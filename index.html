@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCABADO - Auditores Consultores | Business Suite</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rocabado: {
+                            dark: '#081F5C',    /* Azul Marino Profundo */
+                            primary: '#336AEC', /* Azul Corporativo */
+                            light: '#70A6D1',   /* Azul Celeste */
+                            soft: '#D8E3FF',    /* Azul Hielo */
+                            bg: '#F9FCFF'       /* Blanco Puro Fondo */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #planilla-cierre-imprimir, #planilla-cierre-imprimir * { visibility: visible; }
+            #planilla-cierre-imprimir { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-rocabado-bg text-slate-800 font-sans min-h-screen flex flex-col md:flex-row">
+
+    <!-- Menú Lateral Institucional ROCABADO -->
+    <aside class="w-full md:w-72 bg-rocabado-dark text-white p-5 flex flex-col justify-between min-h-screen no-print">
+        <div>
+            <!-- Header Logo ROCABADO -->
+            <div class="flex items-center gap-3 pb-6 border-b border-slate-700/60">
+                <div class="w-10 h-10 rounded-xl bg-rocabado-primary flex items-center justify-center text-white font-black text-xl shadow-lg">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wider text-white leading-tight">ROCABADO</h1>
+                    <span class="text-[10px] text-rocabado-light uppercase font-semibold tracking-widest block">Auditores Consultores</span>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <nav class="mt-6 space-y-1.5">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-3 mb-2">Operación del Salón</span>
+                
+                <a href="#" onclick="mostrarSeccion('sec-cierre')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-rocabado-primary text-white font-semibold text-sm transition-all shadow-md">
+                    <i class="fa-solid fa-file-invoice-dollar w-5 text-rocabado-light"></i>
+                    <span>Cierre de Caja Diario</span>
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('sec-clientes')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/60 font-medium text-sm transition-all">
+                    <i class="fa-solid fa-address-book w-5 text-rocabado-light"></i>
+                    <span>Directorio de Clientes</span>
+                </a>
+
+                <a href="#" onclick="mostrarSeccion('sec-pos')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/60 font-medium text-sm transition-all">
+                    <i class="fa-solid fa-cash-register w-5 text-rocabado-light"></i>
+                    <span>Atención / POS</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="pt-6 border-t border-slate-700/60 text-xs text-slate-400 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-rocabado-light"></i>
+            <span>ROCABADO System v2.0</span>
+        </div>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full">
+        
+        <!-- SECCIÓN: REPORTE Y CIERRE DEL DÍA -->
+        <section id="sec-cierre" class="space-y-6">
+            <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 no-print">
+                <div>
+                    <h2 class="text-2xl font-black text-rocabado-dark">Cierre de Caja y Planilla Diaria</h2>
+                    <p class="text-sm text-slate-500 font-medium">Auditoría consolidada para la entrega a contabilidad.</p>
+                </div>
+
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="window.print()" class="bg-rocabado-dark hover:bg-slate-800 text-white font-bold px-5 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm w-full sm:w-auto">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Imprimir / Descargar PDF</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- PLANILLA IMPRIMIBLE DE CIERRE -->
+            <div id="planilla-cierre-imprimir" class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-10 space-y-8">
+                
+                <!-- Encabezado de la Planilla -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b-2 border-slate-900 gap-4">
+                    <div>
+                        <h1 class="text-xl font-black text-rocabado-dark uppercase">ROCABADO Core ERP — Planilla de Cierre Diario</h1>
+                        <p class="text-xs font-bold text-slate-500 mt-0.5">Empresa: Salón RAC | Sucursal: Casa Matriz Central</p>
+                    </div>
+                    <div class="text-left sm:text-right">
+                        <span class="inline-block px-3 py-1 bg-slate-100 font-black text-slate-800 text-xs rounded-lg uppercase">Estado: Cierre Generado</span>
+                        <p class="text-xs text-slate-500 font-medium mt-1">Fecha: <span class="font-bold text-slate-800">06/Sep/2026</span></p>
+                    </div>
+                </div>
+
+                <!-- Resumen de Métricas Clave -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
+                        <span class="text-[11px] font-extrabold text-slate-400 uppercase block">Pacientes Atendidos</span>
+                        <span class="text-xl font-black text-rocabado-dark">14 Clientes</span>
+                    </div>
+
+                    <div class="p-3.5 bg-emerald-50 rounded-xl border border-emerald-200">
+                        <span class="text-[11px] font-extrabold text-emerald-600 uppercase block">Cobrado en Efectivo</span>
+                        <span class="text-xl font-black text-emerald-800">Bs 1.250</span>
+                    </div>
+
+                    <div class="p-3.5 bg-blue-50 rounded-xl border border-blue-200">
+                        <span class="text-[11px] font-extrabold text-rocabado-primary uppercase block">Cobrado por QR</span>
+                        <span class="text-xl font-black text-rocabado-dark">Bs 890</span>
+                    </div>
+
+                    <div class="p-3.5 bg-slate-100 rounded-xl border border-slate-300">
+                        <span class="text-[11px] font-extrabold text-slate-600 uppercase block">Total Ingreso Bruto</span>
+                        <span class="text-xl font-black text-slate-900">Bs 2.140</span>
+                    </div>
+                </div>
+
+                <!-- Detalle de Servicios Prestados -->
+                <div>
+                    <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-scissors text-rocabado-primary no-print"></i>
+                        <span>1. Resumen de Servicios Realizados</span>
+                    </h3>
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 uppercase font-bold border-y border-slate-200">
+                                <th class="py-2.5 px-3">Servicio / Tratamiento</th>
+                                <th class="py-2.5 px-3 text-center">Cantidad</th>
+                                <th class="py-2.5 px-3 text-right">Precio Unitario</th>
+                                <th class="py-2.5 px-3 text-right">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 font-medium">
+                            <tr>
+                                <td class="py-2 px-3 font-bold text-slate-800">Corte y Peinado Dama</td>
+                                <td class="py-2 px-3 text-center">6</td>
+                                <td class="py-2 px-3 text-right">Bs 80</td>
+                                <td class="py-2 px-3 text-right font-bold">Bs 480</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-bold text-slate-800">Tratamiento de Keratina / Balayage</td>
+                                <td class="py-2 px-3 text-center">3</td>
+                                <td class="py-2 px-3 text-right">Bs 350</td>
+                                <td class="py-2 px-3 text-right font-bold">Bs 1.050</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3 font-bold text-slate-800">Manicura y Pedicura Completa</td>
+                                <td class="py-2 px-3 text-center">5</td>
+                                <td class="py-2 px-3 text-right">Bs 120</td>
+                                <td class="py-2 px-3 text-right font-bold">Bs 610</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Detalle de Comisiones y Gastos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Comisiones a Pagar -->
+                    <div>
+                        <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-3">2. Comisiones del Personal</h3>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <div class="flex justify-between">
+                                <span>María René (Estilista)</span>
+                                <span class="font-bold text-slate-800">Bs 320</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Carlos Eduardo (Barbero)</span>
+                                <span class="font-bold text-slate-800">Bs 180</span>
+                            </div>
+                            <div class="pt-2 border-t border-slate-200 flex justify-between font-black text-slate-900">
+                                <span>Total Comisiones Acumuladas:</span>
+                                <span>Bs 500</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gastos de Caja Chica -->
+                    <div>
+                        <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-3">3. Gastos de Caja Chica</h3>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
+                            <div class="flex justify-between">
+                                <span>Insumos de Limpieza y Toallas</span>
+                                <span class="font-bold text-slate-800">Bs 60</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Compra de Garrafón de Agua</span>
+                                <span class="font-bold text-slate-800">Bs 15</span>
+                            </div>
+                            <div class="pt-2 border-t border-slate-200 flex justify-between font-black text-slate-900">
+                                <span>Total Gastos en Efectivo:</span>
+                                <span>Bs 75</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Balance Final de Caja -->
+                <div class="p-4 bg-rocabado-dark text-white rounded-xl flex justify-between items-center">
+                    <div>
+                        <span class="text-xs uppercase text-rocabado-light font-extrabold tracking-wider">Efectivo Neto a Entregar en Sobre:</span>
+                        <p class="text-xs text-slate-300">Bs 1.250 (Efectivo) - Bs 75 (Gastos)</p>
+                    </div>
+                    <span class="text-2xl font-black text-white">Bs 1.175</span>
+                </div>
+
+                <!-- Sección de Firmas para Auditoría y Contabilidad -->
+                <div class="pt-12 grid grid-cols-2 gap-12 text-center text-xs">
+                    <div>
+                        <div class="border-b border-slate-400 mb-2"></div>
+                        <p class="font-bold text-slate-800">Firma Cajero / Encargado</p>
+                        <span class="text-[10px] text-slate-400">Responsable de Turno</span>
+                    </div>
+                    <div>
+                        <div class="border-b border-slate-400 mb-2"></div>
+                        <p class="font-bold text-slate-800">V°B° Auditor ROCABADO</p>
+                        <span class="text-[10px] text-slate-400">Revisión y Conformidad Contable</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
