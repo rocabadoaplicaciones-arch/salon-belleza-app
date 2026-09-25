@@ -42,13 +42,25 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 bg-slate-900/60 px-3 py-1.5 rounded-xl border border-blue-800/60 text-xs backdrop-blur-md">
-                <span class="text-blue-200"><i class="fa-solid fa-store mr-1 text-amber-400"></i> Sucursal:</span>
-                <select id="sucursalGlobal" onchange="renderizarTodo()" class="bg-slate-900 text-white font-semibold rounded-lg px-2 py-1 outline-none border border-slate-700">
-                    <option value="todos">📊 Consolidado (Todas)</option>
-                    <option value="Sucursal Norte">Lavadero Sucursal Norte</option>
-                    <option value="Sucursal Radial 27">Lavadero Sucursal Radial 27</option>
-                </select>
+            <!-- CONTROLES GLOBALES DE SUCURSAL Y FECHAS -->
+            <div class="flex flex-wrap items-center gap-2 bg-slate-900/60 px-3 py-2 rounded-xl border border-blue-800/60 text-xs backdrop-blur-md">
+                <div class="flex items-center gap-1">
+                    <span class="text-blue-200"><i class="fa-solid fa-store mr-1 text-amber-400"></i> Sucursal:</span>
+                    <select id="sucursalGlobal" onchange="renderizarTodo()" class="bg-slate-900 text-white font-semibold rounded-lg px-2 py-1 outline-none border border-slate-700">
+                        <option value="todos">📊 Consolidado (Todas)</option>
+                        <option value="Sucursal Norte">Lavadero Sucursal Norte</option>
+                        <option value="Sucursal Radial 27">Lavadero Sucursal Radial 27</option>
+                        <option value="Sucursal Sur">Lavadero Sucursal Sur</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-1 border-l border-slate-700 pl-2">
+                    <span class="text-blue-200"><i class="fa-regular fa-calendar mr-1 text-amber-400"></i> Periodo:</span>
+                    <select id="periodoGlobal" onchange="renderizarTodo()" class="bg-slate-900 text-white font-semibold rounded-lg px-2 py-1 outline-none border border-slate-700">
+                        <option value="mes">📅 Este Mes (Septiembre 2026)</option>
+                        <option value="hoy">⚡ Solo Hoy</option>
+                        <option value="historico">📁 Histórico General</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -58,7 +70,7 @@
             <button onclick="cambiarPestana('pos')" id="tab-pos" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-blue-200 hover:text-white hover:bg-blue-900/50"><i class="fa-solid fa-cash-register mr-1.5"></i> Caja & POS</button>
             <button onclick="cambiarPestana('servicios')" id="tab-servicios" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-blue-200 hover:text-white hover:bg-blue-900/50"><i class="fa-solid fa-list-check mr-1.5"></i> Catálogo y Precios</button>
             <button onclick="cambiarPestana('comisiones')" id="tab-comisiones" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-blue-200 hover:text-white hover:bg-blue-900/50"><i class="fa-solid fa-users-gear mr-1.5"></i> Planilla Comisiones</button>
-            <button onclick="cambiarPestana('historial')" id="tab-historial" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-blue-200 hover:text-white hover:bg-blue-900/50"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Historial y Cierres</button>
+            <button onclick="cambiarPestana('historial')" id="tab-historial" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-blue-200 hover:text-white hover:bg-blue-900/50"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Historial y Vehículos</button>
         </div>
     </header>
 
@@ -72,10 +84,10 @@
                     <h2 class="text-sm font-black text-slate-900 flex items-center gap-2">
                         <i class="fa-solid fa-gauge-high text-amber-600"></i> Tablero Gerencial Financiero
                     </h2>
-                    <p class="text-xs text-slate-500">Métricas clave actualizadas en tiempo real para la toma de decisiones.</p>
+                    <p class="text-xs text-slate-500">Métricas consolidadas para inversionistas y gerencia en tiempo real.</p>
                 </div>
-                <div class="text-xs bg-blue-50 text-blue-700 font-semibold px-3 py-1.5 rounded-xl border border-blue-200">
-                    <i class="fa-regular fa-calendar-days mr-1"></i> Sesión Activa
+                <div class="text-xs bg-emerald-50 text-emerald-700 font-bold px-3 py-1.5 rounded-xl border border-emerald-200">
+                    <i class="fa-solid fa-circle-check mr-1"></i> Ejercicio Operativo Activo
                 </div>
             </div>
 
@@ -86,7 +98,7 @@
                         <div class="p-2 bg-blue-50 text-blue-600 rounded-xl"><i class="fa-solid fa-car-side"></i></div>
                     </div>
                     <h3 id="kpiVehiculos" class="text-3xl font-black text-slate-900 mt-2">0</h3>
-                    <span class="text-[11px] text-slate-400 font-medium">Total servicios facturados</span>
+                    <span id="kpiSubVehiculos" class="text-[11px] text-slate-400 font-medium">Frecuencia de lavado</span>
                 </div>
                 <div class="card-executive p-5 rounded-2xl">
                     <div class="flex justify-between items-start">
@@ -102,7 +114,7 @@
                         <div class="p-2 bg-amber-50 text-amber-600 rounded-xl"><i class="fa-solid fa-users"></i></div>
                     </div>
                     <h3 id="kpiComisionesTotal" class="text-3xl font-black text-amber-600 mt-2">Bs. 0</h3>
-                    <span class="text-[11px] text-slate-400 font-medium">Pago acumulado personal</span>
+                    <span class="text-[11px] text-slate-400 font-medium">40% acumulado personal</span>
                 </div>
                 <div class="bg-gradient-to-br from-slate-900 to-blue-950 border border-amber-500/40 p-5 rounded-2xl shadow-xl text-white">
                     <div class="flex justify-between items-start">
@@ -114,10 +126,10 @@
                 </div>
             </div>
 
-            <!-- Desglose de Caja -->
+            <!-- Desglose de Caja y Rendimiento por Sucursal -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="card-executive p-5 rounded-2xl">
-                    <h3 class="text-sm font-bold text-slate-900 mb-3"><i class="fa-solid fa-wallet text-teal-600 mr-2"></i> Arqueo por Método de Pago</h3>
+                <div class="card-executive p-5 rounded-2xl space-y-3">
+                    <h3 class="text-sm font-bold text-slate-900"><i class="fa-solid fa-wallet text-teal-600 mr-2"></i> Arqueo por Método de Pago</h3>
                     <div class="space-y-2 text-xs">
                         <div class="flex justify-between p-3 bg-slate-50 rounded-xl border border-slate-200">
                             <span class="text-slate-700 font-medium">💵 Efectivo Físico en Caja:</span>
@@ -129,10 +141,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-executive p-5 rounded-2xl">
-                    <h3 class="text-sm font-bold text-slate-900 mb-3"><i class="fa-solid fa-star text-amber-500 mr-2"></i> Servicios Más Populares</h3>
-                    <div id="resumenServiciosPopulares" class="space-y-2 text-xs text-slate-700">
-                        <!-- Generado dinámicamente -->
+                <div class="card-executive p-5 rounded-2xl space-y-3">
+                    <h3 class="text-sm font-bold text-slate-900"><i class="fa-solid fa-building text-blue-600 mr-2"></i> Rendimiento por Sucursal</h3>
+                    <div id="desgloseSucursales" class="space-y-2 text-xs">
+                        <!-- Generado por JS -->
                     </div>
                 </div>
             </div>
@@ -155,6 +167,7 @@
                                 <select id="posSucursal" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs text-slate-900 font-medium outline-none focus:border-blue-600">
                                     <option value="Sucursal Norte">Sucursal Norte</option>
                                     <option value="Sucursal Radial 27">Sucursal Radial 27</option>
+                                    <option value="Sucursal Sur">Sucursal Sur</option>
                                 </select>
                             </div>
                             <div>
@@ -171,7 +184,7 @@
                         <div>
                             <label class="block text-xs font-semibold text-slate-700 mb-1.5">Tipo de Vehículo</label>
                             <div class="grid grid-cols-4 gap-2">
-                                <button type="button" onclick="seleccionarVehiculo(this, 'Automóvil')" class="veh-btn bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-1"><i class="fa-solid fa-car"></i> Auto</button>
+                                <button type="button" onclick="seleccionarVehiculo(this, 'Auto')" class="veh-btn bg-blue-600 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-1"><i class="fa-solid fa-car"></i> Auto</button>
                                 <button type="button" onclick="seleccionarVehiculo(this, 'Vagoneta')" class="veh-btn bg-slate-100 text-slate-700 border border-slate-300 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1"><i class="fa-solid fa-van-shuttle"></i> Vagoneta</button>
                                 <button type="button" onclick="seleccionarVehiculo(this, 'Camioneta')" class="veh-btn bg-slate-100 text-slate-700 border border-slate-300 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1"><i class="fa-solid fa-truck-pickup"></i> Camioneta</button>
                                 <button type="button" onclick="seleccionarVehiculo(this, 'Moto')" class="veh-btn bg-slate-100 text-slate-700 border border-slate-300 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-1"><i class="fa-solid fa-motorcycle"></i> Moto</button>
@@ -188,11 +201,11 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Operario Responsable</label>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Operario Asignado</label>
                                 <select id="posOperario" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-xs text-slate-900 font-medium outline-none">
                                     <option value="Juan Pérez">Juan Pérez</option>
                                     <option value="Carlos Gómez">Carlos Gómez</option>
-                                    <option value="Marcos Ruiz">Marcos Ruiz</option>
+                                    <option value="Carla Díaz">Carla Díaz</option>
                                 </select>
                             </div>
                             <div>
@@ -274,8 +287,8 @@
             <div class="card-executive p-5 rounded-2xl shadow">
                 <div class="flex justify-between items-center mb-4 border-b border-slate-200 pb-3">
                     <div>
-                        <h2 class="text-sm font-black text-slate-900"><i class="fa-solid fa-users-gear text-amber-600 mr-2"></i> Liquidación y Control de Comisiones</h2>
-                        <p class="text-xs text-slate-500">Cálculo automático del 40% por operario y servicio lavado.</p>
+                        <h2 class="text-sm font-black text-slate-900"><i class="fa-solid fa-users-gear text-amber-600 mr-2"></i> Liquidación y Control de Comisiones (Operadores)</h2>
+                        <p class="text-xs text-slate-500">Cálculo automático del 40% por operario para pago de planillas.</p>
                     </div>
                     <div class="bg-amber-50 border border-amber-300 text-amber-800 text-xs px-3 py-1.5 rounded-xl font-bold">
                         Comisión Estándar: 40%
@@ -301,13 +314,16 @@
             </div>
         </div>
 
-        <!-- ================= 5. PESTAÑA: HISTORIAL Y CIERRES ================= -->
+        <!-- ================= 5. PESTAÑA: HISTORIAL Y VEHÍCULOS ================= -->
         <div id="seccion-historial" class="seccion-contenido hidden space-y-6">
             <div class="card-executive rounded-2xl shadow overflow-hidden">
                 <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-                    <h3 class="font-bold text-slate-900 text-xs flex items-center gap-2">
-                        <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> Historial Completo de Operaciones
-                    </h3>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-xs flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-blue-600"></i> Historial y Frecuencia de Vehículos
+                        </h3>
+                        <p class="text-xs text-slate-500">Consulta cuántas veces vino un vehículo al mes y su historial de pagos.</p>
+                    </div>
                     <div class="flex gap-2">
                         <button onclick="exportarRespaldo()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition shadow-sm">
                             <i class="fa-solid fa-download mr-1"></i> Respaldar JSON
@@ -321,9 +337,9 @@
                                 <th class="p-3">Fecha / Hora</th>
                                 <th class="p-3">Sucursal</th>
                                 <th class="p-3">Tipo</th>
-                                <th class="p-3">Referencia / Placa</th>
-                                <th class="p-3">Detalle</th>
-                                <th class="p-3">Personal / Pago</th>
+                                <th class="p-3">Placa / Vehículo</th>
+                                <th class="p-3">Detalle Servicio</th>
+                                <th class="p-3">Operario / Pago</th>
                                 <th class="p-3 text-right">Monto (Bs.)</th>
                                 <th class="p-3 text-center">Acción</th>
                             </tr>
@@ -356,7 +372,7 @@
 
             <div class="border-t border-b border-slate-200 py-2 text-xs space-y-1">
                 <div class="flex justify-between font-bold text-slate-900">
-                    <span id="reciboConcepto">Lavado Básico [Automóvil]</span>
+                    <span id="reciboConcepto">Lavado Básico [Auto]</span>
                     <span id="reciboMontoUnitario">Bs. 40.00</span>
                 </div>
                 <div class="text-[10px] text-slate-500">Operario: <span id="reciboOperario">Juan Pérez</span></div>
@@ -404,10 +420,10 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE LÓGICA -->
+    <!-- SCRIPT DE LÓGICA CON EJERCICIO COMPLETO PRECARGADO -->
     <script>
-        let vehiculoSeleccionado = "Automóvil";
-        let servicioSeleccionadoNombre = "Lavado Básico (Carrocería + Aspirado)";
+        let vehiculoSeleccionado = "Auto";
+        let servicioSeleccionadoNombre = "Lavado Básico";
         let servicioSeleccionadoPrecio = 40;
 
         let catalogoServicios = JSON.parse(localStorage.getItem('rac_catalogo')) || [
@@ -417,9 +433,14 @@
             { nombre: "Detailing Tapiz", desc: "Limpieza Profunda Asientos", precio: 180 }
         ];
 
+        // EJERCICIO PRECARGADO CON MÚLTIPLES SUCURSALES Y OPERADORES (Septiembre 2026)
         let registros = JSON.parse(localStorage.getItem('rac_registros')) || [
-            { id: 1, sucursal: "Sucursal Norte", fecha: "2026-09-25 09:30", tipo: "Servicio", ref: "4589ABC", detalle: "Lavado Básico [Automóvil]", extra: "Juan Pérez (Efectivo)", monto: 40 },
-            { id: 2, sucursal: "Sucursal Radial 27", fecha: "2026-09-25 10:15", tipo: "Producto", ref: "Venta Tienda", detalle: "Silicona en Spray", extra: "Efectivo Tienda", monto: 25 }
+            { id: 101, sucursal: "Sucursal Norte", fecha: "2026-09-02 09:15", tipo: "Servicio", ref: "4589ABC", cliente: "Mario Solíz", detalle: "Lavado Básico [Auto]", extra: "Juan Pérez (Efectivo)", monto: 40 },
+            { id: 102, sucursal: "Sucursal Norte", fecha: "2026-09-10 11:30", tipo: "Servicio", ref: "4589ABC", cliente: "Mario Solíz", detalle: "Lavado Completo [Auto]", extra: "Juan Pérez (QR)", monto: 90 },
+            { id: 103, sucursal: "Sucursal Radial 27", fecha: "2026-09-15 14:00", tipo: "Servicio", ref: "7821XYZ", cliente: "Claudia Vaca", detalle: "Lavado General [Vagoneta]", extra: "Carlos Gómez (Efectivo)", monto: 60 },
+            { id: 104, sucursal: "Sucursal Sur", fecha: "2026-09-20 16:45", tipo: "Servicio", ref: "9910BHT", cliente: "Roberto Mendez", detalle: "Detailing Tapiz [Camioneta]", extra: "Carla Díaz (QR)", monto: 180 },
+            { id: 105, sucursal: "Sucursal Norte", fecha: "2026-09-25 10:15", tipo: "Producto", ref: "Venta Tienda", cliente: "Mostrador", detalle: "Silicona en Spray", extra: "Efectivo Tienda", monto: 25 },
+            { id: 106, sucursal: "Sucursal Radial 27", fecha: "2026-09-25 11:00", tipo: "Servicio", ref: "4589ABC", cliente: "Mario Solíz", detalle: "Lavado Básico [Auto]", extra: "Carlos Gómez (Efectivo)", monto: 40 }
         ];
 
         function cambiarPestana(pestanaId) {
@@ -461,7 +482,7 @@
                         b.className = "srv-btn text-left p-3 rounded-xl border border-slate-200 bg-slate-50 transition text-slate-700";
                     });
                     btn.className = "srv-btn text-left p-3 rounded-xl border border-blue-600 bg-blue-50 text-blue-900 transition shadow-sm";
-                    servicioSeleccionadoNombre = `${s.nombre} (${s.desc})`;
+                    servicioSeleccionadoNombre = s.nombre;
                     servicioSeleccionadoPrecio = s.precio;
                     document.getElementById('posMonto').value = s.precio;
                 };
@@ -485,10 +506,13 @@
 
             const sucursal = document.getElementById('posSucursal').value;
             const placa = document.getElementById('posPlaca').value.toUpperCase();
-            const cliente = document.getElementById('posCliente').value || "Cliente General";
+            const cliente = document.getElementById('posCliente').value || "Cliente Frecuente";
             const operario = document.getElementById('posOperario').value;
             const pago = document.getElementById('posMetodoPago').value;
             const monto = parseFloat(document.getElementById('posMonto').value);
+
+            // Saber cuántas veces ha venido este vehículo antes
+            let visitasPrevias = registros.filter(r => r.ref === placa).length + 1;
 
             const nuevo = {
                 id: Date.now(),
@@ -508,7 +532,7 @@
             document.getElementById('reciboSucursal').textContent = sucursal;
             document.getElementById('reciboNro').textContent = `#${Math.floor(100000 + Math.random() * 900000)}`;
             document.getElementById('reciboFecha').textContent = fechaStr;
-            document.getElementById('reciboPlaca').textContent = placa;
+            document.getElementById('reciboPlaca').textContent = `${placa} (Visita N° ${visitasPrevias})`;
             document.getElementById('reciboCliente').textContent = cliente;
             document.getElementById('reciboConcepto').textContent = `${servicioSeleccionadoNombre} [${vehiculoSeleccionado}]`;
             document.getElementById('reciboMontoUnitario').textContent = `Bs. ${monto.toFixed(2)}`;
@@ -622,14 +646,29 @@
             }
         }
 
+        function filtrarPorPeriodo(regs) {
+            const periodo = document.getElementById('periodoGlobal').value;
+            if(periodo === 'historico') return regs;
+            return regs.filter(r => {
+                if(periodo === 'hoy') {
+                    return r.fecha.startsWith("2026-09-25");
+                }
+                if(periodo === 'mes') {
+                    return r.fecha.startsWith("2026-09");
+                }
+                return true;
+            });
+        }
+
         function renderizarComisiones() {
             const tbody = document.getElementById('tablaComisiones');
             tbody.innerHTML = "";
             const sucursalFiltro = document.getElementById('sucursalGlobal').value;
 
+            let regsFiltrados = filtrarPorPeriodo(registros);
             let operariosMap = {};
 
-            registros.filter(r => r.tipo === "Servicio" && (sucursalFiltro === "todos" || r.sucursal === sucursalFiltro)).forEach(r => {
+            regsFiltrados.filter(r => r.tipo === "Servicio" && (sucursalFiltro === "todos" || r.sucursal === sucursalFiltro)).forEach(r => {
                 let partes = r.extra.split(" (");
                 let operario = partes[0] || "General";
                 if(!operariosMap[operario]) {
@@ -640,7 +679,7 @@
             });
 
             if(Object.keys(operariosMap).length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">No hay servicios registrados para calcular comisiones.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">No hay servicios registrados en este periodo para calcular comisiones.</td></tr>`;
                 return;
             }
 
@@ -664,11 +703,16 @@
             const tbody = document.getElementById('tablaHistorial');
             tbody.innerHTML = "";
             const sucursalFiltro = document.getElementById('sucursalGlobal').value;
+            let regsFiltrados = filtrarPorPeriodo(registros);
 
-            registros.filter(r => sucursalFiltro === "todos" || r.sucursal === sucursalFiltro).forEach(r => {
+            regsFiltrados.filter(r => sucursalFiltro === "todos" || r.sucursal === sucursalFiltro).forEach(r => {
                 let badge = r.tipo === "Servicio" ? 
                     '<span class="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-car mr-1"></i> Servicio</span>' : 
                     '<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-box mr-1"></i> Producto</span>';
+
+                // Contar visitas totales históricas de esta placa
+                let visitasPlaca = r.tipo === "Servicio" ? registros.filter(item => item.ref === r.ref).length : "-";
+                let refTexto = r.tipo === "Servicio" ? `${r.ref} <span class="text-[10px] text-blue-600 font-semibold">(Visitas: ${visitasPlaca})</span>` : r.ref;
 
                 let tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50 border-b border-slate-100";
@@ -676,7 +720,7 @@
                     <td class="p-3 text-[11px] text-slate-500">${r.fecha}</td>
                     <td class="p-3 font-semibold text-slate-800">${r.sucursal}</td>
                     <td class="p-3">${badge}</td>
-                    <td class="p-3 font-bold text-slate-900">${r.ref}</td>
+                    <td class="p-3 font-bold text-slate-900">${refTexto}</td>
                     <td class="p-3 text-slate-700 text-xs">${r.detalle}</td>
                     <td class="p-3 text-xs text-slate-500">${r.extra}</td>
                     <td class="p-3 text-right font-black text-emerald-600">Bs. ${r.monto.toFixed(2)}</td>
@@ -702,22 +746,21 @@
 
         function renderizarTodo() {
             const sucursalFiltro = document.getElementById('sucursalGlobal').value;
+            let regsFiltrados = filtrarPorPeriodo(registros);
             
             let totalVehiculos = 0;
             let ventaServicios = 0;
             let ventaProductos = 0;
             let efectivoCaja = 0;
             let qrCaja = 0;
-            let serviciosConteo = {};
+            let sucursalesConteo = {};
 
-            const filtrados = registros.filter(r => sucursalFiltro === "todos" || r.sucursal === sucursalFiltro);
+            let filtradosSucursal = regsFiltrados.filter(r => sucursalFiltro === "todos" || r.sucursal === sucursalFiltro);
 
-            filtrados.forEach(r => {
+            filtradosSucursal.forEach(r => {
                 if(r.tipo === "Servicio") {
                     totalVehiculos++;
                     ventaServicios += r.monto;
-                    let sName = r.detalle.split(" [")[0];
-                    serviciosConteo[sName] = (serviciosConteo[sName] || 0) + 1;
                 } else {
                     ventaProductos += r.monto;
                 }
@@ -727,6 +770,8 @@
                 } else {
                     qrCaja += r.monto;
                 }
+
+                sucursalesConteo[r.sucursal] = (sucursalesConteo[r.sucursal] || 0) + r.monto;
             });
 
             let comisionesTotal = ventaServicios * 0.40;
@@ -734,20 +779,26 @@
             let utilidadReal = (ventaServicios - comisionesTotal) + ventaProductos;
 
             document.getElementById('kpiVehiculos').textContent = totalVehiculos;
+            document.getElementById('kpiSubVehiculos').textContent = sucursalFiltro === 'todos' ? 'Consolidado multi-sucursal' : sucursalFiltro;
             document.getElementById('kpiFacturacion').textContent = `Bs. ${facturacionTotal.toFixed(2)}`;
             document.getElementById('kpiComisionesTotal').textContent = `Bs. ${comisionesTotal.toFixed(2)}`;
             document.getElementById('kpiUtilidadReal').textContent = `Bs. ${utilidadReal.toFixed(2)}`;
             document.getElementById('arqueoEfectivo').textContent = `Bs. ${efectivoCaja.toFixed(2)}`;
             document.getElementById('arqueoQR').textContent = `Bs. ${qrCaja.toFixed(2)}`;
 
-            let divPop = document.getElementById('resumenServiciosPopulares');
-            divPop.innerHTML = "";
-            let keys = Object.keys(serviciosConteo);
-            if(keys.length === 0) {
-                divPop.innerHTML = `<div class="text-slate-400">Sin servicios registrados aún.</div>`;
+            let divSuc = document.getElementById('desgloseSucursales');
+            divSuc.innerHTML = "";
+            let keysSuc = Object.keys(sucursalesConteo);
+            if(keysSuc.length === 0) {
+                divSuc.innerHTML = `<div class="text-slate-400">Sin operaciones en este periodo.</div>`;
             } else {
-                keys.sort((a,b) => serviciosConteo[b] - serviciosConteo[a]).slice(0,3).forEach(k => {
-                    divPop.innerHTML += `<div class="flex justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200"><span class="font-medium text-slate-700">${k}</span><span class="font-bold text-blue-600">${serviciosConteo[k]} veces</span></div>`;
+                keysSuc.forEach(suc => {
+                    divSuc.innerHTML += `
+                        <div class="flex justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+                            <span class="font-medium text-slate-700"><i class="fa-solid fa-store text-amber-600 mr-1"></i> ${suc}</span>
+                            <span class="font-bold text-slate-900">Bs. ${sucursalesConteo[suc].toFixed(2)}</span>
+                        </div>
+                    `;
                 });
             }
 
