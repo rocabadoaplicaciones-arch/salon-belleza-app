@@ -3,310 +3,476 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAC - Sistema Gerencial para Lavaderos de Autos</title>
+    <title>RAC - Carwash Enterprise Manager</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome para Iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #modalRecibo, #modalRecibo * { visibility: visible; }
+            #modalRecibo { position: absolute; left: 0; top: 0; width: 100%; background: white; color: black; }
+        }
+    </style>
 </head>
-<body class="bg-slate-900 font-sans text-slate-100 antialiased pb-12">
+<body class="bg-slate-950 font-sans text-slate-100 antialiased pb-12">
 
     <!-- HEADER / NAVEGACIÓN Y MULTI-SUCURSAL -->
-    <header class="bg-slate-950 border-b border-slate-800 sticky top-0 z-50 shadow-lg">
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 shadow-xl">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
                 <div class="bg-blue-600 p-2.5 rounded-xl text-white font-bold text-xl shadow-lg shadow-blue-600/30">
                     <i class="fa-solid fa-car-rear"></i>
                 </div>
                 <div>
-                    <h1 class="font-extrabold text-base tracking-wide text-white">Rocabado Consultores <span class="text-blue-500 font-normal">Carwash Pro</span></h1>
-                    <p class="text-[11px] text-slate-400">Control Gerencial y Operativo Multi-Sucursal</p>
+                    <h1 class="font-extrabold text-base tracking-wide text-white">Rocabado Consultores <span class="text-blue-400 font-normal">Carwash Pro</span></h1>
+                    <p class="text-[11px] text-slate-400">Sistema Gerencial Multi-Sucursal y POS Avanzado</p>
                 </div>
             </div>
             
-            <!-- Selector de Sucursal y Fechas -->
-            <div class="flex flex-wrap items-center gap-2">
-                <div class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
-                    <span class="text-slate-400"><i class="fa-solid fa-store mr-1 text-blue-400"></i> Sucursal:</span>
-                    <select id="sucursalActiva" onchange="renderizar()" class="bg-slate-950 text-white font-semibold rounded-lg px-2 py-1 outline-none border border-slate-700">
-                        <option value="todos">📊 Consolidado (Todas)</option>
-                        <option value="Sucursal Norte">Lavadero Sucursal Norte</option>
-                        <option value="Sucursal Radial">Lavadero Sucursal Radial 27</option>
-                    </select>
-                </div>
-                <div class="flex items-center gap-2 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
-                    <span class="text-slate-400"><i class="fa-solid fa-calendar-days mr-1 text-emerald-400"></i> Filtro:</span>
-                    <select id="filtroFecha" onchange="renderizar()" class="bg-slate-950 text-white font-semibold rounded-lg px-2 py-1 outline-none border border-slate-700">
-                        <option value="hoy">📅 Solo Hoy</option>
-                        <option value="todos">📂 Historial Completo</option>
-                    </select>
-                </div>
+            <div class="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 text-xs">
+                <span class="text-slate-400"><i class="fa-solid fa-store mr-1 text-blue-400"></i> Sucursal:</span>
+                <select id="sucursalGlobal" onchange="renderizarTodo()" class="bg-slate-900 text-white font-semibold rounded-lg px-2 py-1 outline-none border border-slate-700">
+                    <option value="todos">📊 Consolidado (Todas)</option>
+                    <option value="Sucursal Norte">Lavadero Sucursal Norte</option>
+                    <option value="Sucursal Radial 27">Lavadero Sucursal Radial 27</option>
+                </select>
             </div>
+        </div>
+
+        <!-- PESTAÑAS DE NAVEGACIÓN PRINCIPAL -->
+        <div class="max-w-7xl mx-auto px-4 flex overflow-x-auto space-x-2 border-t border-slate-800 py-2">
+            <button onclick="cambiarPestana('dashboard')" id="tab-dashboard" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow"><i class="fa-solid fa-chart-pie mr-1.5"></i> Resumen Ejecutivo</button>
+            <button onclick="cambiarPestana('pos')" id="tab-pos" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800"><i class="fa-solid fa-cash-register mr-1.5"></i> Caja & POS (Servicios/Tienda)</button>
+            <button onclick="cambiarPestana('servicios')" id="tab-servicios" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800"><i class="fa-solid fa-list-check mr-1.5"></i> Catálogo y Precios</button>
+            <button onclick="cambiarPestana('comisiones')" id="tab-comisiones" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800"><i class="fa-solid fa-users-gear mr-1.5"></i> Planilla Comisiones</button>
+            <button onclick="cambiarPestana('historial')" id="tab-historial" class="pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800"><i class="fa-solid fa-clock-rotate-left mr-1.5"></i> Historial y Cierres</button>
         </div>
     </header>
 
-    <!-- CONTENEDOR PRINCIPAL -->
-    <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+    <!-- CONTENEDOR DE PESTAÑAS -->
+    <main class="max-w-7xl mx-auto px-4 py-6">
 
-        <!-- 1. VISTA GERENCIAL DE DUEÑO (KPIs FINANCIEROS CLAVE) -->
-        <div class="grid grid-cols-2 lg:grid-cols-6 gap-3">
-            <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Vehículos</p>
-                <h3 id="kpiVehiculos" class="text-2xl font-black text-blue-400 mt-1">0</h3>
-                <span class="text-[10px] text-slate-400">Atendidos</span>
-            </div>
-            <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Venta Lavados</p>
-                <h3 id="kpiServicios" class="text-2xl font-black text-emerald-400 mt-1">Bs. 0</h3>
-                <span class="text-[10px] text-slate-400">Facturación servicios</span>
-            </div>
-            <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Venta Tienda</p>
-                <h3 id="kpiProductos" class="text-2xl font-black text-indigo-400 mt-1">Bs. 0</h3>
-                <span class="text-[10px] text-slate-400">Aromatizantes/Accesorios</span>
-            </div>
-            <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Comisiones Personal</p>
-                <h3 id="kpiComisiones" class="text-2xl font-black text-amber-400 mt-1">Bs. 0</h3>
-                <span class="text-[10px] text-slate-400">Pago lavadores (40%)</span>
-            </div>
-            <div class="bg-slate-800/80 border border-slate-700/60 p-4 rounded-2xl shadow-sm">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Arqueo Caja (Efectivo)</p>
-                <h3 id="kpiEfectivo" class="text-2xl font-black text-teal-400 mt-1">Bs. 0</h3>
-                <span class="text-[10px] text-slate-400">Dinero físico en gaveta</span>
-            </div>
-            <div class="col-span-2 lg:col-span-1 bg-gradient-to-br from-emerald-950/90 to-slate-800 border border-emerald-600/60 p-4 rounded-2xl shadow-lg">
-                <p class="text-[11px] font-bold text-emerald-300 uppercase tracking-wider">Utilidad Neta Real</p>
-                <h3 id="kpiUtilidad" class="text-2xl font-black text-emerald-400 mt-1">Bs. 0</h3>
-                <span class="text-[10px] text-emerald-300 font-medium">Ganancia limpia tuya</span>
-            </div>
-        </div>
-
-        <!-- 2. PANEL OPERATIVO TÁCTIL (RECEPCIÓN Y TIENDA) -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- RECEPCIÓN RÁPIDA DE VEHÍCULO -->
-            <div class="bg-slate-800/90 border border-slate-700 p-5 rounded-2xl shadow-md lg:col-span-2 space-y-4">
-                <h2 class="text-sm font-bold text-white flex items-center gap-2 border-b border-slate-700 pb-2">
-                    <i class="fa-solid fa-car text-blue-500"></i> Recepción y Cobro de Vehículo
+        <!-- ================= 1. PESTAÑA: RESUMEN EJECUTIVO ================= -->
+        <div id="seccion-dashboard" class="seccion-contenido space-y-6">
+            <div class="flex justify-between items-center">
+                <h2 class="text-base font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-gauge-high text-blue-400"></i> Tablero Gerencial Financiero
                 </h2>
-                
-                <form id="servicioForm" onsubmit="registrarServicio(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Sucursal de Atención</label>
-                            <select id="sucursalRegistro" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white outline-none">
-                                <option value="Sucursal Norte">Lavadero Sucursal Norte</option>
-                                <option value="Sucursal Radial">Lavadero Sucursal Radial 27</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Número de Placa *</label>
-                            <input type="text" id="placa" required placeholder="Ej. 4589ABC" class="w-full uppercase bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs font-bold text-white outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Celular / Cliente (Opcional)</label>
-                            <input type="text" id="clienteInfo" placeholder="Ej. 70123456" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-200 outline-none">
-                        </div>
-                    </div>
-
-                    <!-- Botones Táctiles para Tipo de Vehículo -->
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Tipo de Vehículo</label>
-                        <div class="grid grid-cols-4 gap-2">
-                            <button type="button" onclick="seleccionarVehiculo(this, 'Automóvil')" class="veh-btn bg-blue-600 text-white border border-blue-500 font-bold py-2 rounded-xl text-xs transition shadow">Auto</button>
-                            <button type="button" onclick="seleccionarVehiculo(this, 'Vagoneta')" class="veh-btn bg-slate-900 text-slate-300 border border-slate-700 font-bold py-2 rounded-xl text-xs transition">Vagoneta</button>
-                            <button type="button" onclick="seleccionarVehiculo(this, 'Camioneta')" class="veh-btn bg-slate-900 text-slate-300 border border-slate-700 font-bold py-2 rounded-xl text-xs transition">Camioneta</button>
-                            <button type="button" onclick="seleccionarVehiculo(this, 'Moto')" class="veh-btn bg-slate-900 text-slate-300 border border-slate-700 font-bold py-2 rounded-xl text-xs transition">Moto</button>
-                        </div>
-                    </div>
-
-                    <!-- Botones Táctiles para Paquetes de Servicios -->
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Seleccionar Paquete de Servicio</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <button type="button" onclick="seleccionarServicio(this, 'Lavado Básico (Carrocería + Aspirado)', 40)" class="srv-btn text-left p-2.5 rounded-xl border border-blue-500 bg-blue-950/40 transition">
-                                <div class="font-bold text-xs text-blue-300">Lavado Básico</div>
-                                <div class="text-[10px] text-slate-400">Carrocería + Aspirado • <span class="font-bold text-white">Bs. 40</span></div>
-                            </button>
-                            <button type="button" onclick="seleccionarServicio(this, 'Lavado General (Incluye Chasis)', 60)" class="srv-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-900 transition">
-                                <div class="font-bold text-xs text-slate-200">Lavado General</div>
-                                <div class="text-[10px] text-slate-400">Incluye Chasis • <span class="font-bold text-white">Bs. 60</span></div>
-                            </button>
-                            <button type="button" onclick="seleccionarServicio(this, 'Lavado Completo (Motor + Chasis + Encerado)', 90)" class="srv-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-900 transition">
-                                <div class="font-bold text-xs text-slate-200">Lavado Completo</div>
-                                <div class="text-[10px] text-slate-400">Motor + Chasis + Encerado • <span class="font-bold text-white">Bs. 90</span></div>
-                            </button>
-                            <button type="button" onclick="seleccionarServicio(this, 'Detailing / Limpieza de Tapiz', 180)" class="srv-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-900 transition">
-                                <div class="font-bold text-xs text-slate-200">Detailing Tapiz</div>
-                                <div class="text-[10px] text-slate-400">Limpieza Profunda • <span class="font-bold text-white">Bs. 180</span></div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Operario Encargado</label>
-                            <select id="operario" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white font-medium outline-none">
-                                <option value="Juan Pérez">Juan Pérez</option>
-                                <option value="Carlos Gómez">Carlos Gómez</option>
-                                <option value="Marcos Ruiz">Marcos Ruiz</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Monto Editable (Bs.)</label>
-                            <input type="number" step="0.01" id="montoServicio" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs font-bold text-emerald-400 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-300 mb-1">Método de Cobro (Caja)</label>
-                            <select id="metodoPagoServicio" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white font-medium outline-none">
-                                <option value="Efectivo">💵 Efectivo (Suma a Caja)</option>
-                                <option value="QR / Transferencia">📱 QR / Transferencia</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end pt-2">
-                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3 px-6 rounded-xl text-sm transition shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-cash-register text-lg"></i> COBRAR Y REGISTRAR SERVICIO
-                        </button>
-                    </div>
-                </form>
+                <div class="text-xs text-slate-400">Actualizado en tiempo real</div>
             </div>
 
-            <!-- VENTA DE PRODUCTOS (TIENDA) -->
-            <div class="bg-slate-800/90 border border-slate-700 p-5 rounded-2xl shadow-md space-y-4">
-                <h2 class="text-sm font-bold text-white flex items-center gap-2 border-b border-slate-700 pb-2">
-                    <i class="fa-solid fa-box-open text-indigo-400"></i> Venta de Productos Tienda
-                </h2>
-                <form id="productoForm" onsubmit="registrarProducto(event)" class="space-y-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Producto</label>
-                        <select id="nombreProducto" onchange="actualizarPrecioProducto()" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white outline-none">
-                            <option value="Aromatizante Colgante">Aromatizante Colgante (Bs. 15)</option>
-                            <option value="Silicona en Spray">Silicona en Spray (Bs. 25)</option>
-                            <option value="Shampoo con Cera Lt.">Shampoo con Cera Lt. (Bs. 35)</option>
-                            <option value="Paño Microfibra">Paño Microfibra (Bs. 12)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Precio (Bs.)</label>
-                        <input type="number" step="0.01" id="montoProducto" required class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs font-bold text-indigo-400 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">Pago Tienda</label>
-                        <select id="metodoPagoProducto" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs text-white outline-none">
-                            <option value="Efectivo">💵 Efectivo</option>
-                            <option value="QR / Transferencia">📱 QR / Transferencia</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-cart-plus"></i> Vender Producto Rápido
-                    </button>
-                </form>
-
-                <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/60 text-[11px] text-slate-400 space-y-1">
-                    <div class="font-bold text-slate-300"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Garantía RAC:</div>
-                    <p>• Control total de efectivo en caja sin fugas.</p>
-                    <p>• Comisiones automáticas listas para liquidar al personal.</p>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Vehículos Atendidos</p>
+                    <h3 id="kpiVehiculos" class="text-3xl font-black text-blue-400 mt-2">0</h3>
+                    <span class="text-[11px] text-slate-500">Total servicios facturados</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Facturación Total</p>
+                    <h3 id="kpiFacturacion" class="text-3xl font-black text-emerald-400 mt-2">Bs. 0</h3>
+                    <span class="text-[11px] text-slate-500">Servicios + Tienda</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Comisiones Lavadores</p>
+                    <h3 id="kpiComisionesTotal" class="text-3xl font-black text-amber-400 mt-2">Bs. 0</h3>
+                    <span class="text-[11px] text-slate-500">Pago acumulado personal</span>
+                </div>
+                <div class="bg-gradient-to-br from-emerald-950 to-slate-900 border border-emerald-600/60 p-5 rounded-2xl shadow-xl">
+                    <p class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Utilidad Neta Dueño</p>
+                    <h3 id="kpiUtilidadReal" class="text-3xl font-black text-emerald-400 mt-2">Bs. 0</h3>
+                    <span class="text-[11px] text-emerald-300 font-medium">Ganancia neta limpia</span>
                 </div>
             </div>
 
+            <!-- Desglose de Caja -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+                    <h3 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-wallet text-teal-400 mr-2"></i> Arqueo por Método de Pago</h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+                            <span class="text-slate-300">💵 Efectivo Físico en Caja:</span>
+                            <span id="arqueoEfectivo" class="font-bold text-teal-400 text-sm">Bs. 0</span>
+                        </div>
+                        <div class="flex justify-between p-2.5 bg-slate-950 rounded-xl border border-slate-800">
+                            <span class="text-slate-300">📱 QR / Transferencias Bancarias:</span>
+                            <span id="arqueoQR" class="font-bold text-blue-400 text-sm">Bs. 0</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl">
+                    <h3 class="text-sm font-bold text-white mb-3"><i class="fa-solid fa-star text-amber-400 mr-2"></i> Servicios Más Populares</h3>
+                    <div id="resumenServiciosPopulares" class="space-y-2 text-xs text-slate-300">
+                        <!-- Generado dinámicamente -->
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- 3. TABLA DE HISTORIAL DE OPERACIONES -->
-        <div class="bg-slate-800/90 border border-slate-700 rounded-2xl shadow-md overflow-hidden">
-            <div class="p-4 border-b border-slate-700 flex justify-between items-center bg-slate-800">
-                <h3 class="font-bold text-white text-xs flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-blue-400"></i> Historial de Movimientos de los Lavaderos
-                </h3>
-                <button onclick="exportarDatos()" class="bg-slate-700 hover:bg-slate-600 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-download mr-1"></i> Respaldar Base de Datos
+        <!-- ================= 2. PESTAÑA: CAJA & POS ================= -->
+        <div id="seccion-pos" class="seccion-contenido hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Formulario de Recepción de Vehículo -->
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-md lg:col-span-2 space-y-4">
+                    <h2 class="text-sm font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-2">
+                        <i class="fa-solid fa-car text-blue-400"></i> Recepción y Cobro Rápido de Servicio
+                    </h2>
+                    
+                    <form id="servicioForm" onsubmit="registrarServicio(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Sucursal</label>
+                                <select id="posSucursal" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none">
+                                    <option value="Sucursal Norte">Sucursal Norte</option>
+                                    <option value="Sucursal Radial 27">Sucursal Radial 27</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Número de Placa *</label>
+                                <input type="text" id="posPlaca" required placeholder="Ej. 4589ABC" class="w-full uppercase bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs font-bold text-white outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Celular / Cliente</label>
+                                <input type="text" id="posCliente" placeholder="Ej. 70123456" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 outline-none">
+                            </div>
+                        </div>
+
+                        <!-- Botones Táctiles Tipo Vehículo -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Tipo de Vehículo</label>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button type="button" onclick="seleccionarVehiculo(this, 'Automóvil')" class="veh-btn bg-blue-600 text-white border border-blue-500 font-bold py-2 rounded-xl text-xs transition shadow">Auto</button>
+                                <button type="button" onclick="seleccionarVehiculo(this, 'Vagoneta')" class="veh-btn bg-slate-950 text-slate-300 border border-slate-800 font-bold py-2 rounded-xl text-xs transition">Vagoneta</button>
+                                <button type="button" onclick="seleccionarVehiculo(this, 'Camioneta')" class="veh-btn bg-slate-950 text-slate-300 border border-slate-800 font-bold py-2 rounded-xl text-xs transition">Camioneta</button>
+                                <button type="button" onclick="seleccionarVehiculo(this, 'Moto')" class="veh-btn bg-slate-950 text-slate-300 border border-slate-800 font-bold py-2 rounded-xl text-xs transition">Moto</button>
+                            </div>
+                        </div>
+
+                        <!-- Botones Táctiles Servicios -->
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Paquete de Servicio (Táctil)</label>
+                            <div id="contenedorBotonesServicios" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <!-- Se llena con JS desde la pestaña de Catálogo -->
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Operario Responsable</label>
+                                <select id="posOperario" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-medium outline-none">
+                                    <option value="Juan Pérez">Juan Pérez</option>
+                                    <option value="Carlos Gómez">Carlos Gómez</option>
+                                    <option value="Marcos Ruiz">Marcos Ruiz</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Monto Cobrado (Bs.)</label>
+                                <input type="number" step="0.01" id="posMonto" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs font-bold text-emerald-400 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Forma de Pago</label>
+                                <select id="posMetodoPago" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white font-medium outline-none">
+                                    <option value="Efectivo">💵 Efectivo</option>
+                                    <option value="QR">📱 QR / Transferencia</option>
+                                    <option value="Tarjeta">💳 Tarjeta POS</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-3.5 px-6 rounded-xl text-sm transition shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-receipt text-lg"></i> COBRAR Y EMITIR RECIBO ELECTRÓNICO
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tienda / Productos RÁPIDOS -->
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-md space-y-4">
+                    <h2 class="text-sm font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-2">
+                        <i class="fa-solid fa-box-open text-indigo-400"></i> Venta de Tienda (Accesorios)
+                    </h2>
+                    <form id="productoForm" onsubmit="registrarProducto(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Producto</label>
+                            <select id="prodNombre" onchange="actualizarPrecioTienda()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none">
+                                <option value="Aromatizante Colgante" data-precio="15">Aromatizante Colgante (Bs. 15)</option>
+                                <option value="Silicona en Spray" data-precio="25">Silicona en Spray (Bs. 25)</option>
+                                <option value="Shampoo con Cera Lt." data-precio="35">Shampoo con Cera Lt. (Bs. 35)</option>
+                                <option value="Paño Microfibra" data-precio="12">Paño Microfibra (Bs. 12)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Precio (Bs.)</label>
+                            <input type="number" step="0.01" id="prodMonto" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs font-bold text-indigo-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Forma de Pago Tienda</label>
+                            <select id="prodPago" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none">
+                                <option value="Efectivo">💵 Efectivo</option>
+                                <option value="QR">📱 QR / Transferencia</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-cart-plus"></i> Registrar Venta de Producto
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= 3. PESTAÑA: CATÁLOGO Y PRECIOS ================= -->
+        <div id="seccion-servicios" class="seccion-contenido hidden space-y-6">
+            <div class="flex justify-between items-center bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+                <div>
+                    <h2 class="text-sm font-black text-white"><i class="fa-solid fa-tags text-blue-400 mr-2"></i> Gestión de Servicios y Tarifas</h2>
+                    <p class="text-xs text-slate-400">Modifique los precios base o agregue nuevos servicios para el panel táctil.</p>
+                </div>
+                <button onclick="abrirModalServicio()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition">
+                    <i class="fa-solid fa-plus mr-1"></i> Nuevo Servicio
                 </button>
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-900 text-slate-400 text-[11px] uppercase tracking-wider border-b border-slate-700">
-                            <th class="p-3">Hora</th>
-                            <th class="p-3">Sucursal</th>
-                            <th class="p-3">Tipo</th>
-                            <th class="p-3">Placa / Ref</th>
-                            <th class="p-3">Servicio / Detalle</th>
-                            <th class="p-3">Personal / Pago</th>
-                            <th class="p-3 text-right">Monto (Bs.)</th>
-                            <th class="p-3 text-center">Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaMovimientos" class="divide-y divide-slate-700/50 text-xs">
-                        <!-- Se llena con JS -->
-                    </tbody>
-                </table>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="listaCatServicios">
+                <!-- Generado por JS -->
+            </div>
+        </div>
+
+        <!-- ================= 4. PESTAÑA: PLANILLA COMISIONES ================= -->
+        <div id="seccion-comisiones" class="seccion-contenido hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-sm font-black text-white"><i class="fa-solid fa-users-gear text-amber-400 mr-2"></i> Liquidación y Control de Comisiones</h2>
+                        <p class="text-xs text-slate-400">Cálculo automático del 40% (o comisión personalizada) por operario y servicio lavado.</p>
+                    </div>
+                    <div class="bg-amber-950/60 border border-amber-600/50 text-amber-300 text-xs px-3 py-1.5 rounded-xl font-bold">
+                        Comisión Estándar: 40%
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-950 text-slate-400 text-[11px] uppercase tracking-wider border-b border-slate-800">
+                                <th class="p-3">Operario</th>
+                                <th class="p-3 text-center">Vehículos Lavados</th>
+                                <th class="p-3 text-right">Total Facturado</th>
+                                <th class="p-3 text-right">Comisión a Pagar (40%)</th>
+                                <th class="p-3 text-center">Estado Liquidación</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaComisiones" class="divide-y divide-slate-800 text-xs">
+                            <!-- Llenado por JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 5. PESTAÑA: HISTORIAL Y CIERRES ================= -->
+        <div id="seccion-historial" class="seccion-contenido hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow overflow-hidden">
+                <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950">
+                    <h3 class="font-bold text-white text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-clock-rotate-left text-blue-400"></i> Historial Completo de Operaciones
+                    </h3>
+                    <div class="flex gap-2">
+                        <button onclick="exportarRespaldo()" class="bg-slate-800 hover:bg-slate-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition">
+                            <i class="fa-solid fa-download mr-1"></i> Respaldar JSON
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-950 text-slate-400 text-[11px] uppercase tracking-wider border-b border-slate-800">
+                                <th class="p-3">Fecha / Hora</th>
+                                <th class="p-3">Sucursal</th>
+                                <th class="p-3">Tipo</th>
+                                <th class="p-3">Referencia / Placa</th>
+                                <th class="p-3">Detalle</th>
+                                <th class="p-3">Personal / Pago</th>
+                                <th class="p-3 text-right">Monto (Bs.)</th>
+                                <th class="p-3 text-center">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaHistorial" class="divide-y divide-slate-800 text-xs">
+                            <!-- Llenado por JS -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
     </main>
 
-    <!-- SCRIPT DE LÓGICA DE NEGOCIO -->
+    <!-- MODAL DE RECIBO ELEGANTE (IMPRESIÓN) -->
+    <div id="modalRecibo" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white text-slate-900 w-full max-w-sm rounded-2xl p-6 shadow-2xl space-y-4 relative">
+            <div class="text-center border-b border-slate-200 pb-3">
+                <div class="font-black text-base text-blue-600">ROCABADO CONSULTORES</div>
+                <div class="text-xs font-bold text-slate-700">CARWASH & DETAILING SYSTEM</div>
+                <div id="reciboSucursal" class="text-[11px] text-slate-500 mt-0.5">Sucursal Norte</div>
+            </div>
+            
+            <div class="space-y-1 text-xs">
+                <div class="flex justify-between"><span>Recibo N°:</span> <span id="reciboNro" class="font-bold">#000124</span></div>
+                <div class="flex justify-between"><span>Fecha/Hora:</span> <span id="reciboFecha">25/09/2026 12:30</span></div>
+                <div class="flex justify-between"><span>Placa / Ref:</span> <span id="reciboPlaca" class="font-bold uppercase">4589ABC</span></div>
+                <div class="flex justify-between"><span>Cliente:</span> <span id="reciboCliente">Juan Pérez</span></div>
+            </div>
+
+            <div class="border-t border-b border-slate-200 py-2 text-xs space-y-1">
+                <div class="flex justify-between font-bold text-slate-800">
+                    <span id="reciboConcepto">Lavado Básico [Automóvil]</span>
+                    <span id="reciboMontoUnitario">Bs. 40.00</span>
+                </div>
+                <div class="text-[10px] text-slate-500">Operario: <span id="reciboOperario">Juan Pérez</span></div>
+            </div>
+
+            <div class="flex justify-between font-black text-sm text-slate-900 pt-1">
+                <span>TOTAL PAGADO:</span>
+                <span id="reciboTotal">Bs. 40.00</span>
+            </div>
+
+            <div class="text-center text-[10px] text-slate-500 pt-2 border-t border-slate-100">
+                ¡Gracias por su preferencia!<br>Comprobante válido para control interno.
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="window.print()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition"><i class="fa-solid fa-print mr-1"></i> Imprimir</button>
+                <button onclick="cerrarRecibo()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2.5 rounded-xl text-xs transition">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL NUEVO/EDITAR SERVICIO -->
+    <div id="modalServicio" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 text-slate-100 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+            <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2"><i class="fa-solid fa-tag text-blue-400 mr-2"></i> Configurar Paquete de Servicio</h3>
+            <form onsubmit="guardarServicioCat(event)" class="space-y-3">
+                <input type="hidden" id="editIndex" value="-1">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre del Servicio</label>
+                    <input type="text" id="catNombre" required placeholder="Ej. Lavado Premium" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Descripción Breve</label>
+                    <input type="text" id="catDesc" required placeholder="Ej. Carrocería + Cera + Aspirado" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-300 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Precio Estándar (Bs.)</label>
+                    <input type="number" step="0.01" id="catPrecio" required class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs font-bold text-emerald-400 outline-none">
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="document.getElementById('modalServicio').classList.add('hidden')" class="bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-xl text-xs font-bold">Cancelar</button>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-xl text-xs font-bold text-white">Guardar Tarifa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE LÓGICA GENERAL -->
     <script>
+        // --- ESTADOS Y DATOS INICIALES ---
         let vehiculoSeleccionado = "Automóvil";
         let servicioSeleccionadoNombre = "Lavado Básico (Carrocería + Aspirado)";
         let servicioSeleccionadoPrecio = 40;
 
+        let catalogoServicios = JSON.parse(localStorage.getItem('rac_catalogo')) || [
+            { nombre: "Lavado Básico", desc: "Carrocería + Aspirado", precio: 40 },
+            { nombre: "Lavado General", desc: "Incluye Chasis", precio: 60 },
+            { nombre: "Lavado Completo", desc: "Motor + Chasis + Encerado", precio: 90 },
+            { nombre: "Detailing Tapiz", desc: "Limpieza Profunda Asientos", precio: 180 }
+        ];
+
+        let registros = JSON.parse(localStorage.getItem('rac_registros')) || [
+            { id: 1, sucursal: "Sucursal Norte", fecha: "2026-09-25 09:30", tipo: "Servicio", ref: "4589ABC", detalle: "Lavado Básico [Automóvil]", extra: "Juan Pérez (Efectivo)", monto: 40 },
+            { id: 2, sucursal: "Sucursal Radial 27", fecha: "2026-09-25 10:15", tipo: "Producto", ref: "Venta Tienda", detalle: "Silicona en Spray", extra: "Efectivo Tienda", monto: 25 }
+        ];
+
+        // --- CONTROL DE PESTAÑAS ---
+        function cambiarPestana(pestanaId) {
+            document.querySelectorAll('.seccion-contenido').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.pestana-btn').forEach(btn => {
+                btn.className = "pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800";
+            });
+
+            document.getElementById(`seccion-${pestanaId}`).classList.remove('hidden');
+            document.getElementById(`tab-${pestanaId}`).className = "pestana-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-blue-600 text-white shadow";
+            
+            if(pestanaId === 'servicios') renderizarCatalogo();
+            if(pestanaId === 'comisiones') renderizarComisiones();
+            if(pestanaId === 'historial') renderizarHistorial();
+        }
+
+        // --- POS & BOTONES TÁCTILES ---
         function seleccionarVehiculo(btn, tipo) {
             document.querySelectorAll('.veh-btn').forEach(b => {
-                b.className = "veh-btn bg-slate-900 text-slate-300 border border-slate-700 font-bold py-2 rounded-xl text-xs transition";
+                b.className = "veh-btn bg-slate-950 text-slate-300 border border-slate-800 font-bold py-2 rounded-xl text-xs transition";
             });
             btn.className = "veh-btn bg-blue-600 text-white border border-blue-500 font-bold py-2 rounded-xl text-xs transition shadow";
             vehiculoSeleccionado = tipo;
         }
 
-        function seleccionarServicio(btn, nombre, precio) {
-            document.querySelectorAll('.srv-btn').forEach(b => {
-                b.className = "srv-btn text-left p-2.5 rounded-xl border border-slate-700 bg-slate-900 transition";
-                b.querySelector('.font-bold').className = "font-bold text-xs text-slate-200";
+        function renderizarBotonesPosServicios() {
+            const contenedor = document.getElementById('contenedorBotonesServicios');
+            contenedor.innerHTML = "";
+            catalogoServicios.forEach((s, idx) => {
+                let btn = document.createElement('button');
+                let activo = idx === 0 ? "border-blue-500 bg-blue-950/40 text-blue-300" : "border-slate-800 bg-slate-950 text-slate-300";
+                btn.type = "button";
+                btn.className = `srv-btn text-left p-2.5 rounded-xl border ${activo} transition`;
+                btn.innerHTML = `
+                    <div class="font-bold text-xs ${idx === 0 ? 'text-blue-300' : 'text-slate-200'}">${s.nombre}</div>
+                    <div class="text-[10px] text-slate-400">${s.desc} • <span class="font-bold text-white">Bs. ${s.precio}</span></div>
+                `;
+                btn.onclick = () => {
+                    document.querySelectorAll('.srv-btn').forEach(b => {
+                        b.className = "srv-btn text-left p-2.5 rounded-xl border border-slate-800 bg-slate-950 transition text-slate-300";
+                    });
+                    btn.className = "srv-btn text-left p-2.5 rounded-xl border border-blue-500 bg-blue-950/40 text-blue-300 transition shadow";
+                    servicioSeleccionadoNombre = `${s.nombre} (${s.desc})`;
+                    servicioSeleccionadoPrecio = s.precio;
+                    document.getElementById('posMonto').value = s.precio;
+                };
+                contenedor.appendChild(btn);
             });
-            btn.className = "srv-btn text-left p-2.5 rounded-xl border border-blue-500 bg-blue-950/40 transition shadow";
-            btn.querySelector('.font-bold').className = "font-bold text-xs text-blue-300";
-            
-            servicioSeleccionadoNombre = nombre;
-            servicioSeleccionadoPrecio = precio;
-            document.getElementById('montoServicio').value = precio;
+            if(catalogoServicios.length > 0) {
+                document.getElementById('posMonto').value = catalogoServicios[0].precio;
+            }
         }
 
-        function actualizarPrecioProducto() {
-            const prod = document.getElementById('nombreProducto').value;
-            const input = document.getElementById('montoProducto');
-            if(prod.includes("Aromatizante")) input.value = 15;
-            else if(prod.includes("Silicona")) input.value = 25;
-            else if(prod.includes("Shampoo")) input.value = 35;
-            else if(prod.includes("Microfibra")) input.value = 12;
+        function actualizarPrecioTienda() {
+            const select = document.getElementById('prodNombre');
+            const precio = select.options[select.selectedIndex].getAttribute('data-precio');
+            document.getElementById('prodMonto').value = precio;
         }
 
-        let registros = JSON.parse(localStorage.getItem('rac_carwash_multisucursal')) || [
-            { id: 1, sucursal: "Sucursal Norte", fecha: "2026-09-25 09:30", tipo: "Servicio", ref: "4589ABC", detalle: "Lavado Básico (Automóvil)", extra: "Juan Pérez (Efectivo)", monto: 40 },
-            { id: 2, sucursal: "Sucursal Radial", fecha: "2026-09-25 10:15", tipo: "Producto", ref: "Venta Tienda", detalle: "Silicona en Spray", extra: "Efectivo", monto: 25 }
-        ];
-
+        // --- REGISTROS ---
         function registrarServicio(e) {
             e.preventDefault();
             const now = new Date();
-            const horaStr = now.toTimeString().slice(0, 5);
-            const fechaStr = now.toISOString().slice(0, 10) + ' ' + horaStr;
+            const fechaStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
 
-            const sucursal = document.getElementById('sucursalRegistro').value;
-            const placa = document.getElementById('placa').value.toUpperCase();
-            const cliente = document.getElementById('clienteInfo').value;
-            const operario = document.getElementById('operario').value;
-            const pago = document.getElementById('metodoPagoServicio').value;
-            const monto = parseFloat(document.getElementById('montoServicio').value);
+            const sucursal = document.getElementById('posSucursal').value;
+            const placa = document.getElementById('posPlaca').value.toUpperCase();
+            const cliente = document.getElementById('posCliente').value || "Cliente General";
+            const operario = document.getElementById('posOperario').value;
+            const pago = document.getElementById('posMetodoPago').value;
+            const monto = parseFloat(document.getElementById('posMonto').value);
 
             const nuevo = {
                 id: Date.now(),
                 sucursal: sucursal,
                 fecha: fechaStr,
                 tipo: "Servicio",
-                ref: placa + (cliente ? ` (${cliente})` : ''),
+                ref: placa,
+                cliente: cliente,
                 detalle: `${servicioSeleccionadoNombre} [${vehiculoSeleccionado}]`,
                 extra: `${operario} (${pago})`,
                 monto: monto
@@ -314,21 +480,32 @@
 
             registros.unshift(nuevo);
             guardarYRenderizar();
+            
+            // Mostrar Recibo
+            document.getElementById('reciboSucursal').textContent = sucursal;
+            document.getElementById('reciboNro').textContent = `#${Math.floor(100000 + Math.random() * 900000)}`;
+            document.getElementById('reciboFecha').textContent = fechaStr;
+            document.getElementById('reciboPlaca').textContent = placa;
+            document.getElementById('reciboCliente').textContent = cliente;
+            document.getElementById('reciboConcepto').textContent = `${servicioSeleccionadoNombre} [${vehiculoSeleccionado}]`;
+            document.getElementById('reciboMontoUnitario').textContent = `Bs. ${monto.toFixed(2)}`;
+            document.getElementById('reciboOperario').textContent = operario;
+            document.getElementById('reciboTotal').textContent = `Bs. ${monto.toFixed(2)}`;
+            
+            document.getElementById('modalRecibo').classList.remove('hidden');
             document.getElementById('servicioForm').reset();
-            document.getElementById('montoServicio').value = 40;
-            alert("✅ ¡Servicio registrado y cobrado con éxito!");
+            renderizarBotonesPosServicios();
         }
 
         function registrarProducto(e) {
             e.preventDefault();
             const now = new Date();
-            const horaStr = now.toTimeString().slice(0, 5);
-            const fechaStr = now.toISOString().slice(0, 10) + ' ' + horaStr;
+            const fechaStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
 
-            const sucursal = document.getElementById('sucursalRegistro').value;
-            const prod = document.getElementById('nombreProducto').value;
-            const pago = document.getElementById('metodoPagoProducto').value;
-            const monto = parseFloat(document.getElementById('montoProducto').value);
+            const sucursal = document.getElementById('posSucursal').value;
+            const prod = document.getElementById('prodNombre').value;
+            const pago = document.getElementById('prodPago').value;
+            const monto = parseFloat(document.getElementById('prodMonto').value);
 
             const nuevo = {
                 id: Date.now(),
@@ -336,6 +513,7 @@
                 fecha: fechaStr,
                 tipo: "Producto",
                 ref: "Venta Tienda",
+                cliente: "Mostrador",
                 detalle: prod,
                 extra: `${pago} Tienda`,
                 monto: monto
@@ -344,58 +522,136 @@
             registros.unshift(nuevo);
             guardarYRenderizar();
             document.getElementById('productoForm').reset();
-            actualizarPrecioProducto();
-            alert("✅ ¡Producto registrado con éxito!");
+            actualizarPrecioTienda();
+            alert("✅ ¡Venta de producto registrada con éxito!");
         }
 
-        function eliminarRegistro(id) {
-            if(confirm("¿Estás seguro de eliminar este registro?")) {
-                registros = registros.filter(r => r.id !== id);
-                guardarYRenderizar();
+        function cerrarRecibo() {
+            document.getElementById('modalRecibo').classList.add('hidden');
+        }
+
+        // --- CATÁLOGO DE SERVICIOS ---
+        function renderizarCatalogo() {
+            const contenedor = document.getElementById('listaCatServicios');
+            contenedor.innerHTML = "";
+            catalogoServicios.forEach((s, idx) => {
+                let div = document.createElement('div');
+                div.className = "bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between space-y-3";
+                div.innerHTML = `
+                    <div>
+                        <div class="font-bold text-white text-sm">${s.nombre}</div>
+                        <div class="text-xs text-slate-400 mt-1">${s.desc}</div>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-slate-800">
+                        <span class="text-emerald-400 font-black text-base">Bs. ${s.precio.toFixed(2)}</span>
+                        <div class="flex gap-1">
+                            <button onclick="editarServicioCat(${idx})" class="bg-slate-800 hover:bg-slate-700 text-xs px-2.5 py-1.5 rounded-lg"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="eliminarServicioCat(${idx})" class="bg-rose-950/80 text-rose-400 hover:bg-rose-900 text-xs px-2.5 py-1.5 rounded-lg"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                contenedor.appendChild(div);
+            });
+        }
+
+        function abrirModalServicio() {
+            document.getElementById('editIndex').value = -1;
+            document.getElementById('catNombre').value = "";
+            document.getElementById('catDesc').value = "";
+            document.getElementById('catPrecio').value = "";
+            document.getElementById('modalServicio').classList.remove('hidden');
+        }
+
+        function editarServicioCat(idx) {
+            let s = catalogoServicios[idx];
+            document.getElementById('editIndex').value = idx;
+            document.getElementById('catNombre').value = s.nombre;
+            document.getElementById('catDesc').value = s.desc;
+            document.getElementById('catPrecio').value = s.precio;
+            document.getElementById('modalServicio').classList.remove('hidden');
+        }
+
+        function guardarServicioCat(e) {
+            e.preventDefault();
+            const idx = parseInt(document.getElementById('editIndex').value);
+            const nombre = document.getElementById('catNombre').value;
+            const desc = document.getElementById('catDesc').value;
+            const precio = parseFloat(document.getElementById('catPrecio').value);
+
+            if(idx === -1) {
+                catalogoServicios.push({ nombre, desc, precio });
+            } else {
+                catalogoServicios[idx] = { nombre, desc, precio };
+            }
+
+            localStorage.setItem('rac_catalogo', JSON.stringify(catalogoServicios));
+            document.getElementById('modalServicio').classList.add('hidden');
+            renderizarCatalogo();
+            renderizarBotonesPosServicios();
+            alert("✅ Catálogo actualizado correctamente.");
+        }
+
+        function eliminarServicioCat(idx) {
+            if(confirm("¿Eliminar este servicio del catálogo?")) {
+                catalogoServicios.splice(idx, 1);
+                localStorage.setItem('rac_catalogo', JSON.stringify(catalogoServicios));
+                renderizarCatalogo();
+                renderizarBotonesPosServicios();
             }
         }
 
-        function guardarYRenderizar() {
-            localStorage.setItem('rac_carwash_multisucursal', JSON.stringify(registros));
-            renderizar();
-        }
-
-        function renderizar() {
-            const sucursalFiltro = document.getElementById('sucursalActiva').value;
-            const fechaFiltro = document.getElementById('filtroFecha').value;
-            const hoyStr = new Date().toISOString().slice(0, 10);
-            const tbody = document.getElementById('tablaMovimientos');
+        // --- COMISIONES ---
+        function renderizarComisiones() {
+            const tbody = document.getElementById('tablaComisiones');
             tbody.innerHTML = "";
+            const sucursalFiltro = document.getElementById('sucursalGlobal').value;
 
-            let totalVehiculos = 0;
-            let ventaServicios = 0;
-            let ventaProductos = 0;
-            let efectivoCaja = 0;
+            let operariosMap = {};
 
-            const filtrados = registros.filter(r => {
-                let pasaSucursal = (sucursalFiltro === "todos" || r.sucursal === sucursalFiltro);
-                let pasaFecha = (fechaFiltro === "todos" || r.fecha.startsWith(hoyStr));
-                return pasaSucursal && pasaFecha;
+            registros.filter(r => r.tipo === "Servicio" && (sucursalFiltro === "todos" || r.sucursal === sucursalFiltro)).forEach(r => {
+                let partes = r.extra.split(" (");
+                let operario = partes[0] || "General";
+                if(!operariosMap[operario]) {
+                    operariosMap[operario] = { count: 0, total: 0 };
+                }
+                operariosMap[operario].count++;
+                operariosMap[operario].total += r.monto;
             });
 
-            filtrados.forEach(r => {
-                if(r.tipo === "Servicio") {
-                    totalVehiculos++;
-                    ventaServicios += r.monto;
-                } else {
-                    ventaProductos += r.monto;
-                }
+            if(Object.keys(operariosMap).length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">No hay servicios registrados para calcular comisiones.</td></tr>`;
+                return;
+            }
 
-                if(r.extra.includes("Efectivo")) {
-                    efectivoCaja += r.monto;
-                }
+            for(let op in operariosMap) {
+                let data = operariosMap[op];
+                let comision = data.total * 0.40; // 40%
+                let tr = document.createElement('tr');
+                tr.className = "border-b border-slate-800";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-white">${op}</td>
+                    <td class="p-3 text-center">${data.count} vehículos</td>
+                    <td class="p-3 text-right">Bs. ${data.total.toFixed(2)}</td>
+                    <td class="p-3 text-right font-black text-amber-400">Bs. ${comision.toFixed(2)}</td>
+                    <td class="p-3 text-center"><span class="bg-amber-950/60 text-amber-300 border border-amber-600/40 px-2 py-0.5 rounded text-[10px]">Pendiente Pago</span></td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
 
+        // --- HISTORIAL ---
+        function renderizarHistorial() {
+            const tbody = document.getElementById('tablaHistorial');
+            tbody.innerHTML = "";
+            const sucursalFiltro = document.getElementById('sucursalGlobal').value;
+
+            registros.filter(r => sucursalFiltro === "todos" || r.sucursal === sucursalFiltro).forEach(r => {
                 let badge = r.tipo === "Servicio" ? 
-                    '<span class="bg-blue-900/80 text-blue-300 border border-blue-700 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-car"></i> Servicio</span>' : 
-                    '<span class="bg-indigo-900/80 text-indigo-300 border border-indigo-700 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-box"></i> Producto</span>';
+                    '<span class="bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-car mr-1"></i> Servicio</span>' : 
+                    '<span class="bg-indigo-950 text-indigo-300 border border-indigo-800 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-box mr-1"></i> Producto</span>';
 
                 let tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-800/50 border-b border-slate-700/40";
+                tr.className = "hover:bg-slate-900/50 border-b border-slate-800";
                 tr.innerHTML = `
                     <td class="p-3 text-[11px] text-slate-400">${r.fecha}</td>
                     <td class="p-3 font-semibold text-slate-300">${r.sucursal}</td>
@@ -410,32 +666,91 @@
                 `;
                 tbody.appendChild(tr);
             });
-
-            // Cálculos gerenciales exactos
-            let comisionesLavadores = ventaServicios * 0.40; // 40% estándar para el lavador
-            let utilidadRealDuenio = (ventaServicios - comisionesLavadores) + ventaProductos;
-
-            document.getElementById('kpiVehiculos').textContent = totalVehiculos;
-            document.getElementById('kpiServicios').textContent = `Bs. ${ventaServicios.toFixed(2)}`;
-            document.getElementById('kpiProductos').textContent = `Bs. ${ventaProductos.toFixed(2)}`;
-            document.getElementById('kpiComisiones').textContent = `Bs. ${comisionesLavadores.toFixed(2)}`;
-            document.getElementById('kpiEfectivo').textContent = `Bs. ${efectivoCaja.toFixed(2)}`;
-            document.getElementById('kpiUtilidad').textContent = `Bs. ${utilidadRealDuenio.toFixed(2)}`;
         }
 
-        function exportarDatos() {
+        function eliminarRegistro(id) {
+            if(confirm("¿Eliminar este registro financiero?")) {
+                registros = registros.filter(r => r.id !== id);
+                guardarYRenderizar();
+            }
+        }
+
+        // --- RENDERIZADO GLOBAL & DASHBOARD ---
+        function guardarYRenderizar() {
+            localStorage.setItem('rac_registros', JSON.stringify(registros));
+            renderizarTodo();
+        }
+
+        function renderizarTodo() {
+            const sucursalFiltro = document.getElementById('sucursalGlobal').value;
+            
+            let totalVehiculos = 0;
+            let ventaServicios = 0;
+            let ventaProductos = 0;
+            let efectivoCaja = 0;
+            let qrCaja = 0;
+            let serviciosConteo = {};
+
+            const filtrados = registros.filter(r => sucursalFiltro === "todos" || r.sucursal === sucursalFiltro);
+
+            filtrados.forEach(r => {
+                if(r.tipo === "Servicio") {
+                    totalVehiculos++;
+                    ventaServicios += r.monto;
+                    let sName = r.detalle.split(" [")[0];
+                    serviciosConteo[sName] = (serviciosConteo[sName] || 0) + 1;
+                } else {
+                    ventaProductos += r.monto;
+                }
+
+                if(r.extra.includes("Efectivo")) {
+                    efectivoCaja += r.monto;
+                } else {
+                    qrCaja += r.monto;
+                }
+            });
+
+            let comisionesTotal = ventaServicios * 0.40;
+            let facturacionTotal = ventaServicios + ventaProductos;
+            let utilidadReal = (ventaServicios - comisionesTotal) + ventaProductos;
+
+            // KPIs Dashboard
+            document.getElementById('kpiVehiculos').textContent = totalVehiculos;
+            document.getElementById('kpiFacturacion').textContent = `Bs. ${facturacionTotal.toFixed(2)}`;
+            document.getElementById('kpiComisionesTotal').textContent = `Bs. ${comisionesTotal.toFixed(2)}`;
+            document.getElementById('kpiUtilidadReal').textContent = `Bs. ${utilidadReal.toFixed(2)}`;
+            document.getElementById('arqueoEfectivo').textContent = `Bs. ${efectivoCaja.toFixed(2)}`;
+            document.getElementById('arqueoQR').textContent = `Bs. ${qrCaja.toFixed(2)}`;
+
+            // Servicios populares
+            let divPop = document.getElementById('resumenServiciosPopulares');
+            divPop.innerHTML = "";
+            let keys = Object.keys(serviciosConteo);
+            if(keys.length === 0) {
+                divPop.innerHTML = `<div class="text-slate-500">Sin servicios registrados aún.</div>`;
+            } else {
+                keys.sort((a,b) => serviciosConteo[b] - serviciosConteo[a]).slice(0,3).forEach(k => {
+                    divPop.innerHTML += `<div class="flex justify-between p-2 bg-slate-950 rounded-xl border border-slate-800"><span>${k}</span><span class="font-bold text-blue-400">${serviciosConteo[k]} veces</span></div>`;
+                });
+            }
+
+            // Actualizar pestañas activas si están visibles
+            renderizarBotonesPosServicios();
+        }
+
+        function exportarRespaldo() {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(registros));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `respaldo_carwash_multisucursal_${new Date().toISOString().slice(0,10)}.json`);
+            downloadAnchor.setAttribute("download", `respaldo_carwash_${new Date().toISOString().slice(0,10)}.json`);
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
         }
 
-        document.getElementById('montoServicio').value = 40;
-        actualizarPrecioProducto();
-        renderizar();
+        // Inicializar aplicación
+        renderizarBotonesPosServicios();
+        renderizarTodo();
     </script>
 </body>
 </html>
