@@ -3,242 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROCABADO - Auditores Consultores | Business Suite</title>
+    <title>RAC - Sistema Profesional de Lavadero de Autos y Carwash</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        rocabado: {
-                            dark: '#081F5C',    /* Azul Marino Profundo */
-                            primary: '#336AEC', /* Azul Corporativo */
-                            light: '#70A6D1',   /* Azul Celeste */
-                            soft: '#D8E3FF',    /* Azul Hielo */
-                            bg: '#F9FCFF'       /* Blanco Puro Fondo */
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        @media print {
-            body * { visibility: hidden; }
-            #planilla-cierre-imprimir, #planilla-cierre-imprimir * { visibility: visible; }
-            #planilla-cierre-imprimir { position: absolute; left: 0; top: 0; width: 100%; }
-            .no-print { display: none !important; }
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-rocabado-bg text-slate-800 font-sans min-h-screen flex flex-col md:flex-row">
+<body class="bg-slate-50 font-sans text-slate-800 antialiased">
 
-    <!-- Menú Lateral Institucional ROCABADO -->
-    <aside class="w-full md:w-72 bg-rocabado-dark text-white p-5 flex flex-col justify-between min-h-screen no-print">
-        <div>
-            <!-- Header Logo ROCABADO -->
-            <div class="flex items-center gap-3 pb-6 border-b border-slate-700/60">
-                <div class="w-10 h-10 rounded-xl bg-rocabado-primary flex items-center justify-center text-white font-black text-xl shadow-lg">
-                    <i class="fa-solid fa-chart-line"></i>
+    <!-- HEADER / NAVEGACIÓN -->
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 p-2.5 rounded-xl text-white font-bold text-xl shadow-md">
+                    <i class="fa-solid fa-car-rear"></i>
                 </div>
                 <div>
-                    <h1 class="font-extrabold text-lg tracking-wider text-white leading-tight">ROCABADO</h1>
-                    <span class="text-[10px] text-rocabado-light uppercase font-semibold tracking-widest block">Auditores Consultores</span>
+                    <h1 class="font-bold text-lg leading-tight">Rocabado Consultores - Carwash</h1>
+                    <p class="text-xs text-slate-400">Sistema de Control Operativo y Gerencial</p>
                 </div>
             </div>
-
-            <!-- Navegación -->
-            <nav class="mt-6 space-y-1.5">
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-3 mb-2">Operación del Salón</span>
-                
-                <a href="#" onclick="mostrarSeccion('sec-cierre')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-rocabado-primary text-white font-semibold text-sm transition-all shadow-md">
-                    <i class="fa-solid fa-file-invoice-dollar w-5 text-rocabado-light"></i>
-                    <span>Cierre de Caja Diario</span>
-                </a>
-
-                <a href="#" onclick="mostrarSeccion('sec-clientes')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/60 font-medium text-sm transition-all">
-                    <i class="fa-solid fa-address-book w-5 text-rocabado-light"></i>
-                    <span>Directorio de Clientes</span>
-                </a>
-
-                <a href="#" onclick="mostrarSeccion('sec-pos')" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-slate-300 hover:bg-slate-800/60 font-medium text-sm transition-all">
-                    <i class="fa-solid fa-cash-register w-5 text-rocabado-light"></i>
-                    <span>Atención / POS</span>
-                </a>
-            </nav>
-        </div>
-
-        <div class="pt-6 border-t border-slate-700/60 text-xs text-slate-400 flex items-center gap-2">
-            <i class="fa-solid fa-shield-halved text-rocabado-light"></i>
-            <span>ROCABADO System v2.0</span>
-        </div>
-    </aside>
-
-    <!-- Contenido Principal -->
-    <main class="flex-1 p-4 md:p-8 max-w-5xl mx-auto w-full">
-        
-        <!-- SECCIÓN: REPORTE Y CIERRE DEL DÍA -->
-        <section id="sec-cierre" class="space-y-6">
-            <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 no-print">
-                <div>
-                    <h2 class="text-2xl font-black text-rocabado-dark">Cierre de Caja y Planilla Diaria</h2>
-                    <p class="text-sm text-slate-500 font-medium">Auditoría consolidada para la entrega a contabilidad.</p>
-                </div>
-
-                <div class="flex gap-2 w-full sm:w-auto">
-                    <button onclick="window.print()" class="bg-rocabado-dark hover:bg-slate-800 text-white font-bold px-5 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm w-full sm:w-auto">
-                        <i class="fa-solid fa-print"></i>
-                        <span>Imprimir / Descargar PDF</span>
-                    </button>
-                </div>
-            </header>
-
-            <!-- PLANILLA IMPRIMIBLE DE CIERRE -->
-            <div id="planilla-cierre-imprimir" class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-10 space-y-8">
-                
-                <!-- Encabezado de la Planilla -->
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b-2 border-slate-900 gap-4">
-                    <div>
-                        <h1 class="text-xl font-black text-rocabado-dark uppercase">ROCABADO Core ERP — Planilla de Cierre Diario</h1>
-                        <p class="text-xs font-bold text-slate-500 mt-0.5">Empresa: Salón RAC | Sucursal: Casa Matriz Central</p>
-                    </div>
-                    <div class="text-left sm:text-right">
-                        <span class="inline-block px-3 py-1 bg-slate-100 font-black text-slate-800 text-xs rounded-lg uppercase">Estado: Cierre Generado</span>
-                        <p class="text-xs text-slate-500 font-medium mt-1">Fecha: <span class="font-bold text-slate-800">06/Sep/2026</span></p>
-                    </div>
-                </div>
-
-                <!-- Resumen de Métricas Clave -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200">
-                        <span class="text-[11px] font-extrabold text-slate-400 uppercase block">Pacientes Atendidos</span>
-                        <span class="text-xl font-black text-rocabado-dark">14 Clientes</span>
-                    </div>
-
-                    <div class="p-3.5 bg-emerald-50 rounded-xl border border-emerald-200">
-                        <span class="text-[11px] font-extrabold text-emerald-600 uppercase block">Cobrado en Efectivo</span>
-                        <span class="text-xl font-black text-emerald-800">Bs 1.250</span>
-                    </div>
-
-                    <div class="p-3.5 bg-blue-50 rounded-xl border border-blue-200">
-                        <span class="text-[11px] font-extrabold text-rocabado-primary uppercase block">Cobrado por QR</span>
-                        <span class="text-xl font-black text-rocabado-dark">Bs 890</span>
-                    </div>
-
-                    <div class="p-3.5 bg-slate-100 rounded-xl border border-slate-300">
-                        <span class="text-[11px] font-extrabold text-slate-600 uppercase block">Total Ingreso Bruto</span>
-                        <span class="text-xl font-black text-slate-900">Bs 2.140</span>
-                    </div>
-                </div>
-
-                <!-- Detalle de Servicios Prestados -->
-                <div>
-                    <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-scissors text-rocabado-primary no-print"></i>
-                        <span>1. Resumen de Servicios Realizados</span>
-                    </h3>
-                    <table class="w-full text-left text-xs border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-600 uppercase font-bold border-y border-slate-200">
-                                <th class="py-2.5 px-3">Servicio / Tratamiento</th>
-                                <th class="py-2.5 px-3 text-center">Cantidad</th>
-                                <th class="py-2.5 px-3 text-right">Precio Unitario</th>
-                                <th class="py-2.5 px-3 text-right">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200 font-medium">
-                            <tr>
-                                <td class="py-2 px-3 font-bold text-slate-800">Corte y Peinado Dama</td>
-                                <td class="py-2 px-3 text-center">6</td>
-                                <td class="py-2 px-3 text-right">Bs 80</td>
-                                <td class="py-2 px-3 text-right font-bold">Bs 480</td>
-                            </tr>
-                            <tr>
-                                <td class="py-2 px-3 font-bold text-slate-800">Tratamiento de Keratina / Balayage</td>
-                                <td class="py-2 px-3 text-center">3</td>
-                                <td class="py-2 px-3 text-right">Bs 350</td>
-                                <td class="py-2 px-3 text-right font-bold">Bs 1.050</td>
-                            </tr>
-                            <tr>
-                                <td class="py-2 px-3 font-bold text-slate-800">Manicura y Pedicura Completa</td>
-                                <td class="py-2 px-3 text-center">5</td>
-                                <td class="py-2 px-3 text-right">Bs 120</td>
-                                <td class="py-2 px-3 text-right font-bold">Bs 610</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Detalle de Comisiones y Gastos -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Comisiones a Pagar -->
-                    <div>
-                        <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-3">2. Comisiones del Personal</h3>
-                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
-                            <div class="flex justify-between">
-                                <span>María René (Estilista)</span>
-                                <span class="font-bold text-slate-800">Bs 320</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Carlos Eduardo (Barbero)</span>
-                                <span class="font-bold text-slate-800">Bs 180</span>
-                            </div>
-                            <div class="pt-2 border-t border-slate-200 flex justify-between font-black text-slate-900">
-                                <span>Total Comisiones Acumuladas:</span>
-                                <span>Bs 500</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Gastos de Caja Chica -->
-                    <div>
-                        <h3 class="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-3">3. Gastos de Caja Chica</h3>
-                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-xs">
-                            <div class="flex justify-between">
-                                <span>Insumos de Limpieza y Toallas</span>
-                                <span class="font-bold text-slate-800">Bs 60</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Compra de Garrafón de Agua</span>
-                                <span class="font-bold text-slate-800">Bs 15</span>
-                            </div>
-                            <div class="pt-2 border-t border-slate-200 flex justify-between font-black text-slate-900">
-                                <span>Total Gastos en Efectivo:</span>
-                                <span>Bs 75</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Balance Final de Caja -->
-                <div class="p-4 bg-rocabado-dark text-white rounded-xl flex justify-between items-center">
-                    <div>
-                        <span class="text-xs uppercase text-rocabado-light font-extrabold tracking-wider">Efectivo Neto a Entregar en Sobre:</span>
-                        <p class="text-xs text-slate-300">Bs 1.250 (Efectivo) - Bs 75 (Gastos)</p>
-                    </div>
-                    <span class="text-2xl font-black text-white">Bs 1.175</span>
-                </div>
-
-                <!-- Sección de Firmas para Auditoría y Contabilidad -->
-                <div class="pt-12 grid grid-cols-2 gap-12 text-center text-xs">
-                    <div>
-                        <div class="border-b border-slate-400 mb-2"></div>
-                        <p class="font-bold text-slate-800">Firma Cajero / Encargado</p>
-                        <span class="text-[10px] text-slate-400">Responsable de Turno</span>
-                    </div>
-                    <div>
-                        <div class="border-b border-slate-400 mb-2"></div>
-                        <p class="font-bold text-slate-800">V°B° Auditor ROCABADO</p>
-                        <span class="text-[10px] text-slate-400">Revisión y Conformidad Contable</span>
-                    </div>
-                </div>
-
+            <!-- Filtro por Rango de Fechas -->
+            <div class="flex items-center gap-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-xs">
+                <span class="text-slate-400"><i class="fa-solid fa-calendar-days mr-1"></i> Período:</span>
+                <select id="filtroFecha" onchange="renderizar()" class="bg-slate-900 text-white font-semibold rounded px-2 py-1 outline-none border border-slate-600">
+                    <option value="hoy">📅 Solo Hoy</option>
+                    <option value="semana">📊 Última Semana</option>
+                    <option value="todos">📂 Historial Completo</option>
+                </select>
             </div>
-        </section>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+        <!-- 1. TABLERO GERENCIAL / RESUMEN CLAVE -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <p class="text-xs font-bold text-slate-400 uppercase">Vehículos Entrados</p>
+                <h3 id="kpiVehiculos" class="text-2xl font-extrabold text-blue-600 mt-1">0</h3>
+                <span class="text-[10px] text-slate-500">Unidades lavadas</span>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <p class="text-xs font-bold text-slate-400 uppercase">Venta Servicios</p>
+                <h3 id="kpiServicios" class="text-2xl font-extrabold text-slate-700 mt-1">Bs. 0.00</h3>
+                <span class="text-[10px] text-slate-500">Lavados y paquetes</span>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <p class="text-xs font-bold text-slate-400 uppercase">Venta Productos</p>
+                <h3 id="kpiProductos" class="text-2xl font-extrabold text-indigo-600 mt-1">Bs. 0.00</h3>
+                <span class="text-[10px] text-slate-500">Aromatizantes / Accesorios</span>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
+                <p class="text-xs font-bold text-slate-400 uppercase">Comisiones Lavadores</p>
+                <h3 id="kpiComisiones" class="text-2xl font-extrabold text-amber-600 mt-1">Bs. 0.00</h3>
+                <span class="text-[10px] text-slate-500">Pago a personal (40%)</span>
+            </div>
+            <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 bg-gradient-to-br from-emerald-50 to-white">
+                <p class="text-xs font-bold text-emerald-700 uppercase">Utilidad Real Dueño</p>
+                <h3 id="kpiUtilidad" class="text-2xl font-extrabold text-emerald-600 mt-1">Bs. 0.00</h3>
+                <span class="text-[10px] text-emerald-600 font-medium">Ganancia neta neta</span>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE REGISTROS (2 COLUMNAS EN PANTALLAS GRANDES) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- FORMULARIO 1: RECEPCIÓN DE VEHÍCULO / SERVICIO -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 lg:col-span-2">
+                <h2 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-car text-blue-600"></i> Registrar Ingreso de Vehículo / Servicio
+                </h2>
+                <form id="servicioForm" onsubmit="registrarServicio(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Número de Placa</label>
+                        <input type="text" id="placa" required placeholder="Ej. 4589ABC" class="w-full uppercase bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo de Vehículo</label>
+                        <select id="tipoVehiculo" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="Automóvil">Automóvil / Auto</option>
+                            <option value="Vagoneta / SUV">Vagoneta / SUV</option>
+                            <option value="Camioneta">Camioneta / 4x4</option>
+                            <option value="Motocicleta">Motocicleta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Paquete / Servicio</label>
+                        <select id="servicioPaquete" onchange="autocompletarPrecioServicio()" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="Lavado Básico (Carrocería + Aspirado)">Lavado Básico (Bs. 40)</option>
+                            <option value="Lavado General (Incluye Chasis)">Lavado General (Bs. 60)</option>
+                            <option value="Lavado Completo (Motor + Chasis + Encerado)">Lavado Completo (Bs. 90)</option>
+                            <option value="Detailing / Limpieza de Tapiz">Detailing / Tapiz (Bs. 180)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Operario / Lavador Asignado</label>
+                        <select id="operario" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="Juan Pérez">Juan Pérez</option>
+                            <option value="Carlos Gómez">Carlos Gómez</option>
+                            <option value="Marcos Ruiz">Marcos Ruiz</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Precio Cobrado (Bs.)</label>
+                        <input type="number" step="0.01" id="montoServicio" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm font-bold text-slate-700 outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Método de Pago</label>
+                        <select id="metodoPagoServicio" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <option value="Efectivo">Efectivo en Caja</option>
+                            <option value="QR / Transferencia">QR / Transferencia</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2 flex justify-end mt-1">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg text-xs transition shadow-sm flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-plus"></i> Registrar Servicio de Lavado
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- FORMULARIO 2: VENTA DE PRODUCTOS -->
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <h2 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-box-open text-indigo-600"></i> Venta de Productos Tienda
+                </h2>
+                <form id="productoForm" onsubmit="registrarProducto(event)" class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Seleccionar Producto</label>
+                        <select id="nombreProducto" onchange="autocompletarPrecioProducto()" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                            <option value="Aromatizante Colgante">Aromatizante Colgante (Bs. 15)</option>
+                            <option value="Silicona en Spray">Silicona en Spray (Bs. 25)</option>
+                            <option value="Shampoo con Cera (Litro)">Shampoo con Cera Lt. (Bs. 35)</option>
+                            <option value="Gamuza / Paño Microfibra">Paño Microfibra (Bs. 12)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Precio Total (Bs.)</label>
+                        <input type="number" step="0.01" id="montoProducto" required class="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-sm font-bold text-slate-700 outline-none">
+                    </div>
+                    <div class="flex justify-end pt-1">
+                        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg text-xs transition shadow-sm flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-cart-shopping"></i> Registrar Venta de Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- TABLA CONSOLIDADA DE MOVIMIENTOS -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-blue-600"></i> Detalle de Ingresos (Lavados y Productos)
+                </h3>
+                <button onclick="exportarDatos()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-1.5 rounded font-medium transition">
+                    <i class="fa-solid fa-download mr-1"></i> Respaldar Datos
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                            <th class="p-3">Fecha / Hora</th>
+                            <th class="p-3">Tipo</th>
+                            <th class="p-3">Referencia / Placa</th>
+                            <th class="p-3">Detalle / Servicio</th>
+                            <th class="p-3">Personal / Pago</th>
+                            <th class="p-3 text-right">Monto (Bs.)</th>
+                            <th class="p-3 text-center">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaMovimientos" class="divide-y divide-slate-100 text-sm">
+                        <!-- Se llena con JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </main>
 
+    <!-- SCRIPT DE FUNCIONAMIENTO -->
+    <script>
+        // Autocompletar precios sugeridos
+        function autocompletarPrecioServicio() {
+            const servicio = document.getElementById('servicioPaquete').value;
+            const input = document.getElementById('montoServicio');
+            if(servicio.includes("Básico")) input.value = 40;
+            else if(servicio.includes("General")) input.value = 60;
+            else if(servicio.includes("Completo")) input.value = 90;
+            else if(servicio.includes("Detailing")) input.value = 180;
+        }
+
+        function autocompletarPrecioProducto() {
+            const prod = document.getElementById('nombreProducto').value;
+            const input = document.getElementById('montoProducto');
+            if(prod.includes("Aromatizante")) input.value = 15;
+            else if(prod.includes("Silicona")) input.value = 25;
+            else if(prod.includes("Shampoo")) input.value = 35;
+            else if(prod.includes("Microfibra")) input.value = 12;
+        }
+
+        // Base de datos local
+        let registros = JSON.parse(localStorage.getItem('rac_carwash_pro')) || [
+            { id: 1, fecha: new Date().toISOString().slice(0, 10) + ' 09:30', tipo: "Servicio", ref: "4589ABC", detalle: "Lavado General (Incluye Chasis)", extra: "Juan Pérez (Efectivo)", monto: 60 },
+            { id: 2, fecha: new Date().toISOString().slice(0, 10) + ' 10:15', tipo: "Producto", ref: "Tienda", detalle: "Silicona en Spray", extra: "QR / Transferencia", monto: 25 }
+        ];
+
+        function registrarServicio(e) {
+            e.preventDefault();
+            const now = new Date();
+            const fechaStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
+
+            const nuevo = {
+                id: Date.now(),
+                fecha: fechaStr,
+                tipo: "Servicio",
+                ref: document.getElementById('placa').value.toUpperCase(),
+                detalle: document.getElementById('servicioPaquete').value,
+                extra: document.getElementById('operario').value + ' (' + document.getElementById('metodoPagoServicio').value + ')',
+                monto: parseFloat(document.getElementById('montoServicio').value)
+            };
+
+            registros.unshift(nuevo);
+            guardarYRenderizar();
+            document.getElementById('servicioForm').reset();
+            autocompletarPrecioServicio();
+        }
+
+        function registrarProducto(e) {
+            e.preventDefault();
+            const now = new Date();
+            const fechaStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
+
+            const nuevo = {
+                id: Date.now(),
+                fecha: fechaStr,
+                tipo: "Producto",
+                ref: "Venta Tienda",
+                detalle: document.getElementById('nombreProducto').value,
+                extra: "Efectivo Tienda",
+                monto: parseFloat(document.getElementById('montoProducto').value)
+            };
+
+            registros.unshift(nuevo);
+            guardarYRenderizar();
+            document.getElementById('productoForm').reset();
+            autocompletarPrecioProducto();
+        }
+
+        function eliminarRegistro(id) {
+            if(confirm("¿Deseas eliminar este registro?")) {
+                registros = registros.filter(r => r.id !== id);
+                guardarYRenderizar();
+            }
+        }
+
+        function guardarYRenderizar() {
+            localStorage.setItem('rac_carwash_pro', JSON.stringify(registros));
+            renderizar();
+        }
+
+        function renderizar() {
+            const filtro = document.getElementById('filtroFecha').value;
+            const hoyStr = new Date().toISOString().slice(0, 10);
+            const tbody = document.getElementById('tablaMovimientos');
+            tbody.innerHTML = "";
+
+            let totalVehiculos = 0;
+            let ventaServicios = 0;
+            let ventaProductos = 0;
+
+            const filtrados = registros.filter(r => {
+                if(filtro === "hoy") return r.fecha.startsWith(hoyStr);
+                return true; // Si es semana o todos
+            });
+
+            filtrados.forEach(r => {
+                if(r.tipo === "Servicio") {
+                    totalVehiculos++;
+                    ventaServicios += r.monto;
+                } else {
+                    ventaProductos += r.monto;
+                }
+
+                let badgeTipo = r.tipo === "Servicio" ? 
+                    '<span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-[11px] font-bold"><i class="fa-solid fa-car"></i> Servicio</span>' : 
+                    '<span class="bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded text-[11px] font-bold"><i class="fa-solid fa-box"></i> Producto</span>';
+
+                let tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 border-b border-slate-100";
+                tr.innerHTML = `
+                    <td class="p-3 text-xs text-slate-500">${r.fecha}</td>
+                    <td class="p-3">${badgeTipo}</td>
+                    <td class="p-3 font-bold text-slate-800">${r.ref}</td>
+                    <td class="p-3 text-slate-700 text-xs">${r.detalle}</td>
+                    <td class="p-3 text-xs text-slate-500">${r.extra}</td>
+                    <td class="p-3 text-right font-bold text-slate-800">Bs. ${r.monto.toFixed(2)}</td>
+                    <td class="p-3 text-center">
+                        <button onclick="eliminarRegistro(${r.id})" class="text-rose-500 hover:text-rose-700 p-1"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Cálculos gerenciales pedidos
+            let totalIngresosBrutos = ventaServicios + ventaProductos;
+            let comisionesLavadores = ventaServicios * 0.40; // 40% comisión estándar al operario
+            let utilidadRealDuenio = totalIngresosBrutos - comisionesLavadores;
+
+            // Actualizar tarjetas KPIs gerenciales
+            document.getElementById('kpiVehiculos').textContent = totalVehiculos;
+            document.getElementById('kpiServicios').textContent = `Bs. ${ventaServicios.toFixed(2)}`;
+            document.getElementById('kpiProductos').textContent = `Bs. ${ventaProductos.toFixed(2)}`;
+            document.getElementById('kpiComisiones').textContent = `Bs. ${comisionesLavadores.toFixed(2)}`;
+            document.getElementById('kpiUtilidad').textContent = `Bs. ${utilidadRealDuenio.toFixed(2)}`;
+        }
+
+        function exportarDatos() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(registros));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `respaldo_carwash_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+
+        // Inicializar
+        autocompletarPrecioServicio();
+        autocompletarPrecioProducto();
+        renderizar();
+    </script>
 </body>
 </html>
