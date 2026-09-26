@@ -11,11 +11,11 @@
             theme: {
                 extend: {
                     colors: {
-                        rcbPrimary: '#0F2537', // Azul corporativo Rocabado
-                        rcbGold: '#D4AF37',    // Acento dorado ejecutivo
-                        rcbLight: '#F8FAFC',   // Fondo limpio y claro
-                        rcbCard: '#FFFFFF',    // Tarjetas blancas limpias
-                        rcbBorder: '#E2E8F0'   // Bordes sutiles
+                        rcbDark: '#081F5C',     /* Azul oscuro corporativo principal */
+                        rcbBlue: '#336AEC',     /* Azul medio corporativo */
+                        rcbLightBlue: '#70A6D1',/* Celeste corporativo */
+                        rcbPale: '#D8E3FF',     /* Fondo suave */
+                        rcbWhite: '#F9CFF'      /* Blanco marfil corporativo */
                     }
                 }
             }
@@ -24,85 +24,100 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-rcbLight text-slate-800 font-sans antialiased pb-20">
+<body class="bg-[#F9CFF] text-[#081F5C] font-sans antialiased pb-20">
 
     <!-- ========================================== -->
     <!-- PANTALLA 1: BIENVENIDA / ACCESO PRINCIPAL   -->
     <!-- ========================================== -->
-    <div id="view-bienvenida" class="min-h-screen flex flex-col justify-between bg-rcbPrimary text-white p-6">
-        <div class="max-w-md mx-auto w-full pt-10 text-center space-y-4">
-            <!-- Logotipo / Identidad -->
-            <div class="bg-white p-4 rounded-2xl shadow-xl inline-block">
-                <div class="flex items-center space-x-2 text-rcbPrimary">
-                    <i class="fa-solid fa-chart-pie text-2xl text-rcbPrimary"></i>
-                    <span class="font-black text-xl tracking-wider">ROCABADO</span>
+    <div id="view-bienvenida" class="min-h-screen flex flex-col justify-between bg-[#081F5C] text-white p-6">
+        <div class="max-w-md mx-auto w-full pt-8 text-center space-y-4">
+            
+            <!-- LOGOTIPO OFICIAL DE ROCABADO -->
+            <div class="bg-white p-4 rounded-2xl shadow-xl inline-block border border-[#70A6D1]/30">
+                <div class="flex items-center justify-center space-x-3">
+                    <!-- Isotipo Corporativo -->
+                    <div class="relative w-12 h-12 flex items-center justify-center bg-[#081F5C] rounded-xl overflow-hidden shadow-inner">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#336AEC] to-[#081F5C]"></div>
+                        <i class="fa-solid fa-chart-line text-white text-xl relative z-10"></i>
+                    </div>
+                    <div class="text-left">
+                        <h2 class="font-black text-lg tracking-wider text-[#081F5C] leading-none">ROCABADO</h2>
+                        <p class="text-[8px] text-[#336AEC] tracking-widest font-bold uppercase mt-1">Auditores Consultores RAC</p>
+                    </div>
                 </div>
-                <p class="text-[9px] text-slate-500 tracking-widest font-semibold uppercase mt-0.5">Auditores Consultores RAC</p>
             </div>
             
-            <div class="space-y-2 pt-4">
-                <span class="text-xs uppercase tracking-widest text-rcbGold font-bold">Plataforma Empresarial</span>
-                <h1 class="text-2xl font-bold tracking-tight">Gestión y Control Profesional</h1>
-                <p class="text-xs text-slate-300 leading-relaxed px-4">
-                    Diseñada para que la empresa se vea tan bien como funciona. Inteligente, clara y ejecutiva.
+            <div class="space-y-2 pt-2">
+                <span class="text-xs uppercase tracking-widest text-[#70A6D1] font-bold">Plataforma Empresarial Autorizada</span>
+                <h1 class="text-2xl font-extrabold tracking-tight text-white">Gestión y Control Profesional</h1>
+                <p class="text-xs text-[#D8E3FF] leading-relaxed px-4">
+                    Diseñada para que la empresa se vea tan bien como funciona. Inteligente, clara y ejecutiva en Santa Cruz.
                 </p>
             </div>
         </div>
 
-        <!-- Tarjetas de Acceso -->
-        <div class="max-w-md mx-auto w-full space-y-3 pb-8">
-            <p class="text-xs text-slate-400 text-center uppercase tracking-wider mb-2 font-medium">Seleccione su acceso</p>
+        <!-- Tarjetas de Acceso y WhatsApp -->
+        <div class="max-w-md mx-auto w-full space-y-3 pb-6">
+            <p class="text-[11px] text-[#70A6D1] text-center uppercase tracking-wider mb-1 font-semibold">Seleccione su acceso autorizado</p>
             
             <!-- Botón Master RAC -->
-            <button onclick="abrirLoginMaster()" class="w-full bg-white/10 hover:bg-white/20 border border-white/20 p-4 rounded-xl flex items-center justify-between transition-all text-left">
+            <button onclick="abrirLoginMaster()" class="w-full bg-white/10 hover:bg-white/20 border border-white/20 p-3.5 rounded-xl flex items-center justify-between transition-all text-left shadow-md">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-rcbGold/20 p-2.5 rounded-lg text-rcbGold">
-                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                    <div class="bg-[#336AEC]/30 p-2.5 rounded-lg text-[#D8E3FF]">
+                        <i class="fa-solid fa-shield-halved text-base"></i>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-white">Master RAC</h3>
-                        <p class="text-[11px] text-slate-300">Panel de control, licencias y creación de empresas</p>
+                        <h3 class="text-sm font-bold text-white">Master RAC (Administrador)</h3>
+                        <p class="text-[10px] text-[#D8E3FF]">Control de licencias, auditoría y empresas</p>
                     </div>
                 </div>
-                <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                <i class="fa-solid fa-chevron-right text-[#70A6D1] text-xs"></i>
             </button>
 
             <!-- Botón Acceso Empresa -->
-            <button onclick="entrarEmpresa()" class="w-full bg-white text-rcbPrimary hover:bg-slate-100 p-4 rounded-xl flex items-center justify-between transition-all text-left shadow-lg">
+            <button onclick="entrarEmpresa()" class="w-full bg-white text-[#081F5C] hover:bg-[#D8E3FF] p-3.5 rounded-xl flex items-center justify-between transition-all text-left shadow-xl">
                 <div class="flex items-center space-x-3">
-                    <div class="bg-rcbPrimary/10 p-2.5 rounded-lg text-rcbPrimary">
-                        <i class="fa-solid fa-building text-lg"></i>
+                    <div class="bg-[#081F5C]/10 p-2.5 rounded-lg text-[#081F5C]">
+                        <i class="fa-solid fa-building text-base"></i>
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-rcbPrimary">Acceso Empresa</h3>
-                        <p class="text-[11px] text-slate-500">Operación privada de RAC Carwash Pro</p>
+                        <h3 class="text-sm font-bold text-[#081F5C]">Acceso Empresa (RAC Carwash)</h3>
+                        <p class="text-[10px] text-slate-500">Operación privada y caja diaria</p>
                     </div>
                 </div>
-                <i class="fa-solid fa-chevron-right text-rcbPrimary text-xs"></i>
+                <i class="fa-solid fa-chevron-right text-[#081F5C] text-xs"></i>
             </button>
 
-            <div class="text-center pt-4">
-                <p class="text-[10px] text-slate-400">Rocabado Auditores Consultores · Santa Cruz, Bolivia</p>
+            <!-- CONTACTO DIRECTO WHATSAPP OFICIAL -->
+            <div class="pt-2">
+                <a href="https://wa.me/59170000000?text=Hola%20Rocabado%20Auditores,%20deseo%20consultar%20sobre%20las%20plataformas%20empresariales." target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-lg transition-all">
+                    <i class="fa-brands fa-whatsapp text-base"></i>
+                    <span>Soporte Directo WhatsApp RAC</span>
+                </a>
+            </div>
+
+            <div class="text-center pt-2">
+                <p class="text-[10px] text-[#70A6D1]">Rocabado Auditores Consultores · Santa Cruz, Bolivia</p>
             </div>
         </div>
     </div>
 
     <!-- ========================================== -->
-    <!-- MODAL / VISTA LOGIN MASTER (OCULTO)       -->
+    <!-- MODAL LOGIN MASTER                         -->
     <!-- ========================================== -->
     <div id="modal-master" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 text-slate-800 shadow-2xl">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 space-y-4 text-[#081F5C] shadow-2xl border border-[#70A6D1]/30">
             <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="text-sm font-bold text-rcbPrimary flex items-center">
-                    <i class="fa-solid fa-key text-rcbGold mr-2"></i> Autenticación Master RAC
+                <h3 class="text-sm font-bold text-[#081F5C] flex items-center">
+                    <i class="fa-solid fa-key text-[#336AEC] mr-2"></i> Autenticación Master RAC
                 </h3>
                 <button onclick="cerrarLoginMaster()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div>
                 <label class="block text-xs font-semibold text-slate-600 mb-1">Clave Maestra</label>
-                <input type="password" id="inputClaveMaster" placeholder="Ingrese clave maestra" class="w-full border border-rcbBorder rounded-lg px-3 py-2 text-xs outline-none focus:border-rcbPrimary">
+                <input type="password" id="inputClaveMaster" placeholder="Ingrese clave maestra" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
             </div>
-            <button onclick="verificarMaster()" class="w-full bg-rcbPrimary hover:bg-slate-800 text-white font-bold py-2.5 rounded-lg text-xs transition-all">
+            <button onclick="verificarMaster()" class="w-full bg-[#081F5C] hover:bg-[#336AEC] text-white font-bold py-2.5 rounded-lg text-xs transition-all">
                 Acceder al Panel Maestro
             </button>
         </div>
@@ -113,18 +128,18 @@
     <!-- ========================================== -->
     <div id="view-app" class="hidden">
         <!-- HEADER EJECUTIVO -->
-        <header class="bg-white border-b border-rcbBorder sticky top-0 z-40 px-4 py-3 shadow-sm">
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 py-3 shadow-sm">
             <div class="max-w-7xl mx-auto flex justify-between items-center">
                 <div class="flex items-center space-x-3">
-                    <button onclick="volverBienvenida()" class="text-slate-400 hover:text-rcbPrimary text-sm mr-1" title="Volver al inicio">
+                    <button onclick="volverBienvenida()" class="text-slate-400 hover:text-[#081F5C] text-sm mr-1" title="Volver al inicio">
                         <i class="fa-solid fa-house"></i>
                     </button>
-                    <div class="bg-rcbPrimary/10 p-2 rounded-lg text-rcbPrimary">
+                    <div class="bg-[#081F5C]/10 p-2 rounded-lg text-[#081F5C]">
                         <i class="fa-solid fa-car-tunnel text-lg"></i>
                     </div>
                     <div>
-                        <h1 id="headerEmpresaNombre" class="text-sm font-bold text-rcbPrimary tracking-wide">RAC Carwash Pro - Santa Cruz</h1>
-                        <p class="text-[10px] text-slate-500 font-medium">Asesorado por: <span class="text-rcbPrimary font-bold">Rocabado Auditores</span></p>
+                        <h1 id="headerEmpresaNombre" class="text-sm font-bold text-[#081F5C] tracking-wide">RAC Carwash Pro - Santa Cruz</h1>
+                        <p class="text-[10px] text-slate-500 font-medium">Asesorado por: <span class="text-[#336AEC] font-bold">Rocabado Auditores</span></p>
                     </div>
                 </div>
                 <a href="https://wa.me/59170000000?text=Hola%20Rocabado,%20necesito%20soporte%20con%20RAC%20Carwash%20Pro." target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-sm transition-all">
@@ -141,65 +156,35 @@
             <section id="tab-resumen" class="space-y-6 tab-content">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h2 class="text-lg font-bold text-rcbPrimary">Resumen Ejecutivo</h2>
+                        <h2 class="text-lg font-bold text-[#081F5C]">Resumen Ejecutivo</h2>
                         <p class="text-xs text-slate-500">Control financiero y operativo en tiempo real</p>
                     </div>
-                    <div class="bg-white border border-rcbBorder px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">
-                        <i class="fa-solid fa-calendar text-rcbGold mr-1"></i> <span id="currentDate">Hoy</span>
+                    <div class="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">
+                        <i class="fa-solid fa-calendar text-[#336AEC] mr-1"></i> <span id="currentDate">Hoy</span>
                     </div>
                 </div>
 
                 <!-- KPIs -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm">
+                    <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
                         <p class="text-xs text-slate-500">Vehículos Atendidos</p>
-                        <h3 id="kpiVehiculos" class="text-2xl font-bold text-rcbPrimary mt-1">0</h3>
+                        <h3 id="kpiVehiculos" class="text-2xl font-bold text-[#081F5C] mt-1">0</h3>
                         <span class="text-[10px] text-emerald-600 font-semibold"><i class="fa-solid fa-arrow-up"></i> Activo hoy</span>
                     </div>
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm">
+                    <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
                         <p class="text-xs text-slate-500">Ingreso Total (Bs)</p>
-                        <h3 id="kpiIngresos" class="text-2xl font-bold text-rcbGold mt-1">Bs. 0.00</h3>
+                        <h3 id="kpiIngresos" class="text-2xl font-bold text-[#336AEC] mt-1">Bs. 0.00</h3>
                         <span class="text-[10px] text-slate-500">Caja general</span>
                     </div>
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm">
+                    <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
                         <p class="text-xs text-slate-500">Efectivo / QR</p>
-                        <h3 id="kpiEfectivoQR" class="text-lg font-bold text-rcbPrimary mt-1">0 / 0</h3>
+                        <h3 id="kpiEfectivoQR" class="text-lg font-bold text-[#081F5C] mt-1">0 / 0</h3>
                         <span class="text-[10px] text-slate-500">Métodos de pago</span>
                     </div>
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm">
+                    <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
                         <p class="text-xs text-slate-500">Utilidad Neta Est.</p>
                         <h3 id="kpiUtilidad" class="text-2xl font-bold text-emerald-600 mt-1">Bs. 0.00</h3>
                         <span class="text-[10px] text-slate-500">Menos egresos y comisiones</span>
-                    </div>
-                </div>
-
-                <!-- Desglose Gráfico -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm">
-                        <h3 class="text-xs font-bold text-rcbPrimary uppercase tracking-wider mb-3"><i class="fa-solid fa-chart-pie text-rcbGold mr-2"></i>Ingresos por Categoría</h3>
-                        <div class="space-y-2 text-xs">
-                            <div class="flex justify-between items-center bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                <span class="text-slate-600">Servicios de Lavado</span>
-                                <span id="lblIngresoServicios" class="font-bold text-rcbPrimary">Bs. 0.00</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                <span class="text-slate-600">Venta de Productos (Tienda)</span>
-                                <span id="lblIngresoProductos" class="font-bold text-rcbPrimary">Bs. 0.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm">
-                        <h3 class="text-xs font-bold text-rcbPrimary uppercase tracking-wider mb-3"><i class="fa-solid fa-wallet text-rcbGold mr-2"></i>Métodos de Cobro</h3>
-                        <div class="space-y-2 text-xs">
-                            <div class="flex justify-between items-center bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                <span class="text-slate-600">Efectivo en Caja</span>
-                                <span id="lblPagoEfectivo" class="font-bold text-emerald-600">Bs. 0.00</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                                <span class="text-slate-600">Transferencia / QR</span>
-                                <span id="lblPagoQR" class="font-bold text-blue-600">Bs. 0.00</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -207,44 +192,42 @@
             <!-- 2. CAJA & POS -->
             <section id="tab-pos" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-lg font-bold text-rcbPrimary">Caja & POS Ágil</h2>
+                    <h2 class="text-lg font-bold text-[#081F5C]">Caja & POS Ágil</h2>
                     <p class="text-xs text-slate-500">Registro rápido de cobros y servicios</p>
                 </div>
 
-                <div class="bg-rcbCard border border-rcbBorder p-5 rounded-xl shadow-sm space-y-4 max-w-2xl mx-auto">
-                    <h3 class="text-xs font-bold text-rcbPrimary uppercase tracking-wider border-b border-rcbBorder pb-2"><i class="fa-solid fa-cash-register text-rcbGold mr-2"></i>Nuevo Cobro / Servicio</h3>
+                <div class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-4 max-w-2xl mx-auto">
+                    <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider border-b border-slate-200 pb-2"><i class="fa-solid fa-cash-register text-[#336AEC] mr-2"></i>Nuevo Cobro / Servicio</h3>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Número de Placa</label>
-                            <input type="text" id="posPlaca" placeholder="Ej: 2849XYZ" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs uppercase focus:border-rcbPrimary outline-none">
+                            <input type="text" id="posPlaca" placeholder="Ej: 2849XYZ" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs uppercase focus:border-[#336AEC] outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre del Cliente</label>
-                            <input type="text" id="posCliente" placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <input type="text" id="posCliente" placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Celular (WhatsApp)</label>
-                            <input type="text" id="posCelular" placeholder="Ej: 70000000" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <input type="text" id="posCelular" placeholder="Ej: 70000000" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Seleccionar Servicio</label>
-                            <select id="posServicio" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <select id="posServicio" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                                 <option value="35|Lavado Básico (Auto)">Lavado Básico - Bs. 35</option>
                                 <option value="50|Lavado General (Vagoneta)">Lavado General - Bs. 50</option>
                                 <option value="80|Lavado Completo + Motor">Lavado Completo + Motor - Bs. 80</option>
-                                <option value="150|Detailing Express">Detailing Express - Bs. 150</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Operario Asignado</label>
-                            <select id="posOperario" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <select id="posOperario" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                                 <option value="Juan Pérez">Juan Pérez</option>
                                 <option value="Carlos Gómez">Carlos Gómez</option>
-                                <option value="Carla Díaz">Carla Díaz</option>
                             </select>
                         </div>
                     </div>
@@ -252,24 +235,22 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Producto Adicional (Tienda)</label>
-                            <select id="posProducto" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <select id="posProducto" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                                 <option value="0|Ninguno">Ninguno - Bs. 0</option>
                                 <option value="15|Aromatizante Colgante">Aromatizante Colgante - Bs. 15</option>
-                                <option value="25|Silicona en Spray">Silicona en Spray - Bs. 25</option>
-                                <option value="20|Paño Microfibra">Paño Microfibra - Bs. 20</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Método de Pago</label>
-                            <select id="posMetodo" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <select id="posMetodo" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                                 <option value="Efectivo">Efectivo</option>
                                 <option value="QR">QR / Transferencia</option>
                             </select>
                         </div>
                     </div>
 
-                    <button onclick="registrarServicio()" class="w-full bg-rcbPrimary hover:bg-slate-800 text-white font-bold py-2.5 rounded-lg text-xs transition-all shadow-sm">
-                        <i class="fa-solid fa-check-circle mr-1 text-rcbGold"></i> Cobrar y Registrar Servicio
+                    <button onclick="registrarServicio()" class="w-full bg-[#081F5C] hover:bg-[#336AEC] text-white font-bold py-2.5 rounded-lg text-xs transition-all shadow-sm">
+                        <i class="fa-solid fa-check-circle mr-1 text-[#D8E3FF]"></i> Cobrar y Registrar Servicio
                     </button>
                 </div>
             </section>
@@ -277,74 +258,69 @@
             <!-- 3. PLANILLA DE COMISIONES -->
             <section id="tab-comisiones" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-lg font-bold text-rcbPrimary">Planilla de Comisiones</h2>
+                    <h2 class="text-lg font-bold text-[#081F5C]">Planilla de Comisiones</h2>
                     <p class="text-xs text-slate-500">Cálculo automático del 40% para operarios</p>
                 </div>
 
-                <div class="bg-rcbCard border border-rcbBorder rounded-xl overflow-hidden shadow-sm">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-100 text-slate-600 uppercase text-[10px] border-b border-rcbBorder">
-                                <tr>
-                                    <th class="p-3 font-semibold">Operario</th>
-                                    <th class="p-3 font-semibold">Vehículos Lavados</th>
-                                    <th class="p-3 font-semibold">Total Generado</th>
-                                    <th class="p-3 font-semibold">Comisión (40%)</th>
-                                    <th class="p-3 font-semibold">Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaComisionesBody" class="divide-y divide-rcbBorder">
-                                <!-- Dinámico -->
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-600 uppercase text-[10px] border-b border-slate-200">
+                            <tr>
+                                <th class="p-3 font-semibold">Operario</th>
+                                <th class="p-3 font-semibold">Vehículos</th>
+                                <th class="p-3 font-semibold">Total Generado</th>
+                                <th class="p-3 font-semibold">Comisión (40%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaComisionesBody" class="divide-y divide-slate-200"></tbody>
+                    </table>
                 </div>
             </section>
 
-            <!-- 4. GASTOS & LIBRO MAYOR DETALLADO -->
+            <!-- 4. GASTOS & LIBRO MAYOR -->
             <section id="tab-gastos" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-lg font-bold text-rcbPrimary">Libro Mayor de Gastos & Egresos</h2>
+                    <h2 class="text-lg font-bold text-[#081F5C]">Libro Mayor de Gastos & Egresos</h2>
                     <p class="text-xs text-slate-500">Control por categorías contables y auditoría neta</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Formulario de Registro de Gasto -->
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm space-y-3 h-fit">
-                        <h3 class="text-xs font-bold text-rcbPrimary uppercase tracking-wider"><i class="fa-solid fa-receipt text-rcbGold mr-1"></i>Registrar Nuevo Egreso</h3>
+                    <!-- Formulario de Gasto -->
+                    <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-3 h-fit">
+                        <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider"><i class="fa-solid fa-receipt text-[#336AEC] mr-1"></i>Registrar Nuevo Egreso</h3>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Categoría Contable</label>
-                            <select id="gastoCategoria" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <select id="gastoCategoria" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                                 <option value="💧 Servicios Básicos (Agua/Luz)">💧 Servicios Básicos (Agua, Luz)</option>
                                 <option value="🏠 Alquileres">🏠 Alquileres</option>
                                 <option value="👥 Sueldos y Anticipos">👥 Sueldos y Anticipos</option>
                                 <option value="🧴 Insumos y Shampoos">🧴 Insumos y Shampoos</option>
-                                <option value="🛠️ Mantenimiento de Equipos">🛠️ Mantenimiento de Equipos</option>
-                                <option value="📎 Material de Escritorio">📎 Material de Escritorio</option>
-                                <option value="🍔 Gastos Varios / Varios">🍔 Gastos Varios / Varios</option>
+                                <option value="🛠️ Mantenimiento">🛠️ Mantenimiento de Equipos</option>
+                                <option value="📎 Material Escritorio">📎 Material de Escritorio</option>
+                                <option value="🍔 Gastos Varios">🍔 Gastos Varios / Varios</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Descripción Específica</label>
-                            <input type="text" id="gastoDescripcion" placeholder="Ej: Factura CRE - Luz de septiembre" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <input type="text" id="gastoDescripcion" placeholder="Ej: Factura CRE - Luz" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Monto (Bs)</label>
-                            <input type="number" id="gastoMonto" placeholder="0.00" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
+                            <input type="number" id="gastoMonto" placeholder="0.00" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
                         <button onclick="registrarGasto()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg text-xs transition-all shadow-sm">Registrar Gasto</button>
                     </div>
 
-                    <!-- Tabla de Historial y Libro Mayor de Gastos -->
+                    <!-- Tabla de Historial y Libro Mayor -->
                     <div class="lg:col-span-2 space-y-4">
-                        <div class="bg-rcbCard border border-rcbBorder rounded-xl overflow-hidden shadow-sm">
-                            <div class="p-3 bg-slate-100 border-b border-rcbBorder flex justify-between items-center">
-                                <h3 class="text-xs font-bold text-rcbPrimary uppercase tracking-wider">Historial de Gastos Hechos</h3>
+                        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                            <div class="p-3 bg-slate-100 border-b border-slate-200 flex justify-between items-center">
+                                <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider">Historial de Gastos Hechos</h3>
                                 <span id="lblTotalGastosHeader" class="text-xs font-bold text-red-600">Total: Bs. 0.00</span>
                             </div>
                             <div class="overflow-x-auto max-h-64 overflow-y-auto">
                                 <table class="w-full text-left text-xs">
-                                    <thead class="bg-slate-50 text-slate-500 text-[10px] border-b border-rcbBorder">
+                                    <thead class="bg-slate-50 text-slate-500 text-[10px] border-b border-slate-200">
                                         <tr>
                                             <th class="p-2.5">Fecha</th>
                                             <th class="p-2.5">Categoría</th>
@@ -353,30 +329,28 @@
                                             <th class="p-2.5 text-center">Acción</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="tablaGastosBody" class="divide-y divide-rcbBorder">
-                                        <!-- Dinámico -->
-                                    </tbody>
+                                    <tbody id="tablaGastosBody" class="divide-y divide-slate-200"></tbody>
                                 </table>
                             </div>
                         </div>
 
                         <!-- Balance General del Mes -->
-                        <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm space-y-2 text-xs">
-                            <h3 class="text-xs font-bold text-rcbPrimary uppercase tracking-wider mb-2"><i class="fa-solid fa-scale-balanced text-rcbGold mr-1"></i>Balance y Utilidad Neta Real</h3>
+                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-2 text-xs">
+                            <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider mb-2"><i class="fa-solid fa-scale-balanced text-[#336AEC] mr-1"></i>Balance y Utilidad Neta Real</h3>
                             <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                <span class="text-slate-650">(+) Ingresos Totales (Servicios + Tienda)</span>
-                                <span id="finIngresos" class="font-bold text-rcbPrimary">Bs. 0.00</span>
+                                <span class="text-slate-600">(+) Ingresos Totales</span>
+                                <span id="finIngresos" class="font-bold text-[#081F5C]">Bs. 0.00</span>
                             </div>
                             <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                <span class="text-slate-650">(-) Total Gastos Operativos Registrados</span>
+                                <span class="text-slate-600">(-) Total Gastos Registrados</span>
                                 <span id="finGastos" class="font-bold text-red-600">Bs. 0.00</span>
                             </div>
                             <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                <span class="text-slate-650">(-) Total Comisiones Pagadas a Operarios</span>
+                                <span class="text-slate-600">(-) Total Comisiones Operarios</span>
                                 <span id="finComisiones" class="font-bold text-amber-600">Bs. 0.00</span>
                             </div>
-                            <div class="flex justify-between p-3 bg-rcbPrimary text-white rounded-lg font-bold text-sm">
-                                <span>(=) Utilidad Neta Real para el Dueño</span>
+                            <div class="flex justify-between p-3 bg-[#081F5C] text-white rounded-lg font-bold text-sm">
+                                <span>(=) Utilidad Neta Real</span>
                                 <span id="finUtilidadNeta" class="text-emerald-400">Bs. 0.00</span>
                             </div>
                         </div>
@@ -384,95 +358,70 @@
                 </div>
             </section>
 
-            <!-- 5. HISTORIAL DE VEHÍCULOS -->
+            <!-- 5. HISTORIAL VEHÍCULOS -->
             <section id="tab-historial" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-lg font-bold text-rcbPrimary">Historial de Vehículos y WhatsApp</h2>
+                    <h2 class="text-lg font-bold text-[#081F5C]">Historial de Vehículos y WhatsApp</h2>
                     <p class="text-xs text-slate-500">Auditoría de placas y agradecimientos directos</p>
                 </div>
-
-                <div class="bg-rcbCard border border-rcbBorder rounded-xl overflow-hidden shadow-sm">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs">
-                            <thead class="bg-slate-100 text-slate-600 uppercase text-[10px] border-b border-rcbBorder">
-                                <tr>
-                                    <th class="p-3">Fecha/Hora</th>
-                                    <th class="p-3">Placa</th>
-                                    <th class="p-3">Cliente</th>
-                                    <th class="p-3">Servicio / Adicional</th>
-                                    <th class="p-3">Total</th>
-                                    <th class="p-3 text-center">WhatsApp</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaHistorialBody" class="divide-y divide-rcbBorder">
-                                <!-- Dinámico -->
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-600 uppercase text-[10px] border-b border-slate-200">
+                            <tr>
+                                <th class="p-3">Fecha/Hora</th>
+                                <th class="p-3">Placa</th>
+                                <th class="p-3">Cliente</th>
+                                <th class="p-3">Servicio</th>
+                                <th class="p-3">Total</th>
+                                <th class="p-3 text-center">WhatsApp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaHistorialBody" class="divide-y divide-slate-200"></tbody>
+                    </table>
                 </div>
             </section>
 
             <!-- 6. CONFIGURACIÓN -->
             <section id="tab-config" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-lg font-bold text-rcbPrimary">Configuración & Panel de Licenciamiento</h2>
-                    <p class="text-xs text-slate-500">Gestión de empresas y control de datos</p>
+                    <h2 class="text-lg font-bold text-[#081F5C]">Configuración & Panel Maestro</h2>
+                    <p class="text-xs text-slate-500">Gestión de empresas y licencias</p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-rcbCard border border-rcbBorder p-4 rounded-xl shadow-sm space-y-3">
-                        <h3 class="text-xs font-bold text-rcbPrimary uppercase tracking-wider"><i class="fa-solid fa-key text-rcbGold mr-1"></i>Acceso Maestro Verificado</h3>
-                        <div class="bg-slate-50 p-3 rounded-lg border border-rcbBorder text-xs space-y-1">
-                            <p class="text-slate-500">Usuario: <span class="text-rcbPrimary font-mono font-bold">MAESTRO (Rocabado)</span></p>
-                            <p class="text-slate-500">Estado: <span class="text-emerald-600 font-bold">Sesión Segura Activa</span></p>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre de la Empresa Activa</label>
-                            <input type="text" id="cfgNombreEmpresa" value="RAC Carwash Pro - Santa Cruz" class="w-full bg-slate-50 border border-rcbBorder rounded-lg px-3 py-2 text-xs focus:border-rcbPrimary outline-none">
-                        </div>
-                        <button onclick="guardarEmpresa()" class="w-full bg-rcbPrimary hover:bg-slate-800 text-white font-bold py-2 rounded-lg text-xs transition-all">Guardar Cambios</button>
+                <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-3 max-w-md">
+                    <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider"><i class="fa-solid fa-key text-[#336AEC] mr-1"></i>Acceso Maestro Verificado</h3>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre de la Empresa Activa</label>
+                        <input type="text" id="cfgNombreEmpresa" value="RAC Carwash Pro - Santa Cruz" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                     </div>
-
-                    <div class="bg-rcbCard border border-red-200 p-4 rounded-xl shadow-sm space-y-3 flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-xs font-bold text-red-600 uppercase tracking-wider"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Zona de Pruebas / Reinicio</h3>
-                            <p class="text-xs text-slate-500 mt-1">
-                                Limpia todas las operaciones de prueba sin alterar la estructura base del sistema. Requiere confirmación de seguridad.
-                            </p>
-                        </div>
-                        <button onclick="reiniciarSistema()" class="w-full bg-red-50 hover:bg-red-100 text-red-700 border border-red-300 font-bold py-2 rounded-lg text-xs transition-all">
-                            <i class="fa-solid fa-trash-can mr-1"></i> Limpiar Datos de Prueba
-                        </button>
-                    </div>
+                    <button onclick="guardarEmpresa()" class="w-full bg-[#081F5C] hover:bg-[#336AEC] text-white font-bold py-2 rounded-lg text-xs transition-all">Guardar Cambios</button>
                 </div>
             </section>
-
         </main>
 
-        <!-- NAVEGACIÓN INFERIOR (BOTTOM DOCK) -->
-        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-rcbBorder z-30 py-2 px-2 shadow-lg">
+        <!-- NAVEGACIÓN INFERIOR -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-30 py-2 px-2 shadow-lg">
             <div class="max-w-xl mx-auto grid grid-cols-6 gap-1 text-center">
-                <button onclick="switchTab('resumen')" class="nav-btn flex flex-col items-center justify-center text-rcbPrimary py-1 rounded-lg transition-all" data-target="resumen">
+                <button onclick="switchTab('resumen')" class="nav-btn flex flex-col items-center justify-center text-[#081F5C] py-1 rounded-lg transition-all" data-target="resumen">
                     <i class="fa-solid fa-chart-line text-sm"></i>
                     <span class="text-[9px] mt-0.5 font-semibold">Resumen</span>
                 </button>
-                <button onclick="switchTab('pos')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-rcbPrimary py-1 rounded-lg transition-all" data-target="pos">
+                <button onclick="switchTab('pos')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-[#081F5C] py-1 rounded-lg transition-all" data-target="pos">
                     <i class="fa-solid fa-cash-register text-sm"></i>
                     <span class="text-[9px] mt-0.5 font-semibold">Caja/POS</span>
                 </button>
-                <button onclick="switchTab('comisiones')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-rcbPrimary py-1 rounded-lg transition-all" data-target="comisiones">
+                <button onclick="switchTab('comisiones')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-[#081F5C] py-1 rounded-lg transition-all" data-target="comisiones">
                     <i class="fa-solid fa-users-gear text-sm"></i>
                     <span class="text-[9px] mt-0.5 font-semibold">Comisiones</span>
                 </button>
-                <button onclick="switchTab('gastos')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-rcbPrimary py-1 rounded-lg transition-all" data-target="gastos">
+                <button onclick="switchTab('gastos')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-[#081F5C] py-1 rounded-lg transition-all" data-target="gastos">
                     <i class="fa-solid fa-receipt text-sm"></i>
                     <span class="text-[9px] mt-0.5 font-semibold">Gastos</span>
                 </button>
-                <button onclick="switchTab('historial')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-rcbPrimary py-1 rounded-lg transition-all" data-target="historial">
+                <button onclick="switchTab('historial')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-[#081F5C] py-1 rounded-lg transition-all" data-target="historial">
                     <i class="fa-solid fa-car text-sm"></i>
                     <span class="text-[9px] mt-0.5 font-semibold">Historial</span>
                 </button>
-                <button onclick="switchTab('config')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-rcbPrimary py-1 rounded-lg transition-all" data-target="config">
+                <button onclick="switchTab('config')" class="nav-btn flex flex-col items-center justify-center text-slate-400 hover:text-[#081F5C] py-1 rounded-lg transition-all" data-target="config">
                     <i class="fa-solid fa-gear text-sm"></i>
                     <span class="text-[9px] mt-0.5 font-semibold">Ajustes</span>
                 </button>
@@ -480,36 +429,21 @@
         </nav>
     </div>
 
-    <!-- SCRIPTS DE CONTROL -->
+    <!-- SCRIPTS -->
     <script>
-        let dbServicios = [
-            { fecha: '26/09/2026 15:30', placa: '2849XYZ', cliente: 'Carlos Mendoza', servicio: 'Lavado General (Vagoneta)', operario: 'Juan Pérez', extra: 'Silicona en Spray', total: 75, metodo: 'Efectivo' }
-        ];
+        let dbServicios = [{ fecha: '26/09/2026 15:30', placa: '2849XYZ', cliente: 'Carlos Mendoza', servicio: 'Lavado General', operario: 'Juan Pérez', extra: 'Silicona', total: 75, metodo: 'Efectivo' }];
+        let dbGastos = [{ fecha: '26/09/2026', categoria: '🏠 Alquileres', descripcion: 'Alquiler local', monto: 1200 }];
+        const operariosLista = ['Juan Pérez', 'Carlos Gómez'];
 
-        let dbGastos = [
-            { fecha: '26/09/2026', categoria: '🏠 Alquileres', descripcion: 'Alquiler sucursal septiembre', monto: 1200 },
-            { fecha: '26/09/2026', categoria: '💧 Servicios Básicos (Agua/Luz)', descripcion: 'Factura de CRE', monto: 350 }
-        ];
-
-        const operariosLista = ['Juan Pérez', 'Carlos Gómez', 'Carla Díaz'];
-
-        // Control de pantallas principales
-        function abrirLoginMaster() {
-            document.getElementById('modal-master').classList.remove('hidden');
-        }
-        function cerrarLoginMaster() {
-            document.getElementById('modal-master').classList.add('hidden');
-        }
+        function abrirLoginMaster() { document.getElementById('modal-master').classList.remove('hidden'); }
+        function cerrarLoginMaster() { document.getElementById('modal-master').classList.add('hidden'); }
         function verificarMaster() {
-            const clave = document.getElementById('inputClaveMaster').value;
-            if(clave === 'RUVAMA#18rac*') {
+            if(document.getElementById('inputClaveMaster').value === 'RUVAMA#18rac*') {
                 cerrarLoginMaster();
                 document.getElementById('view-bienvenida').classList.add('hidden');
                 document.getElementById('view-app').classList.remove('hidden');
                 switchTab('resumen');
-            } else {
-                alert('Clave maestra incorrecta.');
-            }
+            } else { alert('Clave maestra incorrecta.'); }
         }
         function entrarEmpresa() {
             document.getElementById('view-bienvenida').classList.add('hidden');
@@ -520,177 +454,80 @@
             document.getElementById('view-app').classList.add('hidden');
             document.getElementById('view-bienvenida').classList.remove('hidden');
         }
-
-        // Navegación internas
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById('tab-' + tabId).classList.remove('hidden');
-
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-rcbPrimary');
+                btn.classList.remove('text-[#081F5C]');
                 btn.classList.add('text-slate-400');
-                if(btn.dataset.target === tabId) {
-                    btn.classList.remove('text-slate-400');
-                    btn.classList.add('text-rcbPrimary');
-                }
+                if(btn.dataset.target === tabId) { btn.classList.remove('text-slate-400'); btn.classList.add('text-[#081F5C]'); }
             });
             window.scrollTo(0, 0);
             renderAll();
         }
-
-        // POS
         function registrarServicio() {
             const placa = document.getElementById('posPlaca').value.trim().toUpperCase();
             const cliente = document.getElementById('posCliente').value.trim() || 'Cliente Frecuente';
             const servVal = document.getElementById('posServicio').value.split('|');
-            const precioServ = parseFloat(servVal[0]);
-            const nombreServ = servVal[1];
-            const prodVal = document.getElementById('posProducto').value.split('|');
-            const precioProd = parseFloat(prodVal[0]);
-            const nombreProd = prodVal[1];
-            const operario = document.getElementById('posOperario').value;
-            const metodo = document.getElementById('posMetodo').value;
-
+            const total = parseFloat(servVal[0]) + parseFloat(document.getElementById('posProducto').value.split('|')[0]);
             if(!placa) { alert('Ingrese la placa.'); return; }
-
-            const total = precioServ + precioProd;
-            const fecha = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-
-            dbServicios.unshift({ fecha, placa, cliente, servicio: nombreServ, operario, extra: nombreProd, total, metodo });
+            dbServicios.unshift({ fecha: new Date().toLocaleDateString(), placa, cliente, servicio: servVal[1], operario: document.getElementById('posOperario').value, extra: '', total, metodo: document.getElementById('posMetodo').value });
             document.getElementById('posPlaca').value = '';
-            document.getElementById('posCliente').value = '';
-            alert('¡Servicio registrado con éxito!');
+            alert('¡Servicio registrado!');
             switchTab('resumen');
         }
-
-        // Gastos
         function registrarGasto() {
-            const categoria = document.getElementById('gastoCategoria').value;
-            const descripcion = document.getElementById('gastoDescripcion').value.trim() || categoria;
+            const cat = document.getElementById('gastoCategoria').value;
+            const desc = document.getElementById('gastoDescripcion').value.trim() || cat;
             const monto = parseFloat(document.getElementById('gastoMonto').value);
-
-            if(isNaN(monto) || monto <= 0) { alert('Ingrese un monto válido.'); return; }
-
-            const fecha = new Date().toLocaleDateString();
-            dbGastos.unshift({ fecha, categoria, descripcion, monto });
+            if(isNaN(monto) || monto <= 0) { alert('Monto inválido.'); return; }
+            dbGastos.unshift({ fecha: new Date().toLocaleDateString(), categoria: cat, descripcion: desc, monto });
             document.getElementById('gastoDescripcion').value = '';
             document.getElementById('gastoMonto').value = '';
             renderAll();
-            alert('Gasto registrado correctamente.');
+            alert('Gasto registrado.');
         }
-
-        function eliminarGasto(index) {
-            if(confirm('¿Eliminar este registro de gasto?')) {
-                dbGastos.splice(index, 1);
-                renderAll();
-            }
-        }
-
-        function guardarEmpresa() {
-            const nombre = document.getElementById('cfgNombreEmpresa').value;
-            document.getElementById('headerEmpresaNombre').innerText = nombre;
-            alert('Datos actualizados.');
-        }
-
-        function reiniciarSistema() {
-            if(prompt("Escriba BORRAR para limpiar los registros de prueba:") === "BORRAR") {
-                dbServicios = [];
-                dbGastos = [];
-                renderAll();
-                alert("Sistema limpio.");
-            }
-        }
-
-        // Render general
+        function eliminarGasto(idx) { if(confirm('¿Eliminar gasto?')) { dbGastos.splice(idx, 1); renderAll(); } }
+        function guardarEmpresa() { alert('Actualizado.'); }
+        
         function renderAll() {
             document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
-
-            let totalIngresos = 0, totalEfectivo = 0, totalQR = 0, ingresoServicios = 0, ingresoProductos = 0;
-            dbServicios.forEach(s => {
-                totalIngresos += s.total;
-                if(s.metodo === 'Efectivo') totalEfectivo += s.total; else totalQR += s.total;
-                ingresoServicios += s.total * 0.8;
-                ingresoProductos += s.total * 0.2;
-            });
-
+            let totIng = 0, totEfe = 0, totQR = 0;
+            dbServicios.forEach(s => { totIng += s.total; if(s.metodo==='Efectivo') totEfe+=s.total; else totQR+=s.total; });
             document.getElementById('kpiVehiculos').innerText = dbServicios.length;
-            document.getElementById('kpiIngresos').innerText = `Bs. ${totalIngresos.toFixed(2)}`;
-            document.getElementById('kpiEfectivoQR').innerText = `${totalEfectivo} / ${totalQR}`;
-            document.getElementById('lblIngresoServicios').innerText = `Bs. ${ingresoServicios.toFixed(2)}`;
-            document.getElementById('lblIngresoProductos').innerText = `Bs. ${ingresoProductos.toFixed(2)}`;
-            document.getElementById('lblPagoEfectivo').innerText = `Bs. ${totalEfectivo.toFixed(2)}`;
-            document.getElementById('lblPagoQR').innerText = `Bs. ${totalQR.toFixed(2)}`;
+            document.getElementById('kpiIngresos').innerText = `Bs. ${totIng.toFixed(2)}`;
+            document.getElementById('kpiEfectivoQR').innerText = `${totEfe} / ${totQR}`;
 
-            // Comisiones
-            let totalComisiones = 0;
-            let comHtml = '';
+            let totCom = 0, comHtml = '';
             operariosLista.forEach(op => {
-                const servOp = dbServicios.filter(s => s.operario === op);
-                const genOp = servOp.reduce((a, c) => a + c.total, 0);
-                const comOp = genOp * 0.40;
-                totalComisiones += comOp;
-                comHtml += `
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-3 font-semibold text-rcbPrimary">${op}</td>
-                        <td class="p-3">${servOp.length} vehíc.</td>
-                        <td class="p-3 text-rcbGold font-semibold">Bs. ${genOp.toFixed(2)}</td>
-                        <td class="p-3 font-bold text-emerald-600">Bs. ${comOp.toFixed(2)}</td>
-                        <td class="p-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px]">Calculado</span></td>
-                    </tr>
-                `;
+                let gen = dbServicios.filter(s=>s.operario===op).reduce((a,c)=>a+c.total,0);
+                let com = gen * 0.4; totCom += com;
+                comHtml += `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-[#081F5C]">${op}</td><td class="p-3">${dbServicios.filter(s=>s.operario===op).length}</td><td class="p-3 text-[#336AEC]">Bs. ${gen.toFixed(2)}</td><td class="p-3 font-bold text-emerald-600">Bs. ${com.toFixed(2)}</td></tr>`;
             });
             document.getElementById('tablaComisionesBody').innerHTML = comHtml;
 
-            // Gastos & Libro Mayor
-            let totalGastos = 0;
-            let gastosHtml = '';
+            let totGas = 0, gasHtml = '';
             dbGastos.forEach((g, idx) => {
-                totalGastos += g.monto;
-                gastosHtml += `
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-2.5 text-slate-500">${g.fecha}</td>
-                        <td class="p-2.5 font-semibold text-rcbPrimary">${g.categoria}</td>
-                        <td class="p-2.5">${g.descripcion}</td>
-                        <td class="p-2.5 font-bold text-red-600">Bs. ${g.monto.toFixed(2)}</td>
-                        <td class="p-2.5 text-center">
-                            <button onclick="eliminarGasto(${idx})" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash text-xs"></i></button>
-                        </td>
-                    </tr>
-                `;
+                totGas += g.monto;
+                gasHtml += `<tr class="hover:bg-slate-50"><td class="p-2.5 text-slate-500">${g.fecha}</td><td class="p-2.5 font-semibold text-[#081F5C]">${g.categoria}</td><td class="p-2.5">${g.descripcion}</td><td class="p-2.5 font-bold text-red-600">Bs. ${g.monto.toFixed(2)}</td><td class="p-2.5 text-center"><button onclick="eliminarGasto(${idx})" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash text-xs"></i></button></td></tr>`;
             });
-            document.getElementById('tablaGastosBody').innerHTML = gastosHtml || `<tr><td colspan="5" class="p-4 text-center text-slate-400">Sin gastos registrados.</td></tr>`;
-            document.getElementById('lblTotalGastosHeader').innerText = `Total: Bs. ${totalGastos.toFixed(2)}`;
+            document.getElementById('tablaGastosBody').innerHTML = gasHtml || `<tr><td colspan="5" class="p-4 text-center text-slate-400">Sin gastos.</td></tr>`;
+            document.getElementById('lblTotalGastosHeader').innerText = `Total: Bs. ${totGas.toFixed(2)}`;
 
-            // Balance y Utilidad Neta
-            let utilidadNeta = totalIngresos - totalGastos - totalComisiones;
-            document.getElementById('finIngresos').innerText = `Bs. ${totalIngresos.toFixed(2)}`;
-            document.getElementById('finGastos').innerText = `Bs. ${totalGastos.toFixed(2)}`;
-            document.getElementById('finComisiones').innerText = `Bs. ${totalComisiones.toFixed(2)}`;
-            document.getElementById('finUtilidadNeta').innerText = `Bs. ${utilidadNeta.toFixed(2)}`;
-            document.getElementById('kpiUtilidad').innerText = `Bs. ${utilidadNeta.toFixed(2)}`;
+            let utilNeta = totIng - totGas - totCom;
+            document.getElementById('finIngresos').innerText = `Bs. ${totIng.toFixed(2)}`;
+            document.getElementById('finGastos').innerText = `Bs. ${totGas.toFixed(2)}`;
+            document.getElementById('finComisiones').innerText = `Bs. ${totCom.toFixed(2)}`;
+            document.getElementById('finUtilidadNeta').innerText = `Bs. ${utilNeta.toFixed(2)}`;
+            document.getElementById('kpiUtilidad').innerText = `Bs. ${utilNeta.toFixed(2)}`;
 
-            // Historial WhatsApp
             let histHtml = '';
             dbServicios.forEach(s => {
-                let msg = encodeURIComponent(`¡Hola ${s.cliente}! Gracias por visitar ${document.getElementById('cfgNombreEmpresa').value}. Su vehículo (${s.placa}) está listo. ¡Le esperamos! 🚗✨`);
-                histHtml += `
-                    <tr class="hover:bg-slate-50">
-                        <td class="p-3 text-slate-500">${s.fecha}</td>
-                        <td class="p-3 font-bold text-rcbPrimary">${s.placa}</td>
-                        <td class="p-3">${s.cliente}</td>
-                        <td class="p-3">${s.servicio}<br><span class="text-[10px] text-slate-500">+ ${s.extra}</span></td>
-                        <td class="p-3 font-bold text-rcbGold">Bs. ${s.total}</td>
-                        <td class="p-3 text-center">
-                            <a href="https://wa.me/?text=${msg}" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2 py-1 rounded text-[10px] font-semibold inline-flex items-center space-x-1 shadow-sm">
-                                <i class="fa-brands fa-whatsapp"></i><span>Agradecer</span>
-                            </a>
-                        </td>
-                    </tr>
-                `;
+                let msg = encodeURIComponent(`¡Hola ${s.cliente}! Su vehículo (${s.placa}) en ${document.getElementById('cfgNombreEmpresa').value} está listo. ¡Gracias!`);
+                histHtml += `<tr class="hover:bg-slate-50"><td class="p-3 text-slate-500">${s.fecha}</td><td class="p-3 font-bold text-[#081F5C]">${s.placa}</td><td class="p-3">${s.cliente}</td><td class="p-3">${s.servicio}</td><td class="p-3 font-bold text-[#336AEC]">Bs. ${s.total}</td><td class="p-3 text-center"><a href="https://wa.me/?text=${msg}" target="_blank" class="bg-emerald-600 text-white px-2 py-1 rounded text-[10px] font-semibold inline-flex items-center space-x-1"><i class="fa-brands fa-whatsapp"></i><span>Agradecer</span></a></td></tr>`;
             });
-            document.getElementById('tablaHistorialBody').innerHTML = histHtml || `<tr><td colspan="6" class="p-4 text-center text-slate-400">No hay servicios registrados.</td></tr>`;
+            document.getElementById('tablaHistorialBody').innerHTML = histHtml || `<tr><td colspan="6" class="p-4 text-center text-slate-400">Sin servicios.</td></tr>`;
         }
-
         window.onload = renderAll;
     </script>
 </body>
