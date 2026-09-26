@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma Contable Multiempresa | Rocabado Auditores</title>
+    <title>Plataforma Contable | Rocabado Auditores</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -30,43 +30,53 @@
 <body class="bg-slate-900 text-slate-800 font-sans antialiased min-h-screen">
 
     <!-- ========================================== -->
-    <!-- VISTA 1: ACCESO Y BIENVENIDA CORPORATIVA   -->
+    <!-- VISTA 1: BIENVENIDA DE ROCABADO AUDITORES  -->
     <!-- ========================================== -->
     <div id="view-welcome" class="min-h-screen flex flex-col justify-between bg-[#081F5C] text-white p-6">
-        <div class="max-w-md mx-auto w-full pt-10 text-center space-y-4">
-            <div class="bg-white p-4 rounded-2xl shadow-2xl inline-block border border-[#70A6D1]/30">
-                <div class="flex items-center justify-center space-x-3">
-                    <div class="w-12 h-12 flex items-center justify-center bg-[#081F5C] rounded-xl text-white shadow-inner">
-                        <i class="fa-solid fa-calculator text-xl"></i>
+        <div class="max-w-md mx-auto w-full pt-8 text-center space-y-4">
+            <!-- Logotipo y Nombre Dinámico de Rocabado -->
+            <div class="bg-white p-5 rounded-2xl shadow-2xl inline-block border border-[#70A6D1]/30 text-[#081F5C] w-full">
+                <div class="flex items-center justify-center space-x-4">
+                    <div id="welcomeLogoContainer" class="w-14 h-14 flex items-center justify-center bg-[#081F5C] rounded-xl text-white shadow-inner overflow-hidden">
+                        <i class="fa-solid fa-calculator text-2xl" id="welcomeLogoIcon"></i>
+                        <img id="welcomeLogoImg" src="" alt="Logo" class="w-full h-full object-cover hidden">
                     </div>
                     <div class="text-left">
-                        <h2 class="font-black text-lg tracking-wider text-[#081F5C] leading-none">ROCABADO</h2>
-                        <p class="text-[9px] text-[#336AEC] tracking-widest font-bold uppercase mt-1">Auditores Consultores RAC</p>
+                        <h2 id="welcomeEmpresaNombre" class="font-black text-xl tracking-tight text-[#081F5C] leading-snug">ROCABADO</h2>
+                        <p id="welcomeEmpresaSub" class="text-[10px] text-[#336AEC] tracking-widest font-bold uppercase mt-0.5">Auditores Consultores RAC</p>
                     </div>
                 </div>
             </div>
             
-            <div class="space-y-2">
-                <span class="text-xs uppercase tracking-widest text-[#70A6D1] font-bold">Sistema de Gestión y Auditoría</span>
-                <h1 class="text-2xl font-extrabold tracking-tight text-white">Plataforma Contable Multiempresa</h1>
-                <p class="text-xs text-slate-300 leading-relaxed px-4">
-                    Control financiero riguroso, libros mayores, caja y control de operarios en Santa Cruz, Bolivia.
+            <div class="space-y-2 pt-2">
+                <span id="welcomeBadgeTitulo" class="text-xs uppercase tracking-widest text-[#70A6D1] font-bold">Sistema de Gestión y Auditoría</span>
+                <h1 id="welcomeTituloPrincipal" class="text-2xl font-extrabold tracking-tight text-white">Transformando números en decisiones</h1>
+                <p id="welcomeDescripcion" class="text-xs text-slate-300 leading-relaxed px-2">
+                    Plataforma Contable Multiempresa desarrollada y respaldada por Rocabado Auditores en Santa Cruz, Bolivia.
                 </p>
             </div>
         </div>
 
         <div class="max-w-md mx-auto w-full space-y-3 pb-8">
-            <button onclick="abrirModalMaster()" class="w-full bg-[#336AEC] hover:bg-blue-600 text-white p-4 rounded-xl flex items-center justify-between transition-all shadow-lg font-bold text-xs uppercase tracking-wider">
+            <button onclick="entrarEmpresaActual()" class="w-full bg-[#336AEC] hover:bg-blue-600 text-white p-4 rounded-xl flex items-center justify-between transition-all shadow-lg font-bold text-xs uppercase tracking-wider">
                 <div class="flex items-center space-x-3">
-                    <i class="fa-solid fa-shield-halved text-base"></i>
+                    <i class="fa-solid fa-right-to-bracket text-base"></i>
+                    <span id="btnEntrarTexto">Ingresar al Sistema</span>
+                </div>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+
+            <button onclick="abrirModalMaster()" class="w-full bg-white/10 hover:bg-white/20 text-white p-3.5 rounded-xl flex items-center justify-between transition-all font-semibold text-xs border border-white/10">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-shield-halved text-base text-[#70A6D1]"></i>
                     <span>Panel Master (Crear / Administrar Empresas)</span>
                 </div>
                 <i class="fa-solid fa-chevron-right text-xs"></i>
             </button>
 
-            <a href="https://wa.me/59170000000?text=Hola%20Rocabado%20Auditores,%20deseo%20soporte%20sobre%20la%20plataforma." target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3.5 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-lg transition-all">
+            <a id="welcomeBtnWp" href="https://wa.me/59170000000" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-3.5 rounded-xl flex items-center justify-center space-x-2 text-xs shadow-lg transition-all">
                 <i class="fa-brands fa-whatsapp text-base"></i>
-                <span>Soporte Directo WhatsApp</span>
+                <span id="welcomeWpTexto">Soporte Directo WhatsApp</span>
             </a>
 
             <div class="text-center pt-2">
@@ -97,7 +107,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- VISTA 2: PANEL MASTER (CREACIÓN EMPRESAS)  -->
+    <!-- VISTA 2: PANEL MASTER                      -->
     <!-- ========================================== -->
     <div id="view-master-panel" class="hidden min-h-screen bg-slate-100 pb-12">
         <header class="bg-[#081F5C] text-white px-6 py-4 shadow-md flex justify-between items-center">
@@ -105,52 +115,41 @@
                 <div class="bg-white/10 p-2 rounded-lg"><i class="fa-solid fa-building-shield text-lg"></i></div>
                 <div>
                     <h1 class="text-sm font-bold">Panel Master - Rocabado Auditores</h1>
-                    <p class="text-[10px] text-slate-300">Gestión de Licencias y Creación de Clientes</p>
+                    <p class="text-[10px] text-slate-300">Gestión Global de Clientes</p>
                 </div>
             </div>
             <button onclick="volverInicio()" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-all font-semibold">
-                <i class="fa-solid fa-arrow-left mr-1"></i> Salir
+                <i class="fa-solid fa-arrow-left mr-1"></i> Salir al Inicio
             </button>
         </header>
 
         <main class="max-w-5xl mx-auto p-6 space-y-6">
             <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
                 <h2 class="text-sm font-bold text-[#081F5C] uppercase tracking-wider border-b pb-2 flex items-center">
-                    <i class="fa-solid fa-circle-plus text-[#336AEC] mr-2"></i> Registrar y Crear Nueva Empresa Cliente
+                    <i class="fa-solid fa-circle-plus text-[#336AEC] mr-2"></i> Registrar Nueva Empresa con Identidad Propia
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre Comercial de la Empresa</label>
-                        <input type="text" id="nuevaEmpresaNombre" placeholder="Ej: Carwash Pro Santa Cruz" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre Comercial</label>
+                        <input type="text" id="nuevaEmpresaNombre" placeholder="Ej: Empresa S.R.L." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">NIT de la Empresa</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">NIT</label>
                         <input type="text" id="nuevaEmpresaNit" placeholder="Ej: 1029384756" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Celular WhatsApp de Contacto</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Celular WhatsApp</label>
                         <input type="text" id="nuevaEmpresaWp" placeholder="Ej: 59170000000" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Propietario / Administrador</label>
-                        <input type="text" id="nuevaEmpresaAdmin" placeholder="Ej: Juan Pérez" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Clave de Acceso Empresa</label>
-                        <input type="text" id="nuevaEmpresaClave" placeholder="Clave para el dueño" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
-                    </div>
-                </div>
-                <button onclick="crearEmpresaNueva()" class="bg-[#081F5C] hover:bg-[#336AEC] text-white font-bold px-6 py-2.5 rounded-lg text-xs transition-all shadow-sm">
-                    Generar y Crear Empresa
+                <button onclick="crearEmpresaNuevaSimple()" class="bg-[#081F5C] hover:bg-[#336AEC] text-white font-bold px-6 py-2.5 rounded-lg text-xs transition-all shadow-sm">
+                    Registrar Empresa
                 </button>
             </div>
 
-            <!-- Lista de Empresas Creadas -->
             <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                 <div class="p-4 bg-slate-50 border-b border-slate-200">
-                    <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider">Empresas Registradas en el Sistema Master</h3>
+                    <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider">Empresas en el Sistema</h3>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
@@ -158,9 +157,8 @@
                             <tr>
                                 <th class="p-3">Empresa</th>
                                 <th class="p-3">NIT</th>
-                                <th class="p-3">Administrador</th>
                                 <th class="p-3">WhatsApp</th>
-                                <th class="p-3 text-center">Acciones / Ingresar</th>
+                                <th class="p-3 text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tablaEmpresasMaster" class="divide-y divide-slate-200"></tbody>
@@ -171,7 +169,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- VISTA 3: APLICACIÓN INTERNA DE LA EMPRESA  -->
+    <!-- VISTA 3: APLICACIÓN INTERNA                -->
     <!-- ========================================== -->
     <div id="view-app" class="hidden min-h-screen bg-slate-100 pb-20">
         <!-- HEADER EJECUTIVO -->
@@ -181,12 +179,12 @@
                     <button onclick="volverInicio()" class="text-slate-400 hover:text-[#081F5C] text-sm mr-1" title="Volver al inicio">
                         <i class="fa-solid fa-house"></i>
                     </button>
-                    <div class="bg-[#081F5C]/10 p-2 rounded-lg text-[#081F5C]">
-                        <i class="fa-solid fa-building text-lg"></i>
+                    <div id="headerLogoBox" class="w-9 h-9 bg-[#081F5C]/10 rounded-lg flex items-center justify-center text-[#081F5C] overflow-hidden">
+                        <i class="fa-solid fa-calculator"></i>
                     </div>
                     <div>
-                        <h1 id="appHeaderNombre" class="text-sm font-bold text-[#081F5C] tracking-wide">Empresa Demostración S.R.L.</h1>
-                        <p class="text-[10px] text-slate-500 font-medium">NIT: <span id="appHeaderNit" class="font-bold text-slate-700">0000000</span> | Asesorado por: <span class="text-[#336AEC] font-bold">Rocabado Auditores</span></p>
+                        <h1 id="appHeaderNombre" class="text-sm font-bold text-[#081F5C] tracking-wide">ROCABADO AUDITORES</h1>
+                        <p class="text-[10px] text-slate-500 font-medium">NIT: <span id="appHeaderNit" class="font-bold text-slate-700">1029384756</span> | <span class="text-[#336AEC] font-bold">Transformando números en decisiones</span></p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -196,38 +194,37 @@
                     </a>
                 </div>
             </div>
-            <!-- PESTAÑAS HORIZONTALES SUPERIORES (Elegantes y limpias) -->
+            <!-- PESTAÑAS HORIZONTALES -->
             <div class="max-w-7xl mx-auto flex space-x-2 mt-3 overflow-x-auto border-t pt-2">
                 <button onclick="switchTab('resumen')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-[#081F5C] text-white" data-target="resumen"><i class="fa-solid fa-chart-line mr-1"></i> Resumen</button>
                 <button onclick="switchTab('pos')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:bg-slate-100" data-target="pos"><i class="fa-solid fa-cash-register mr-1"></i> Caja / POS</button>
                 <button onclick="switchTab('comisiones')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:bg-slate-100" data-target="comisiones"><i class="fa-solid fa-users-gear mr-1"></i> Comisiones</button>
                 <button onclick="switchTab('gastos')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:bg-slate-100" data-target="gastos"><i class="fa-solid fa-receipt mr-1"></i> Gastos y Auditoría</button>
-                <button onclick="switchTab('historial')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:bg-slate-100" data-target="historial"><i class="fa-solid fa-car mr-1"></i> Vehículos / Clientes</button>
-                <button onclick="switchTab('config')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:bg-slate-100" data-target="config"><i class="fa-solid fa-gear mr-1"></i> Configuración Empresa</button>
+                <button onclick="switchTab('historial')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:bg-slate-100" data-target="historial"><i class="fa-solid fa-car mr-1"></i> Clientes</button>
+                <button onclick="switchTab('config')" class="nav-tab px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:bg-slate-100" data-target="config"><i class="fa-solid fa-gear mr-1"></i> Configuración y Logo</button>
             </div>
         </header>
 
         <!-- CONTENIDO DE LAS PESTAÑAS -->
         <main class="max-w-7xl mx-auto p-6 space-y-6">
 
-            <!-- 1. RESUMEN EJECUTIVO -->
+            <!-- 1. RESUMEN -->
             <section id="tab-resumen" class="space-y-6 tab-content">
                 <div class="flex justify-between items-center">
                     <div>
-                        <h2 class="text-base font-bold text-[#081F5C]">Resumen Ejecutivo y Balance</h2>
-                        <p class="text-xs text-slate-500">Indicadores financieros en tiempo real con alineación contable</p>
+                        <h2 class="text-base font-bold text-[#081F5C]">Resumen Financiero y Balance</h2>
+                        <p class="text-xs text-slate-500">Transformando números en decisiones</p>
                     </div>
                     <div class="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-medium shadow-sm">
                         <i class="fa-solid fa-calendar text-[#336AEC] mr-1"></i> <span id="currentDate">Hoy</span>
                     </div>
                 </div>
 
-                <!-- KPIs con números bien formados -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-1">
-                        <p class="text-xs text-slate-500">Vehículos Atendidos</p>
+                        <p class="text-xs text-slate-500">Registros / Servicios</p>
                         <h3 id="kpiVehiculos" class="text-2xl font-bold text-[#081F5C] table-nums">0</h3>
-                        <span class="text-[10px] text-emerald-600 font-semibold"><i class="fa-solid fa-arrow-up"></i> Operación activa</span>
+                        <span class="text-[10px] text-emerald-600 font-semibold"><i class="fa-solid fa-arrow-up"></i> Activo</span>
                     </div>
                     <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-1">
                         <p class="text-xs text-slate-500">Ingreso Total</p>
@@ -236,13 +233,13 @@
                     </div>
                     <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-1">
                         <p class="text-xs text-slate-500">Efectivo / QR</p>
-                        <h3 id="kpiEfectivoQR" class="text-base font-bold text-[#081F5C] table-nums text-right">Bs. 0,00 / Bs. 0,00</h3>
+                        <h3 id="kpiEfectivoQR" class="text-sm font-bold text-[#081F5C] table-nums text-right">Bs. 0,00 / Bs. 0,00</h3>
                         <span class="text-[10px] text-slate-500 block text-right">Métodos de cobro</span>
                     </div>
                     <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-1">
-                        <p class="text-xs text-slate-500">Utilidad Neta Estimada</p>
+                        <p class="text-xs text-slate-500">Utilidad Neta</p>
                         <h3 id="kpiUtilidad" class="text-2xl font-bold text-emerald-600 table-nums text-right">Bs. 0,00</h3>
-                        <span class="text-[10px] text-slate-500 block text-right">Menos gastos y comisiones</span>
+                        <span class="text-[10px] text-slate-500 block text-right">Menos gastos</span>
                     </div>
                 </div>
             </section>
@@ -250,16 +247,16 @@
             <!-- 2. CAJA & POS -->
             <section id="tab-pos" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-base font-bold text-[#081F5C]">Caja & POS Ágil</h2>
-                    <p class="text-xs text-slate-500">Registro de cobros por servicios y tienda</p>
+                    <h2 class="text-base font-bold text-[#081F5C]">Caja & POS de Servicios</h2>
+                    <p class="text-xs text-slate-500">Registro de cobros</p>
                 </div>
 
                 <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm space-y-4 max-w-2xl mx-auto">
-                    <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider border-b pb-2"><i class="fa-solid fa-cash-register text-[#336AEC] mr-2"></i>Registrar Cobro de Servicio</h3>
+                    <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider border-b pb-2"><i class="fa-solid fa-cash-register text-[#336AEC] mr-2"></i>Registrar Cobro</h3>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Placa Vehículo</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Placa / Referencia</label>
                             <input type="text" id="posPlaca" placeholder="Ej: 2849XYZ" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs uppercase focus:border-[#336AEC] outline-none">
                         </div>
                         <div>
@@ -268,44 +265,35 @@
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">WhatsApp Celular</label>
-                            <input type="text" id="posCelular" placeholder="Ej: 70000000" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
+                            <input type="text" id="posCelular" placeholder="Ej: 59170000000" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Servicio de Lavado</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Servicio Prestado</label>
                             <select id="posServicio" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
-                                <option value="35|Lavado Básico (Auto)">Lavado Básico - Bs. 35,00</option>
-                                <option value="50|Lavado General (Vagoneta)">Lavado General - Bs. 50,00</option>
-                                <option value="80|Lavado Completo + Motor">Lavado Completo + Motor - Bs. 80,00</option>
+                                <option value="35|Lavado Básico">Lavado Básico - Bs. 35,00</option>
+                                <option value="50|Lavado General">Lavado General - Bs. 50,00</option>
+                                <option value="80|Lavado Completo">Lavado Completo - Bs. 80,00</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Operario Asignado</label>
-                            <input type="text" id="posOperario" placeholder="Ej: Carlos Gómez" value="Carlos Gómez" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Operario</label>
+                            <input type="text" id="posOperario" value="Carlos Gómez" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Adicional Tienda</label>
-                            <select id="posProducto" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
-                                <option value="0|Ninguno">Ninguno - Bs. 0,00</option>
-                                <option value="15|Aromatizante Colgante">Aromatizante Colgante - Bs. 15,00</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Método de Pago</label>
-                            <select id="posMetodo" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
-                                <option value="Efectivo">Efectivo</option>
-                                <option value="QR">QR / Transferencia</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Método de Pago</label>
+                        <select id="posMetodo" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="QR">QR / Transferencia</option>
+                        </select>
                     </div>
 
                     <button onclick="registrarServicio()" class="w-full bg-[#081F5C] hover:bg-[#336AEC] text-white font-bold py-2.5 rounded-lg text-xs transition-all shadow-sm">
-                        <i class="fa-solid fa-check-circle mr-1"></i> Registrar y Cobrar Servicio
+                        <i class="fa-solid fa-check-circle mr-1"></i> Cobrar y Registrar
                     </button>
                 </div>
             </section>
@@ -313,16 +301,15 @@
             <!-- 3. COMISIONES -->
             <section id="tab-comisiones" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-base font-bold text-[#081F5C]">Planilla de Comisiones de Operarios</h2>
-                    <p class="text-xs text-slate-500">Cálculo porcentual sobre servicios prestados</p>
+                    <h2 class="text-base font-bold text-[#081F5C]">Planilla de Comisiones</h2>
+                    <p class="text-xs text-slate-500">Cálculo porcentual</p>
                 </div>
-
                 <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                     <table class="w-full text-left text-xs">
                         <thead class="bg-slate-100 text-slate-600 uppercase text-[10px] border-b">
                             <tr>
                                 <th class="p-3">Operario</th>
-                                <th class="p-3 text-center">Vehículos</th>
+                                <th class="p-3 text-center">Servicios</th>
                                 <th class="p-3 text-right">Total Generado</th>
                                 <th class="p-3 text-right">Comisión (40%)</th>
                             </tr>
@@ -332,44 +319,39 @@
                 </div>
             </section>
 
-            <!-- 4. GASTOS Y AUDITORÍA -->
+            <!-- 4. GASTOS -->
             <section id="tab-gastos" class="space-y-6 tab-content hidden">
                 <div>
                     <h2 class="text-base font-bold text-[#081F5C]">Libro Mayor de Gastos y Egresos</h2>
-                    <p class="text-xs text-slate-500">Categorización contable oficial para auditoría y control de caja</p>
+                    <p class="text-xs text-slate-500">Control de auditoría</p>
                 </div>
-
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Formulario de Gasto -->
                     <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-3 h-fit">
-                        <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider border-b pb-2"><i class="fa-solid fa-receipt text-[#336AEC] mr-1"></i>Registrar Nuevo Egreso</h3>
+                        <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider border-b pb-2">Registrar Egreso</h3>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Categoría Contable</label>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Categoría</label>
                             <select id="gastoCategoria" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
-                                <option value="💧 Servicios Básicos (Agua, Luz)">💧 Servicios Básicos (Agua, Luz)</option>
+                                <option value="💧 Servicios Básicos">💧 Servicios Básicos</option>
                                 <option value="🏠 Alquileres">🏠 Alquileres</option>
-                                <option value="📎 Material de Escritorio">📎 Material de Escritorio</option>
-                                <option value="🧹 Material de Limpieza">🧹 Material de Limpieza</option>
-                                <option value="🛠️ Mantenimiento y Reparaciones">🛠️ Mantenimiento y Reparaciones</option>
-                                <option value="🍔 Gastos Operativos / Varios">🍔 Gastos Operativos / Varios</option>
+                                <option value="🛠️ Mantenimiento">🛠️ Mantenimiento</option>
+                                <option value="🍔 Varios">🍔 Varios</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Descripción del Comprobante / Factura</label>
-                            <input type="text" id="gastoDescripcion" placeholder="Ej: Factura CRE - Luz" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Descripción</label>
+                            <input type="text" id="gastoDescripcion" placeholder="Detalle" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 mb-1">Monto (Bs)</label>
                             <input type="number" id="gastoMonto" placeholder="0.00" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-xs focus:border-[#336AEC] outline-none">
                         </div>
-                        <button onclick="registrarGasto()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-lg text-xs transition-all shadow-sm">Registrar Gasto en Libro Mayor</button>
+                        <button onclick="registrarGasto()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-lg text-xs transition-all shadow-sm">Registrar Gasto</button>
                     </div>
 
-                    <!-- Tabla de Historial y Balance -->
                     <div class="lg:col-span-2 space-y-4">
                         <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                             <div class="p-3 bg-slate-50 border-b flex justify-between items-center">
-                                <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider">Historial de Gastos Auditados</h3>
+                                <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider">Historial</h3>
                                 <span id="lblTotalGastosHeader" class="text-xs font-bold text-red-600 table-nums">Total: Bs. 0,00</span>
                             </div>
                             <div class="overflow-x-auto max-h-64 overflow-y-auto">
@@ -377,9 +359,9 @@
                                     <thead class="bg-slate-100 text-slate-500 text-[10px] border-b">
                                         <tr>
                                             <th class="p-2.5">Fecha</th>
-                                            <th class="p-2.5">Categoría Contable</th>
+                                            <th class="p-2.5">Categoría</th>
                                             <th class="p-2.5">Descripción</th>
-                                            <th class="p-2.5 text-right">Monto (Bs)</th>
+                                            <th class="p-2.5 text-right">Monto</th>
                                             <th class="p-2.5 text-center">Acción</th>
                                         </tr>
                                     </thead>
@@ -387,47 +369,24 @@
                                 </table>
                             </div>
                         </div>
-
-                        <!-- Balance General -->
-                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm space-y-2 text-xs">
-                            <h3 class="text-xs font-bold text-[#081F5C] uppercase tracking-wider mb-2"><i class="fa-solid fa-scale-balanced text-[#336AEC] mr-1"></i>Balance Contable y Utilidad Neta</h3>
-                            <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                <span class="text-slate-600">(+) Ingresos Totales de Caja</span>
-                                <span id="finIngresos" class="font-bold text-[#081F5C] table-nums">Bs. 0,00</span>
-                            </div>
-                            <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                <span class="text-slate-600">(-) Total Gastos Registrados</span>
-                                <span id="finGastos" class="font-bold text-red-600 table-nums">Bs. 0,00</span>
-                            </div>
-                            <div class="flex justify-between p-2 bg-slate-50 rounded-lg">
-                                <span class="text-slate-600">(-) Total Comisiones Operarios</span>
-                                <span id="finComisiones" class="font-bold text-amber-600 table-nums">Bs. 0,00</span>
-                            </div>
-                            <div class="flex justify-between p-3 bg-[#081F5C] text-white rounded-lg font-bold text-sm">
-                                <span>(=) Utilidad Neta Real</span>
-                                <span id="finUtilidadNeta" class="text-emerald-400 table-nums">Bs. 0,00</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 5. HISTORIAL DE VEHÍCULOS -->
+            <!-- 5. HISTORIAL -->
             <section id="tab-historial" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-base font-bold text-[#081F5C]">Historial de Vehículos y Alertas WhatsApp</h2>
-                    <p class="text-xs text-slate-500">Control de clientes y avisos directos de entrega</p>
+                    <h2 class="text-base font-bold text-[#081F5C]">Historial y Alertas WhatsApp</h2>
                 </div>
                 <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
                     <table class="w-full text-left text-xs">
                         <thead class="bg-slate-100 text-slate-600 uppercase text-[10px] border-b">
                             <tr>
-                                <th class="p-3">Fecha / Hora</th>
+                                <th class="p-3">Fecha</th>
                                 <th class="p-3">Placa</th>
                                 <th class="p-3">Cliente</th>
-                                <th class="p-3">Servicio</th>
-                                <th class="p-3 text-right">Total (Bs)</th>
-                                <th class="p-3 text-center">Aviso WhatsApp</th>
+                                <th class="p-3 text-right">Total</th>
+                                <th class="p-3 text-center">WhatsApp</th>
                             </tr>
                         </thead>
                         <tbody id="tablaHistorialBody" class="divide-y divide-slate-200"></tbody>
@@ -435,11 +394,11 @@
                 </div>
             </section>
 
-            <!-- 6. CONFIGURACIÓN DE EMPRESA -->
+            <!-- 6. CONFIGURACIÓN Y CARGA DE LOGOTIPO -->
             <section id="tab-config" class="space-y-6 tab-content hidden">
                 <div>
-                    <h2 class="text-base font-bold text-[#081F5C]">Configuración de la Empresa Activa</h2>
-                    <p class="text-xs text-slate-500">Personaliza nombre, NIT, logotipo y datos fiscales</p>
+                    <h2 class="text-base font-bold text-[#081F5C]">Configuración de Marca y Logotipo</h2>
+                    <p class="text-xs text-slate-500">Sube tu logo directamente desde tu dispositivo o personaliza tus datos</p>
                 </div>
                 <div class="bg-white border border-slate-200 p-6 rounded-xl shadow-sm space-y-4 max-w-lg">
                     <div>
@@ -447,15 +406,23 @@
                         <input type="text" id="cfgNombre" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">NIT / Datos Fiscales</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Eslogan</label>
+                        <input type="text" id="cfgEslogan" value="Transformando números en decisiones" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">NIT</label>
                         <input type="text" id="cfgNit" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Enlace WhatsApp de Soporte Empresa</label>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Celular WhatsApp</label>
                         <input type="text" id="cfgWp" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none focus:border-[#336AEC]">
                     </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Subir Logotipo (Imagen desde tu equipo)</label>
+                        <input type="file" id="cfgLogoFile" accept="image/*" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs outline-none bg-slate-50 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-[#081F5C] file:text-white hover:file:bg-[#336AEC]">
+                    </div>
                     <button onclick="guardarConfigEmpresa()" class="bg-[#081F5C] hover:bg-[#336AEC] text-white font-bold px-6 py-2.5 rounded-lg text-xs transition-all shadow-sm">
-                        Actualizar Datos de Empresa
+                        Guardar Cambios y Actualizar Logo
                     </button>
                 </div>
             </section>
@@ -463,14 +430,13 @@
         </main>
     </div>
 
-    <!-- SCRIPTS DE GESTIÓN CONTABLE -->
+    <!-- SCRIPTS -->
     <script>
         let empresasBD = [
-            { id: 1, nombre: 'Carwash Pro Santa Cruz', nit: '1029384756', admin: 'Juan Pérez', wp: '59170000000', clave: '1234' }
+            { id: 1, nombre: 'ROCABADO AUDITORES', nit: '1029384756', wp: '59170000000', logo: '', eslogan: 'Transformando números en decisiones' }
         ];
-        let empresaActivaId = null;
+        let empresaActivaId = 1;
 
-        // Base de datos de trabajo para la empresa activa
         let dbServicios = [];
         let dbGastos = [];
         const operariosLista = ['Carlos Gómez', 'Luis Vargas'];
@@ -487,6 +453,7 @@
             if(clave === 'RUVAMA#18rac*') {
                 cerrarModalMaster();
                 document.getElementById('view-welcome').classList.add('hidden');
+                document.getElementById('view-app').classList.add('hidden');
                 document.getElementById('view-master-panel').classList.remove('hidden');
                 renderEmpresasMaster();
             } else {
@@ -498,25 +465,49 @@
             document.getElementById('view-master-panel').classList.add('hidden');
             document.getElementById('view-app').classList.add('hidden');
             document.getElementById('view-welcome').classList.remove('hidden');
+            actualizarPantallaBienvenida();
         }
 
-        function crearEmpresaNueva() {
+        function actualizarPantallaBienvenida() {
+            const emp = empresasBD.find(e => e.id === empresaActivaId) || empresasBD[0];
+            if(!emp) return;
+
+            document.getElementById('welcomeEmpresaNombre').innerText = emp.nombre;
+            document.getElementById('welcomeEmpresaSub').innerText = emp.eslogan || 'Transformando números en decisiones';
+            document.getElementById('welcomeTituloPrincipal').innerText = emp.nombre;
+            document.getElementById('welcomeWpTexto').innerText = `Soporte WhatsApp (${emp.wp})`;
+            document.getElementById('welcomeBtnWp').href = `https://wa.me/${emp.wp}?text=Hola%20${encodeURIComponent(emp.nombre)},%20deseo%20soporte.`;
+
+            const logoImg = document.getElementById('welcomeLogoImg');
+            const logoIcon = document.getElementById('welcomeLogoIcon');
+            if(emp.logo && emp.logo.trim() !== '') {
+                logoImg.src = emp.logo;
+                logoImg.classList.remove('hidden');
+                logoIcon.classList.add('hidden');
+            } else {
+                logoImg.classList.add('hidden');
+                logoIcon.classList.remove('hidden');
+            }
+        }
+
+        function crearEmpresaNuevaSimple() {
             const nombre = document.getElementById('nuevaEmpresaNombre').value.trim();
             const nit = document.getElementById('nuevaEmpresaNit').value.trim();
             const wp = document.getElementById('nuevaEmpresaWp').value.trim();
-            const admin = document.getElementById('nuevaEmpresaAdmin').value.trim();
-            const clave = document.getElementById('nuevaEmpresaClave').value.trim();
 
-            if(!nombre || !nit) { alert('Ingrese al menos el nombre y NIT de la empresa.'); return; }
+            if(!nombre || !nit) { alert('Ingrese al menos el nombre y NIT.'); return; }
 
-            empresasBD.push({ id: Date.now(), nombre, nit, admin: admin || 'Gerente', wp: wp || '59170000000', clave: clave || '1234' });
+            const nuevaId = Date.now();
+            empresasBD.push({ id: nuevaId, nombre, nit, wp: wp || '59170000000', logo: '', eslogan: 'Transformando números en decisiones' });
+            empresaActivaId = nuevaId;
+            
             document.getElementById('nuevaEmpresaNombre').value = '';
             document.getElementById('nuevaEmpresaNit').value = '';
             document.getElementById('nuevaEmpresaWp').value = '';
-            document.getElementById('nuevaEmpresaAdmin').value = '';
-            document.getElementById('nuevaEmpresaClave').value = '';
+            
             renderEmpresasMaster();
-            alert('¡Empresa creada exitosamente!');
+            alert('¡Empresa creada con éxito!');
+            entrarEmpresa(nuevaId);
         }
 
         function renderEmpresasMaster() {
@@ -525,16 +516,15 @@
                 html += `<tr class="hover:bg-slate-50">
                     <td class="p-3 font-bold text-[#081F5C]">${emp.nombre}</td>
                     <td class="p-3 text-slate-600">${emp.nit}</td>
-                    <td class="p-3 text-slate-600">${emp.admin}</td>
                     <td class="p-3 text-slate-600">${emp.wp}</td>
                     <td class="p-3 text-center">
-                        <button onclick="entrarEmpresa(${emp.id})" class="bg-[#336AEC] hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg font-bold text-[11px] shadow-sm">
-                            <i class="fa-solid fa-arrow-right-to-bracket mr-1"></i> Abrir Empresa
+                        <button onclick="entrarEmpresa(${emp.id})" class="bg-[#336AEC] hover:bg-blue-600 text-white px-2.5 py-1 rounded-lg font-bold text-[11px] shadow-sm">
+                            <i class="fa-solid fa-arrow-right-to-bracket mr-1"></i> Abrir
                         </button>
                     </td>
                 </tr>`;
             });
-            document.getElementById('tablaEmpresasMaster').innerHTML = html || `<tr><td colspan="5" class="p-4 text-center text-slate-400">No hay empresas creadas.</td></tr>`;
+            document.getElementById('tablaEmpresasMaster').innerHTML = html;
         }
 
         function entrarEmpresa(id) {
@@ -546,12 +536,18 @@
             document.getElementById('appHeaderNit').innerText = emp.nit;
             document.getElementById('appBtnWp').href = `https://wa.me/${emp.wp}?text=Hola%20${encodeURIComponent(emp.nombre)},%20soporte%20Rocabado.`;
             
-            // Cargar datos en config
             document.getElementById('cfgNombre').value = emp.nombre;
             document.getElementById('cfgNit').value = emp.nit;
             document.getElementById('cfgWp').value = emp.wp;
+            document.getElementById('cfgEslogan').value = emp.eslogan || 'Transformando números en decisiones';
 
-            // Limpiar o inicializar datos de prueba limpios si es nueva
+            const headerLogoBox = document.getElementById('headerLogoBox');
+            if(emp.logo) {
+                headerLogoBox.innerHTML = `<img src="${emp.logo}" class="w-full h-full object-cover">`;
+            } else {
+                headerLogoBox.innerHTML = `<i class="fa-solid fa-calculator"></i>`;
+            }
+
             dbServicios = [];
             dbGastos = [];
 
@@ -559,6 +555,10 @@
             document.getElementById('view-master-panel').classList.add('hidden');
             document.getElementById('view-app').classList.remove('hidden');
             switchTab('resumen');
+        }
+
+        function entrarEmpresaActual() {
+            entrarEmpresa(empresaActivaId);
         }
 
         function switchTab(tabId) {
@@ -579,12 +579,12 @@
 
         function registrarServicio() {
             const placa = document.getElementById('posPlaca').value.trim().toUpperCase();
-            const cliente = document.getElementById('posCliente').value.trim() || 'Cliente General';
+            const cliente = document.getElementById('posCliente').value.trim() || 'Cliente';
             const celular = document.getElementById('posCelular').value.trim() || '59170000000';
             const servVal = document.getElementById('posServicio').value.split('|');
-            const total = parseFloat(servVal[0]) + parseFloat(document.getElementById('posProducto').value.split('|')[0]);
+            const total = parseFloat(servVal[0]);
             
-            if(!placa) { alert('Debe ingresar el número de placa.'); return; }
+            if(!placa) { alert('Ingrese la placa.'); return; }
 
             dbServicios.unshift({
                 fecha: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
@@ -598,7 +598,7 @@
             document.getElementById('posPlaca').value = '';
             document.getElementById('posCliente').value = '';
             document.getElementById('posCelular').value = '';
-            alert('¡Servicio registrado con éxito en caja!');
+            alert('¡Registrado con éxito!');
             switchTab('resumen');
         }
 
@@ -607,21 +607,17 @@
             const descripcion = document.getElementById('gastoDescripcion').value.trim() || categoria;
             const monto = parseFloat(document.getElementById('gastoMonto').value);
 
-            if(isNaN(monto) || monto <= 0) { alert('Ingrese un monto de gasto válido.'); return; }
+            if(isNaN(monto) || monto <= 0) { alert('Ingrese un monto válido.'); return; }
 
-            dbGastos.unshift({
-                fecha: new Date().toLocaleDateString(),
-                categoria, descripcion, monto
-            });
-
+            dbGastos.unshift({ fecha: new Date().toLocaleDateString(), categoria, descripcion, monto });
             document.getElementById('gastoDescripcion').value = '';
             document.getElementById('gastoMonto').value = '';
             renderCalculosContables();
-            alert('Gasto registrado correctamente en el libro mayor.');
+            alert('Gasto registrado.');
         }
 
         function eliminarGasto(idx) {
-            if(confirm('¿Está seguro de eliminar este registro de gasto para efectos de auditoría?')) {
+            if(confirm('¿Eliminar gasto?')) {
                 dbGastos.splice(idx, 1);
                 renderCalculosContables();
             }
@@ -629,13 +625,34 @@
 
         function guardarConfigEmpresa() {
             const emp = empresasBD.find(e => e.id === empresaActivaId);
-            if(emp) {
-                emp.nombre = document.getElementById('cfgNombre').value;
-                emp.nit = document.getElementById('cfgNit').value;
-                emp.wp = document.getElementById('cfgWp').value;
-                document.getElementById('appHeaderNombre').innerText = emp.nombre;
-                document.getElementById('appHeaderNit').innerText = emp.nit;
-                alert('Configuración actualizada correctamente.');
+            if(!emp) return;
+
+            emp.nombre = document.getElementById('cfgNombre').value;
+            emp.nit = document.getElementById('cfgNit').value;
+            emp.wp = document.getElementById('cfgWp').value;
+            emp.eslogan = document.getElementById('cfgEslogan').value;
+
+            const fileInput = document.getElementById('cfgLogoFile');
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    emp.logo = e.target.result;
+                    aplicarCambiosVisualesEmpresa(emp);
+                    alert('¡Configuración y logotipo actualizados con éxito!');
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                aplicarCambiosVisualesEmpresa(emp);
+                alert('¡Configuración actualizada con éxito!');
+            }
+        }
+
+        function aplicarCambiosVisualesEmpresa(emp) {
+            document.getElementById('appHeaderNombre').innerText = emp.nombre;
+            document.getElementById('appHeaderNit').innerText = emp.nit;
+            const headerLogoBox = document.getElementById('headerLogoBox');
+            if(emp.logo) {
+                headerLogoBox.innerHTML = `<img src="${emp.logo}" class="w-full h-full object-cover">`;
             }
         }
 
@@ -653,7 +670,6 @@
             document.getElementById('kpiIngresos').innerText = formatoMoneda(totIng);
             document.getElementById('kpiEfectivoQR').innerText = `${formatoMoneda(totEfe)} / ${formatoMoneda(totQR)}`;
 
-            // Comisiones (40%)
             let totCom = 0, comHtml = '';
             operariosLista.forEach(op => {
                 let servOp = dbServicios.filter(s => s.operario === op);
@@ -668,9 +684,8 @@
                     <td class="p-3 text-right font-bold table-nums text-emerald-600">${formatoMoneda(comOp)}</td>
                 </tr>`;
             });
-            document.getElementById('tablaComisionesBody').innerHTML = comHtml || `<tr><td colspan="4" class="p-4 text-center text-slate-400">Sin operarios con actividad.</td></tr>`;
+            document.getElementById('tablaComisionesBody').innerHTML = comHtml || `<tr><td colspan="4" class="p-4 text-center text-slate-400">Sin actividad.</td></tr>`;
 
-            // Gastos
             let totGas = 0, gasHtml = '';
             dbGastos.forEach((g, idx) => {
                 totGas += g.monto;
@@ -684,26 +699,20 @@
                     </td>
                 </tr>`;
             });
-            document.getElementById('tablaGastosBody').innerHTML = gasHtml || `<tr><td colspan="5" class="p-4 text-center text-slate-400">Sin gastos registrados en el libro mayor.</td></tr>`;
+            document.getElementById('tablaGastosBody').innerHTML = gasHtml || `<tr><td colspan="5" class="p-4 text-center text-slate-400">Sin gastos.</td></tr>`;
             document.getElementById('lblTotalGastosHeader').innerText = `Total: ${formatoMoneda(totGas)}`;
 
-            // Balance y Utilidad Neta
             let utilidadNeta = totIng - totGas - totCom;
-            document.getElementById('finIngresos').innerText = formatoMoneda(totIng);
-            document.getElementById('finGastos').innerText = formatoMoneda(totGas);
-            document.getElementById('finComisiones').innerText = formatoMoneda(totCom);
-            document.getElementById('finUtilidadNeta').innerText = formatoMoneda(utilidadNeta);
             document.getElementById('kpiUtilidad').innerText = formatoMoneda(utilidadNeta);
 
-            // Historial con WhatsApp
             let histHtml = '';
             dbServicios.forEach(s => {
-                let msg = encodeURIComponent(`¡Hola ${s.cliente}! Su vehículo con placa ${s.placa} ya está listo en ${document.getElementById('cfgNombre').value}. ¡Muchas gracias por su preferencia!`);
+                let emp = empresasBD.find(e => e.id === empresaActivaId);
+                let msg = encodeURIComponent(`¡Hola ${s.cliente}! Su servicio ${s.placa} está listo en ${emp.nombre}.`);
                 histHtml += `<tr class="hover:bg-slate-50">
                     <td class="p-3 text-slate-500">${s.fecha}</td>
                     <td class="p-3 font-bold text-[#081F5C]">${s.placa}</td>
                     <td class="p-3 text-slate-700">${s.cliente}</td>
-                    <td class="p-3 text-slate-600">${s.servicio}</td>
                     <td class="p-3 text-right font-bold table-nums text-[#336AEC]">${formatoMoneda(s.total)}</td>
                     <td class="p-3 text-center">
                         <a href="https://wa.me/${s.celular}?text=${msg}" target="_blank" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg text-[10px] font-semibold inline-flex items-center space-x-1 shadow-sm">
@@ -712,8 +721,10 @@
                     </td>
                 </tr>`;
             });
-            document.getElementById('tablaHistorialBody').innerHTML = histHtml || `<tr><td colspan="6" class="p-4 text-center text-slate-400">Sin vehículos registrados en el historial.</td></tr>`;
+            document.getElementById('tablaHistorialBody').innerHTML = histHtml || `<tr><td colspan="5" class="p-4 text-center text-slate-400">Sin registros.</td></tr>`;
         }
+        
+        actualizarPantallaBienvenida();
     </script>
 </body>
 </html>
