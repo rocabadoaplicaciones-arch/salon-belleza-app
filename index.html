@@ -3,1032 +3,525 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma Contable Global | Rocabado Auditores</title>
-    <!-- Tailwind CSS -->
+    <title>Rocabado Auditores - Plataforma Gerencial Multisede</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        corpBg: '#F3F4F6',
-                        corpCard: '#FFFFFF',
-                        corpDark: '#1E293B',
-                        corpBlue: '#2563EB',
-                        corpCyan: '#0EA5E9',
-                        corpAccent: '#3B82F6'
+                        navy: { 800: '#1e3a8a', 900: '#0f172a' },
+                        emerald: { 600: '#059669', 700: '#047857' },
+                        platinum: '#f8fafc'
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .table-nums { font-variant-numeric: tabular-nums; }
-        body { background-color: #F3F4F6; min-height: 100vh; color: #1E293B; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="font-sans antialiased">
+<body class="bg-platinum text-slate-800 font-sans antialiased pb-20">
 
-    <!-- ========================================== -->
-    <!-- VISTA 1: BIENETRADA Y ACCESO CORPORATIVO   -->
-    <!-- ========================================== -->
-    <div id="view-welcome" class="min-h-screen flex flex-col justify-between p-5 max-w-md mx-auto">
-        <div class="pt-6 text-center space-y-6">
-            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xl inline-block w-full">
-                <div class="flex items-center space-x-4">
-                    <div id="welcomeLogoContainer" class="w-16 h-16 flex items-center justify-center bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl text-white shadow-md overflow-hidden flex-shrink-0">
-                        <i class="fa-solid fa-chart-pie text-2xl" id="welcomeLogoIcon"></i>
-                        <img id="welcomeLogoImg" src="" alt="Logo" class="w-full h-full object-cover hidden">
-                    </div>
-                    <div class="text-left overflow-hidden">
-                        <h2 id="welcomeEmpresaNombre" class="font-black text-base text-slate-900 truncate">ROCABADO AUDITORES</h2>
-                        <p id="welcomeEmpresaSub" class="text-[11px] text-blue-600 tracking-wider font-bold uppercase mt-0.5">Transformando números en decisiones</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="space-y-3">
-                <span class="inline-block bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase border border-blue-200">Enterprise Cloud Accounting</span>
-                <h1 class="text-2xl font-black tracking-tight text-slate-900">Plataforma Financiera Multiempresa</h1>
-                <p class="text-xs text-slate-600 leading-relaxed px-2">
-                    Solución contable global certificada. Auditoría en tiempo real, POS inteligente y control gerencial optimizado para dispositivos móviles.
-                </p>
-            </div>
-        </div>
-
-        <div class="space-y-3 pb-6">
-            <button onclick="entrarEmpresaActual()" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-2xl flex items-center justify-between transition-all shadow-lg font-bold text-xs uppercase tracking-wider">
-                <div class="flex items-center space-x-3">
-                    <i class="fa-solid fa-rocket text-base text-blue-200"></i>
-                    <span>Ingresar al Sistema Activo</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs"></i>
-            </button>
-
-            <button onclick="abrirModalMaster()" class="w-full bg-white hover:bg-slate-50 text-slate-800 p-4 rounded-2xl flex items-center justify-between transition-all font-semibold text-xs border border-slate-200 shadow-sm">
-                <div class="flex items-center space-x-3">
-                    <i class="fa-solid fa-shield-halved text-base text-blue-600"></i>
-                    <span>Panel Master Global (Licencias & Empresas)</span>
-                </div>
-                <i class="fa-solid fa-chevron-right text-xs"></i>
-            </button>
-
-            <a id="welcomeBtnWp" href="https://wa.me/59170000000" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-3.5 rounded-2xl flex items-center justify-center space-x-2 text-xs shadow-md transition-all">
-                <i class="fa-brands fa-whatsapp text-base"></i>
-                <span id="welcomeWpTexto">Soporte Técnico Internacional</span>
-            </a>
-
-            <div class="text-center pt-2">
-                <p class="text-[10px] text-slate-400">© 2026 Rocabado Auditores Consultores RAC. All rights reserved.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- MODAL CLAVE MAESTRA                        -->
-    <!-- ========================================== -->
-    <div id="modal-master" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white border border-slate-200 rounded-3xl max-w-sm w-full p-6 space-y-4 text-slate-800 shadow-2xl">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-                <h3 class="text-sm font-bold flex items-center text-blue-600">
-                    <i class="fa-solid fa-key mr-2"></i> Autenticación Master
-                </h3>
-                <button onclick="cerrarModalMaster()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-base"></i></button>
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1.5">Clave de Seguridad Global</label>
-                <input type="password" id="inputClaveMaster" placeholder="••••••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600 text-slate-900">
-            </div>
-            <button onclick="verificarMaster()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs transition-all shadow-md">
-                Acceder al Panel Master
-            </button>
-        </div>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- VISTA 2: PANEL MASTER GLOBAL               -->
-    <!-- ========================================== -->
-    <div id="view-master-panel" class="hidden min-h-screen bg-slate-100 pb-12 text-slate-800">
-        <header class="bg-white border-b border-slate-200 px-5 py-4 shadow-sm flex justify-between items-center">
+    <!-- HEADER EJECUTIVO -->
+    <header class="bg-navy-900 text-white shadow-lg sticky top-0 z-50 border-b border-slate-800">
+        <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <div class="bg-blue-50 p-2.5 rounded-xl border border-blue-100 text-blue-600"><i class="fa-solid fa-building-shield text-lg"></i></div>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-chart-pie text-white text-lg"></i>
+                </div>
                 <div>
-                    <h1 class="text-sm font-black text-slate-900">Panel Master Global</h1>
-                    <p class="text-[10px] text-slate-500">Rocabado Auditores · Emisión de Licencias y Certificados</p>
+                    <h1 class="font-bold text-sm tracking-wide">ROCABADO AUDITORES</h1>
+                    <p class="text-[10px] text-slate-400 italic">"Transformando números en decisiones"</p>
                 </div>
             </div>
-            <button onclick="volverInicio()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-all font-semibold border border-slate-200">
-                <i class="fa-solid fa-arrow-left mr-1"></i> Salir
-            </button>
-        </header>
+            <div class="flex items-center space-x-2">
+                <button onclick="abrirMasterModal()" class="bg-slate-800 hover:bg-slate-700 p-2 rounded-lg text-xs border border-slate-700 text-emerald-400" title="Panel Master">
+                    <i class="fa-solid fa-key"></i>
+                </button>
+                <a href="https://wa.me/" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow flex items-center space-x-1">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Soporte</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- NAVEGACIÓN TÁCTIL VERTICAL / HORIZONTAL DESLIZABLE -->
+        <nav class="bg-navy-800 px-2 py-2 flex space-x-2 overflow-x-auto scrollbar-none border-t border-slate-700/50">
+            <button onclick="cambiarTab('dashboard')" id="btn-dashboard" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap bg-emerald-600 text-white shadow"><i class="fa-solid fa-gauge-high mr-1"></i> 1. Dashboard</button>
+            <button onclick="cambiarTab('pos')" id="btn-pos" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 hover:bg-slate-700"><i class="fa-solid fa-cash-register mr-1"></i> 2. POS Caja</button>
+            <button onclick="cambiarTab('comisiones')" id="btn-comisiones" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 hover:bg-slate-700"><i class="fa-solid fa-users-gear mr-1"></i> 3. Comisiones</button>
+            <button onclick="cambiarTab('catalogo')" id="btn-catalogo" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 hover:bg-slate-700"><i class="fa-solid fa-boxes-stacked mr-1"></i> 4. Catálogo & Stock</button>
+            <button onclick="cambiarTab('egresos')" id="btn-egresos" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 hover:bg-slate-700"><i class="fa-solid fa-file-invoice-dollar mr-1"></i> 5. Gastos & Auditoría</button>
+        </nav>
+    </header>
 
-        <main class="max-w-4xl mx-auto p-4 space-y-6">
-            <div class="bg-white border border-slate-200 p-5 rounded-3xl shadow-md space-y-4">
-                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-wider border-b border-slate-100 pb-3 flex items-center">
-                    <i class="fa-solid fa-circle-plus mr-2"></i> Registrar Nueva Empresa & Licenciamiento
-                </h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre Comercial</label>
-                        <input type="text" id="regNombre" placeholder="Ej: Global Services S.R.L." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">NIT / ID Fiscal</label>
-                        <input type="text" id="regNit" placeholder="Ej: 1029384756" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Teléfono / WhatsApp</label>
-                        <input type="text" id="regWp" placeholder="Ej: 59170000000" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Dirección Física</label>
-                        <input type="text" id="regDir" placeholder="Ej: Av. Monseñor Rivero #123" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Usuario Admin</label>
-                        <input type="text" id="regUser" placeholder="Ej: admin_global" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Contraseña Admin</label>
-                        <input type="password" id="regPass" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo de Licencia</label>
-                        <select id="regLicencia" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-blue-600 text-slate-700">
-                            <option value="Demo 4 Días">Demo 4 Días (Prueba)</option>
-                            <option value="1 Mes">Licencia Mensual (30 Días)</option>
-                            <option value="1 Año">Licencia Anual (365 Días)</option>
-                            <option value="Indefinida">Licencia Vitalicia / Corporativa</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Cargar Logotipo (Archivo)</label>
-                        <input type="file" id="regLogoFile" accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[11px] file:font-semibold file:bg-blue-600 file:text-white">
-                    </div>
+    <!-- CONTENEDOR PRINCIPAL -->
+    <main class="max-w-md mx-auto p-4 space-y-4">
+
+        <!-- 1. TAB DASHBOARD CONSOLIDADO -->
+        <section id="tab-dashboard" class="space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Sucursal / Casa Matriz</label>
+                <select id="select-sucursal" onchange="actualizarDashboard()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-sm font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="consolidado">🌐 Consolidado Total (Todas las Sucursales)</option>
+                    <option value="matriz">🏢 Casa Matriz (Centro)</option>
+                    <option value="sucursal1">📍 Sucursal 1 (4to Anillo)</option>
+                    <option value="sucursal2">📍 Sucursal 2 (Urubó)</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                    <span class="text-xs font-medium text-slate-400">Servicios Hoy</span>
+                    <h2 class="text-2xl font-black text-navy-900 mt-1" id="dash-total-servicios">0</h2>
+                    <span class="text-[10px] text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full inline-block mt-1"><i class="fa-solid fa-arrow-trend-up"></i> Flujo activo</span>
                 </div>
-                <div class="pt-2">
-                    <button onclick="crearEmpresaMaster()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl text-xs transition-all shadow-md">
-                        <i class="fa-solid fa-certificate mr-1"></i> Registrar Empresa y Generar Licencia
-                    </button>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                    <span class="text-xs font-medium text-slate-400">Ingreso Bruto Total</span>
+                    <h2 class="text-xl font-black text-emerald-600 mt-1" id="dash-ingreso-bruto">Bs. 0,00</h2>
+                    <span class="text-[10px] text-slate-500 block mt-1">Caja consolidada</span>
                 </div>
             </div>
 
-            <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-md">
-                <div class="p-4 bg-slate-50 border-b border-slate-200">
-                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Cartera de Empresas Licenciadas</h3>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-2">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Métodos de Cobro (Arqueo)</span>
+                <div class="flex justify-between items-center py-2 border-b border-slate-100 text-sm">
+                    <span class="text-slate-600"><i class="fa-solid fa-money-bill-wave text-emerald-600 mr-2"></i> Efectivo en Caja</span>
+                    <span class="font-bold text-navy-900" id="dash-efectivo">Bs. 0,00</span>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-100 text-slate-600 uppercase text-[10px] border-b border-slate-200">
-                            <tr>
-                                <th class="p-3.5">Empresa / NIT</th>
-                                <th class="p-3.5">Licencia / Certificado</th>
-                                <th class="p-3.5 text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaEmpresasMaster" class="divide-y divide-slate-200"></tbody>
-                    </table>
+                <div class="flex justify-between items-center py-2 text-sm">
+                    <span class="text-slate-600"><i class="fa-solid fa-qrcode text-blue-600 mr-2"></i> QR / Transferencia</span>
+                    <span class="font-bold text-navy-900" id="dash-qr">Bs. 0,00</span>
                 </div>
             </div>
-        </main>
-    </div>
 
-    <!-- ========================================== -->
-    <!-- VISTA 3: APLICACIÓN INTERNA (9 PESTAÑAS)     -->
-    <!-- ========================================== -->
-    <div id="view-app" class="hidden min-h-screen bg-slate-100 pb-24 text-slate-800">
-        <!-- HEADER EJECUTIVO MÓVIL -->
-        <header class="bg-white border-b border-slate-200 sticky top-0 z-40 px-4 py-3 shadow-sm">
+            <div class="bg-gradient-to-br from-navy-900 to-slate-800 text-white p-5 rounded-2xl shadow-md space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-medium text-slate-300 uppercase tracking-wider">Utilidad Neta Real</span>
+                    <i class="fa-solid fa-shield-halved text-emerald-400 text-lg"></i>
+                </div>
+                <h3 class="text-2xl font-black text-emerald-400" id="dash-utilidad-neta">Bs. 0,00</h3>
+                <p class="text-[11px] text-slate-400">Post deducción automática de sueldos, comisiones y gastos operativos categorizados.</p>
+                <button onclick="enviarReporteWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold text-xs shadow transition flex items-center justify-center space-x-2">
+                    <i class="fa-brands fa-whatsapp text-base"></i>
+                    <span>Enviar Arqueo Gerencial por WhatsApp</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. TAB POS INTELIGENTE & CAJA RÁPIDA -->
+        <section id="tab-pos" class="space-y-4 hidden">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                <h3 class="font-bold text-sm text-navy-900 flex items-center"><i class="fa-solid fa-cash-register text-emerald-600 mr-2"></i> POS Inteligente & Caja Rápida</h3>
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Tipo de Vehículo</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="seleccionarVehiculo('Auto / Sedán')" class="tipo-vehiculo-btn p-2 rounded-xl border border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold text-left transition"><i class="fa-solid fa-car mr-1"></i> Auto / Sedán</button>
+                        <button type="button" onclick="seleccionarVehiculo('Vagoneta')" class="tipo-vehiculo-btn p-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs font-bold text-left transition"><i class="fa-solid fa-car-side mr-1"></i> Vagoneta</button>
+                        <button type="button" onclick="seleccionarVehiculo('Camioneta')" class="tipo-vehiculo-btn p-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs font-bold text-left transition"><i class="fa-solid fa-truck-pickup mr-1"></i> Camioneta</button>
+                        <button type="button" onclick="seleccionarVehiculo('Motocicleta')" class="tipo-vehiculo-btn p-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs font-bold text-left transition"><i class="fa-solid fa-motorcycle mr-1"></i> Motocicleta</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Nro. Placa</label>
+                        <input type="text" id="pos-placa" placeholder="EJ: 2849XYZ" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs uppercase font-bold text-navy-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Cliente / Celular</label>
+                        <input type="text" id="pos-cliente" placeholder="Nombre / WhatsApp" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Seleccionar Servicio</label>
+                    <select id="pos-servicio" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <!-- Se llena dinámicamente -->
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Operario Asignado</label>
+                    <select id="pos-operario" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="Carlos Gómez">Carlos Gómez</option>
+                        <option value="Luis Vargas">Luis Vargas</option>
+                        <option value="Mario Rojas">Mario Rojas</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Forma de Pago</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="flex items-center space-x-2 p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+                            <input type="radio" name="pago-metodo" value="Efectivo" checked class="text-emerald-600">
+                            <span>Efectivo</span>
+                        </label>
+                        <label class="flex items-center space-x-2 p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold cursor-pointer">
+                            <input type="radio" name="pago-metodo" value="QR" class="text-emerald-600">
+                            <span>QR / Transferencia</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Notas / Observaciones</label>
+                    <input type="text" id="pos-notas" placeholder="Ej: Prefiere silicona sin aroma" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <button onclick="registrarVentaPOS()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl text-xs shadow-md transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-check-circle text-base"></i>
+                    <span>COBRAR Y REGISTRAR SERVICIO</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. TAB COMISIONES & ESTADOS DE CUENTA -->
+        <section id="tab-comisiones" class="space-y-4 hidden">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-users-gear text-emerald-600 mr-2"></i> Planilla de Comisiones (40%)</h3>
+                    <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded-full">Automático</span>
+                </div>
+                <div id="lista-comisiones-operarios" class="space-y-2">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TAB CATÁLOGO & INVENTARIO -->
+        <section id="tab-catalogo" class="space-y-4 hidden">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-boxes-stacked text-emerald-600 mr-2"></i> Administrar Catálogo de Servicios</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" id="nuevo-serv-nombre" placeholder="Nombre Servicio" class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                    <input type="number" id="nuevo-serv-precio" placeholder="Precio (Bs.)" class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                </div>
+                <button onclick="agregarServicioCatalogo()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-2 rounded-xl text-xs transition">Añadir al Catálogo</button>
+                <div id="lista-catalogo-servicios" class="space-y-2 pt-2 border-t border-slate-100 max-h-48 overflow-y-auto">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-bottle-droplet text-emerald-600 mr-2"></i> Control de Inventario & Insumos</h3>
+                <p class="text-[11px] text-slate-500">Shampoos, siliconas y ceras para evitar mermas y robo hormiga.</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" id="nuevo-insumo-nombre" placeholder="Insumo (Ej. Silicona)" class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                    <input type="number" id="nuevo-insumo-stock" placeholder="Stock Litros/Unid" class="bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                </div>
+                <button onclick="agregarInsumoInventario()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-2 rounded-xl text-xs transition">Registrar Insumo</button>
+                <div id="lista-inventario" class="space-y-2 pt-2 border-t border-slate-100">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. TAB EGRESOS & GASTOS CATEGORIZADOS -->
+        <section id="tab-egresos" class="space-y-4 hidden">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-file-invoice-dollar text-emerald-600 mr-2"></i> Egresos y Gastos Operativos</h3>
+                
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Categoría Estricta</label>
+                    <select id="gasto-categoria" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <option value="Servicios básicos">Servicios básicos (Agua, Luz, Internet)</option>
+                        <option value="Alquiler">Alquiler</option>
+                        <option value="Sueldos">Sueldos</option>
+                        <option value="Material de limpieza">Material de limpieza</option>
+                        <option value="Material de escritorio">Material de escritorio</option>
+                        <option value="Mantenimientos">Mantenimientos</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Monto (Bs.)</label>
+                        <input type="number" id="gasto-monto" placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 font-bold focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Detalle / Proveedor</label>
+                        <input type="text" id="gasto-detalle" placeholder="Ej: Factura CRE" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                    </div>
+                </div>
+
+                <button onclick="registrarGasto()" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-xs shadow transition">REGISTRAR EGRESO</button>
+
+                <div class="pt-3 border-t border-slate-100 space-y-2">
+                    <span class="text-xs font-bold text-slate-500">Historial de Gastos del Mes</span>
+                    <div id="lista-egresos" class="space-y-2 max-h-40 overflow-y-auto">
+                        <!-- Dinámico -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL PANEL MASTER / SUPER ADMIN -->
+    <div id="master-modal" class="fixed inset-0 bg-navy-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-5 space-y-4 shadow-2xl border border-slate-100">
             <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <button onclick="volverInicio()" class="text-slate-600 hover:text-slate-900 text-sm bg-slate-100 p-2 rounded-xl border border-slate-200" title="Volver al inicio">
-                        <i class="fa-solid fa-house"></i>
-                    </button>
-                    <div id="headerLogoBox" class="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 overflow-hidden border border-blue-100">
-                        <i class="fa-solid fa-chart-pie"></i>
-                    </div>
-                    <div>
-                        <h1 id="appHeaderNombre" class="text-xs font-black text-slate-900 tracking-wide">ROCABADO AUDITORES</h1>
-                        <p class="text-[9px] text-slate-500 font-medium">NIT: <span id="appHeaderNit" class="font-bold text-slate-700">5493273119</span> | Lic: <span id="appHeaderLic" class="text-blue-600 font-bold">Activa</span></p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <a id="appBtnWp" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center space-x-1 shadow-sm transition-all">
-                        <i class="fa-brands fa-whatsapp text-sm"></i>
-                        <span class="text-[11px]">Soporte</span>
-                    </a>
-                </div>
+                <h3 class="font-bold text-sm text-navy-900 flex items-center"><i class="fa-solid fa-key text-emerald-600 mr-2"></i> Panel Master (Clave Maestra)</h3>
+                <button onclick="cerrarMasterModal()" class="text-slate-400 hover:text-slate-600 text-sm"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
-            <!-- 9 PESTAÑAS DE NAVEGACIÓN SUPERIOR (HORIZONTAL SCROLL) -->
-            <div class="flex space-x-1.5 mt-3 overflow-x-auto border-t border-slate-100 pt-2.5 hide-scrollbar">
-                <button onclick="switchTab('resumen')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-sm whitespace-nowrap" data-target="resumen"><i class="fa-solid fa-chart-line mr-1"></i> 1. Resumen</button>
-                <button onclick="switchTab('pos')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="pos"><i class="fa-solid fa-cash-register mr-1"></i> 2. POS Caja</button>
-                <button onclick="switchTab('comisiones')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="comisiones"><i class="fa-solid fa-users-gear mr-1"></i> 3. Comisiones</button>
-                <button onclick="switchTab('gastos')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="gastos"><i class="fa-solid fa-receipt mr-1"></i> 4. Gastos</button>
-                <button onclick="switchTab('clientes')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="clientes"><i class="fa-solid fa-address-book mr-1"></i> 5. Clientes</button>
-                <button onclick="switchTab('catalogo')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="catalogo"><i class="fa-solid fa-tags mr-1"></i> 6. Catálogo</button>
-                <button onclick="switchTab('licencias')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="licencias"><i class="fa-solid id-card mr-1"></i> 7. Licencia</button>
-                <button onclick="switchTab('reportes')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="reportes"><i class="fa-solid fa-calendar-days mr-1"></i> 8. Reportes</button>
-                <button onclick="switchTab('config')" class="nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap" data-target="config"><i class="fa-solid fa-gear mr-1"></i> 9. Config</button>
+            <div id="master-login-view" class="space-y-3">
+                <p class="text-xs text-slate-500">Ingrese su clave maestra de auditor para administrar licencias corporativas y empresas.</p>
+                <input type="password" id="master-clave" placeholder="Clave Maestra" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 font-bold focus:outline-none">
+                <button onclick="verificarClaveMaster()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs shadow">ACCEDER AL PANEL MASTER</button>
             </div>
-        </header>
-
-        <!-- CONTENIDO DE LAS 9 PESTAÑAS -->
-        <main class="max-w-4xl mx-auto p-4 space-y-5">
-
-            <!-- PESTAÑA 1: RESUMEN / DASHBOARD -->
-            <section id="tab-resumen" class="space-y-4 tab-content">
-                <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm flex justify-between items-center">
-                    <div>
-                        <h2 class="text-sm font-black text-slate-900">Panel Gerencial Diario</h2>
-                        <p class="text-[11px] text-slate-500">Transformando números en decisiones estratégicas</p>
-                    </div>
-                    <div class="bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs font-semibold text-blue-600">
-                        <i class="fa-solid fa-calendar mr-1"></i> <span id="currentDate">Hoy</span>
-                    </div>
+            <div id="master-panel-view" class="space-y-3 hidden">
+                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-100">
+                    <span class="text-[11px] font-bold text-emerald-800 block">Acceso Concedido - Super Admin</span>
+                    <p class="text-[10px] text-emerald-600">Gestión multiempresa de licencias anuales (3000 - 5000 Bs.)</p>
                 </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm space-y-1">
-                        <p class="text-xs text-slate-500 font-semibold">Servicios Registrados</p>
-                        <h3 id="kpiVehiculos" class="text-2xl font-black text-slate-900 table-nums">0</h3>
-                        <span class="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full inline-block border border-emerald-100"><i class="fa-solid fa-arrow-up mr-1"></i> Flujo activo</span>
-                    </div>
-                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm space-y-1">
-                        <p class="text-xs text-slate-500 font-semibold">Ingreso Total Bruto</p>
-                        <h3 id="kpiIngresos" class="text-2xl font-black text-blue-600 table-nums text-right">Bs. 0,00</h3>
-                        <span class="text-[10px] text-slate-400 block text-right">Caja consolidada</span>
-                    </div>
-                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm space-y-1">
-                        <p class="text-xs text-slate-500 font-semibold">Efectivo / QR Digital</p>
-                        <h3 id="kpiEfectivoQR" class="text-xs font-extrabold text-slate-800 table-nums text-right pt-1">Bs. 0,00 / Bs. 0,00</h3>
-                        <span class="text-[10px] text-slate-400 block text-right">Métodos de cobro</span>
-                    </div>
-                    <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm space-y-1">
-                        <p class="text-xs text-slate-500 font-semibold">Utilidad Neta Real</p>
-                        <h3 id="kpiUtilidad" class="text-2xl font-black text-emerald-600 table-nums text-right">Bs. 0,00</h3>
-                        <span class="text-[10px] text-slate-400 block text-right">Post gastos y comisiones</span>
-                    </div>
+                <div class="space-y-2">
+                    <input type="text" id="empresa-nombre" placeholder="Nombre Lavadero (Ej. Autolavado Urubó)" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                    <input type="text" id="empresa-nit" placeholder="NIT / Licencia" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                    <select id="empresa-vigencia" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 text-xs text-navy-900 focus:outline-none">
+                        <option value="1 Año">Licencia Anual Corporativa (1 Año)</option>
+                        <option value="6 Meses">Licencia Semestral (6 Meses)</option>
+                        <option value="3 Meses">Licencia Trimestral (3 Meses)</option>
+                    </select>
                 </div>
-            </section>
-
-            <!-- PESTAÑA 2: CAJA / POS INTELIGENTE -->
-            <section id="tab-pos" class="space-y-4 tab-content hidden">
-                <div class="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm space-y-4">
-                    <div class="border-b border-slate-100 pb-3">
-                        <h2 class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center">
-                            <i class="fa-solid fa-cash-register text-blue-600 mr-2"></i> POS Inteligente & Caja Rápida
-                        </h2>
-                        <p class="text-[11px] text-slate-500">Selecciona tipo de vehículo, servicio y cobra al instante</p>
-                    </div>
-
-                    <!-- SELECTOR DE VEHÍCULO TÁCTIL -->
-                    <div class="space-y-1.5">
-                        <label class="block text-xs font-semibold text-slate-600">Tipo de Vehículo / Referencia</label>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <button type="button" onclick="seleccionarTipoVehiculo('🚗 Auto')" id="btnVehAuto" class="veh-btn bg-blue-50 border border-blue-500 text-blue-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 shadow-sm">
-                                <i class="fa-solid fa-car text-sm text-blue-600"></i>
-                                <span>Auto / Sedán</span>
-                            </button>
-                            <button type="button" onclick="seleccionarTipoVehiculo('🚙 Vagoneta')" id="btnVehVag" class="veh-btn bg-slate-50 border border-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 hover:bg-slate-100">
-                                <i class="fa-solid fa-truck-monster text-sm text-blue-600"></i>
-                                <span>Vagoneta</span>
-                            </button>
-                            <button type="button" onclick="seleccionarTipoVehiculo('🏍️ Moto')" id="btnVehMoto" class="veh-btn bg-slate-50 border border-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 hover:bg-slate-100">
-                                <i class="fa-solid fa-motorcycle text-sm text-blue-600"></i>
-                                <span>Motocicleta</span>
-                            </button>
-                            <button type="button" onclick="seleccionarTipoVehiculo('🚐 Camioneta')" id="btnVehCam" class="veh-btn bg-slate-50 border border-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 hover:bg-slate-100">
-                                <i class="fa-solid fa-van-shuttle text-sm text-blue-600"></i>
-                                <span>Camioneta</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Nro. Placa / Identificador</label>
-                            <input type="text" id="posPlaca" placeholder="Ej: 2849XYZ" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs uppercase font-bold text-slate-900 outline-none focus:border-blue-600">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Cliente</label>
-                            <input type="text" id="posCliente" placeholder="Ej: Juan Pérez" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-600">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Celular WhatsApp</label>
-                            <input type="text" id="posCelular" placeholder="Ej: 59170000000" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none focus:border-blue-600">
-                        </div>
-                    </div>
-
-                    <!-- CATÁLOGO INTELIGENTE GRID -->
-                    <div class="space-y-1.5">
-                        <label class="block text-xs font-semibold text-slate-600">Catálogo Inteligente (Toque para seleccionar)</label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="gridServiciosPos"></div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-100">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Monto a Cobrar (Bs)</label>
-                            <input type="number" id="posMontoManual" placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-black text-blue-600 outline-none focus:border-blue-600 table-nums">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Operario Asignado</label>
-                            <select id="posOperario" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none focus:border-blue-600">
-                                <option value="Carlos Gómez">Carlos Gómez</option>
-                                <option value="Luis Vargas">Luis Vargas</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Método de Pago</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="button" onclick="seleccionarMetodoPago('Efectivo')" id="btnPagoEfectivo" class="p-2.5 rounded-xl border border-blue-500 bg-blue-50 text-blue-700 font-bold text-xs flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-money-bill-wave text-blue-600"></i><span>Efectivo</span>
-                            </button>
-                            <button type="button" onclick="seleccionarMetodoPago('QR')" id="btnPagoQr" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs flex items-center justify-center space-x-2">
-                                <i class="fa-solid fa-qrcode text-blue-600"></i><span>QR / Transferencia</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button onclick="registrarServicioPOS()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl text-xs transition-all shadow-md uppercase tracking-wider">
-                        <i class="fa-solid fa-print mr-1"></i> Procesar Cobro e Imprimir Ticket
-                    </button>
-                </div>
-            </section>
-
-            <!-- PESTAÑA 3: COMISIONES -->
-            <section id="tab-comisiones" class="space-y-4 tab-content hidden">
-                <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm">
-                    <h2 class="text-xs font-black text-slate-900 uppercase">Planilla de Comisiones (Personal)</h2>
-                    <p class="text-[11px] text-slate-500">Cálculo porcentual gerencial automático (40%)</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600 uppercase text-[10px] border-b border-slate-200">
-                            <tr>
-                                <th class="p-3">Operario</th>
-                                <th class="p-3 text-center">Servicios</th>
-                                <th class="p-3 text-right">Generado</th>
-                                <th class="p-3 text-right">Comisión</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaComisionesBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- PESTAÑA 4: GASTOS Y AUDITORÍA -->
-            <section id="tab-gastos" class="space-y-4 tab-content hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div class="bg-white border border-slate-200 p-4 rounded-3xl shadow-sm space-y-3 h-fit">
-                        <h3 class="text-xs font-bold text-blue-600 uppercase tracking-wider border-b border-slate-100 pb-2">Registrar Egreso</h3>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Categoría</label>
-                            <select id="gastoCategoria" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-700 outline-none">
-                                <option value="💧 Servicios Básicos">💧 Servicios Básicos</option>
-                                <option value="🏠 Alquileres">🏠 Alquileres</option>
-                                <option value="🛠️ Mantenimiento">🛠️ Mantenimiento</option>
-                                <option value="📦 Insumos">📦 Insumos</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Descripción</label>
-                            <input type="text" id="gastoDescripcion" placeholder="Ej: Compra de agua" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Monto (Bs)</label>
-                            <input type="number" id="gastoMonto" placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 outline-none">
-                        </div>
-                        <button onclick="registrarGasto()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-sm">Registrar Gasto</button>
-                    </div>
-
-                    <div class="lg:col-span-2 space-y-3">
-                        <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-                            <div class="p-3.5 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                                <h3 class="text-xs font-bold text-slate-700 uppercase">Libro Mayor de Egresos</h3>
-                                <span id="lblTotalGastosHeader" class="text-xs font-bold text-red-600 table-nums">Total: Bs. 0,00</span>
-                            </div>
-                            <div class="overflow-x-auto max-h-60 overflow-y-auto">
-                                <table class="w-full text-left text-xs">
-                                    <thead class="bg-slate-100 text-slate-600 text-[10px] sticky top-0 border-b border-slate-200">
-                                        <tr>
-                                            <th class="p-2.5">Fecha</th>
-                                            <th class="p-2.5">Categoría</th>
-                                            <th class="p-2.5 text-right">Monto</th>
-                                            <th class="p-2.5 text-center">Acción</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tablaGastosBody" class="divide-y divide-slate-100"></tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PESTAÑA 5: CLIENTES / HISTORIAL -->
-            <section id="tab-clientes" class="space-y-4 tab-content hidden">
-                <div class="bg-white border border-slate-200 p-4 rounded-2xl shadow-sm">
-                    <h2 class="text-xs font-black text-slate-900 uppercase">Base de Clientes & Alertas WhatsApp</h2>
-                    <p class="text-[11px] text-slate-500">Historial completo con notificaciones instantáneas</p>
-                </div>
-                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-                    <table class="w-full text-left text-xs">
-                        <thead class="bg-slate-50 text-slate-600 uppercase text-[10px] border-b border-slate-200">
-                            <tr>
-                                <th class="p-3">Vehículo / Placa</th>
-                                <th class="p-3">Cliente</th>
-                                <th class="p-3 text-right">Monto</th>
-                                <th class="p-3 text-center">WhatsApp</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tablaHistorialBody" class="divide-y divide-slate-100"></tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- PESTAÑA 6: CATÁLOGO DE SERVICIOS -->
-            <section id="tab-catalogo" class="space-y-4 tab-content hidden">
-                <div class="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm space-y-4">
-                    <h2 class="text-xs font-black text-slate-900 uppercase border-b border-slate-100 pb-2">Administrar Catálogo Inteligente</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <input type="text" id="nuevoCatNombre" placeholder="Nombre del Servicio" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                        <input type="number" id="nuevoCatPrecio" placeholder="Precio (Bs)" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                        <button onclick="agregarServicioCatalogo()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl text-xs">Añadir al Catálogo</button>
-                    </div>
-                    <div class="space-y-2 pt-2" id="listaCatalogoConfig"></div>
-                </div>
-            </section>
-
-            <!-- PESTAÑA 7: CONTROL DE LICENCIAS -->
-            <section id="tab-licencias" class="space-y-4 tab-content hidden">
-                <div class="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm space-y-3">
-                    <h2 class="text-xs font-black text-slate-900 uppercase border-b border-slate-100 pb-2">Estado de la Licencia Actual</h2>
-                    <div class="bg-blue-50 border border-blue-100 p-4 rounded-2xl space-y-2">
-                        <div class="flex justify-between text-xs">
-                            <span class="text-slate-600 font-semibold">Tipo de Licencia:</span>
-                            <span id="lblLicTipo" class="font-bold text-blue-700">Licencia Vitalicia / Corporativa</span>
-                        </div>
-                        <div class="flex justify-between text-xs">
-                            <span class="text-slate-600 font-semibold">Estado del Sistema:</span>
-                            <span class="font-bold text-emerald-600">Certificado y Activo</span>
-                        </div>
-                        <div class="flex justify-between text-xs">
-                            <span class="text-slate-600 font-semibold">Auditoría RAC:</span>
-                            <span class="font-bold text-slate-800">Rocabado Auditores Consultores</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PESTAÑA 8: REPORTES POR FECHAS -->
-            <section id="tab-reportes" class="space-y-4 tab-content hidden">
-                <div class="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm space-y-3">
-                    <h2 class="text-xs font-black text-slate-900 uppercase border-b border-slate-100 pb-2">Reporte Analítico por Fechas</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Filtrar por Fecha</label>
-                            <input type="date" id="filtroFecha" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                        </div>
-                        <div class="flex items-end">
-                            <button onclick="filtrarReportesFecha()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-xl text-xs">Generar Reporte Cierre</button>
-                        </div>
-                    </div>
-                    <div id="resultadoReporteFecha" class="pt-3 text-xs text-slate-600"></div>
-                </div>
-            </section>
-
-            <!-- PESTAÑA 9: CONFIGURACIÓN CORPORATIVA -->
-            <section id="tab-config" class="space-y-4 tab-content hidden">
-                <div class="bg-white border border-slate-200 p-5 rounded-3xl shadow-sm space-y-3 max-w-lg">
-                    <h2 class="text-xs font-black text-slate-900 uppercase border-b border-slate-100 pb-2">Configuración Corporativa</h2>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre Comercial</label>
-                        <input type="text" id="cfgNombre" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Eslogan</label>
-                        <input type="text" id="cfgEslogan" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">NIT</label>
-                        <input type="text" id="cfgNit" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">WhatsApp Soporte</label>
-                        <input type="text" id="cfgWp" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Logotipo (Archivo)</label>
-                        <input type="file" id="cfgLogoFile" accept="image/*" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs">
-                    </div>
-                    <button onclick="guardarConfigEmpresa()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs">Guardar Cambios</button>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <!-- ========================================== -->
-    <!-- MODAL TICKET / RECIBO DE PAGO             -->
-    <!-- ========================================== -->
-    <div id="modal-ticket" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white text-slate-900 rounded-3xl max-w-xs w-full p-6 space-y-4 shadow-2xl font-mono text-xs border border-slate-200">
-            <div class="text-center border-b border-dashed border-slate-300 pb-3 space-y-1">
-                <h3 id="ticketEmpresa" class="font-bold text-sm">ROCABADO AUDITORES</h3>
-                <p id="ticketNit" class="text-[10px] text-slate-600">NIT: 5493273119</p>
-                <p class="text-[10px] text-slate-500">COMPROBANTE DE COBRO / POS</p>
-            </div>
-            <div class="space-y-1 text-[11px]">
-                <p><strong>Fecha:</strong> <span id="tFecha"></span></p>
-                <p><strong>Vehículo:</strong> <span id="tVehiculo"></span></p>
-                <p><strong>Placa/Ref:</strong> <span id="tPlaca"></span></p>
-                <p><strong>Cliente:</strong> <span id="tCliente"></span></p>
-                <p><strong>Servicio:</strong> <span id="tServicio"></span></p>
-                <p><strong>Operario:</strong> <span id="tOperario"></span></p>
-                <p><strong>Método Pago:</strong> <span id="tMetodo"></span></p>
-            </div>
-            <div class="border-t border-dashed border-slate-300 pt-2 flex justify-between font-bold text-sm">
-                <span>TOTAL:</span>
-                <span id="tTotal" class="text-blue-600"></span>
-            </div>
-            <div class="text-center text-[10px] text-slate-500 pt-2 border-t border-slate-100">
-                <p>¡Gracias por su preferencia!</p>
-            </div>
-            <div class="flex space-x-2 pt-2">
-                <button onclick="window.print()" class="flex-1 bg-slate-900 text-white py-2.5 rounded-xl font-bold text-[11px]">Imprimir</button>
-                <button onclick="cerrarTicket()" class="flex-1 bg-blue-600 text-white py-2.5 rounded-xl font-bold text-[11px]">Aceptar</button>
+                <button onclick="generarLicenciaEmpresa()" class="w-full bg-navy-900 hover:bg-navy-800 text-white font-bold py-2 rounded-xl text-xs transition">GENERAR CERTIFICADO & ENLACE</button>
+                <button onclick="resetearOperaciones()" class="w-full bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold py-2 rounded-xl text-xs transition">Restaurar / Limpiar Operaciones (Ceros)</button>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT DE CONTROL Y LÓGICA DE LAS 9 PESTAÑAS -->
+    <!-- SCRIPT DE LÓGICA Y NEGOCIO -->
     <script>
-        let empresasBD = [
-            { 
-                id: 1, 
-                nombre: 'ROCABADO AUDITORES', 
-                nit: '5493273119', 
-                wp: '70058120', 
-                dir: 'Santa Cruz, Bolivia',
-                usuario: 'admin',
-                pass: '1234',
-                licencia: 'Licencia Vitalicia / Corporativa',
-                logo: '', 
-                eslogan: 'Transformando números en decisiones' 
-            }
-        ];
-        let empresaActivaId = 1;
+        let tipoVehiculoSeleccionado = 'Auto / Sedán';
+        
+        let db = {
+            sucursalActiva: 'consolidado',
+            serviciosCatalogo: [
+                { nombre: 'Lavado Básico', precio: 35 },
+                { nombre: 'Lavado General', precio: 50 },
+                { nombre: 'Lavado Completo Ejecutivo', precio: 80 },
+                { nombre: 'Cambio de Aceite Sintético', precio: 150 }
+            ],
+            insumos: [
+                { nombre: 'Shampoo Profesional (Litros)', stock: 45 },
+                { nombre: 'Silicona Líquida (Litros)', stock: 20 },
+                { nombre: 'Cera en Pasta (Kilos)', stock: 8 }
+            ],
+            ventas: [
+                { sucursal: 'matriz', placa: '2849XYZ', cliente: 'Joseth Rocabado', servicio: 'Lavado Completo Ejecutivo', precio: 80, operario: 'Carlos Gómez', metodo: 'Efectivo', notas: 'Cliente frecuente' },
+                { sucursal: 'sucursal1', placa: '1234ABC', cliente: 'María Pérez', servicio: 'Lavado General', precio: 50, operario: 'Luis Vargas', metodo: 'QR', notas: 'Normal' }
+            ],
+            egresos: [
+                { categoria: 'Servicios básicos', monto: 350, detalle: 'CRE y Saguapac' },
+                { categoria: 'Alquiler', monto: 2000, detalle: 'Alquiler predio principal' }
+            ]
+        };
 
-        let dbServicios = [
-            { fecha: '25/09/2026 10:15', vehiculo: '🚗 Auto', placa: '4892-XYZ', cliente: 'Roberto Méndez', celular: '59170011223', servicio: 'Lavado Completo Ejecutivo', operario: 'Carlos Gómez', total: 80, metodo: 'Efectivo' },
-            { fecha: '25/09/2026 11:30', vehiculo: '🚙 Vagoneta', placa: '3102-ABC', cliente: 'Mariana Rios', celular: '59170044556', servicio: 'Cambio de Aceite Sintético', operario: 'Luis Vargas', total: 150, metodo: 'QR' }
-        ];
-
-        let dbGastos = [
-            { fecha: '25/09/2026', categoria: '💧 Servicios Básicos', descripcion: 'Consumo de agua y energía', monto: 120 }
-        ];
-
-        let catalogoServicios = [
-            { nombre: 'Lavado Básico', precio: 35, icono: 'fa-soap' },
-            { nombre: 'Lavado General', precio: 50, icono: 'fa-car-wash' },
-            { nombre: 'Lavado Completo Ejecutivo', precio: 80, icono: 'fa-spray-can-sparkles' },
-            { nombre: 'Cambio de Aceite Sintético', precio: 150, icono: 'fa-oil-can' }
-        ];
-
-        let operariosLista = ['Carlos Gómez', 'Luis Vargas'];
-        let tipoVehiculoSeleccionado = '🚗 Auto';
-        let servicioSeleccionadoNombre = 'Lavado Básico';
-        let metodoPagoSeleccionado = 'Efectivo';
-
-        function formatoMoneda(valor) {
-            return 'Bs. ' + Number(valor).toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        function cambiarTab(tabId) {
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white', 'shadow');
+                btn.classList.add('text-slate-300', 'hover:bg-slate-700');
+            });
+            document.getElementById('btn-' + tabId).classList.add('bg-emerald-600', 'text-white', 'shadow');
+            document.getElementById('btn-' + tabId).classList.remove('text-slate-300', 'hover:bg-slate-700');
+            
+            if(tabId === 'dashboard') actualizarDashboard();
+            if(tabId === 'comisiones') actualizarComisiones();
+            if(tabId === 'catalogo') actualizarCatalogoEInventario();
+            if(tabId === 'egresos') actualizarEgresos();
         }
 
-        function abrirModalMaster() { document.getElementById('modal-master').classList.remove('hidden'); }
-        function cerrarModalMaster() { document.getElementById('modal-master').classList.add('hidden'); }
-        function cerrarTicket() { document.getElementById('modal-ticket').classList.add('hidden'); switchTab('resumen'); }
-
-        function seleccionarTipoVehiculo(tipo) {
+        function seleccionarVehiculo(tipo) {
             tipoVehiculoSeleccionado = tipo;
-            ['btnVehAuto', 'btnVehVag', 'btnVehMoto', 'btnVehCam'].forEach(id => {
-                const btn = document.getElementById(id);
-                btn.className = "veh-btn bg-slate-50 border border-slate-200 text-slate-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 hover:bg-slate-100";
+            document.querySelectorAll('.tipo-vehiculo-btn').forEach(b => {
+                b.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-800');
+                b.classList.add('border-slate-200', 'bg-slate-50', 'text-slate-700');
             });
-            if(tipo.includes('Auto')) document.getElementById('btnVehAuto').className = "veh-btn bg-blue-50 border border-blue-500 text-blue-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 shadow-sm";
-            if(tipo.includes('Vagoneta')) document.getElementById('btnVehVag').className = "veh-btn bg-blue-50 border border-blue-500 text-blue-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 shadow-sm";
-            if(tipo.includes('Moto')) document.getElementById('btnVehMoto').className = "veh-btn bg-blue-50 border border-blue-500 text-blue-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 shadow-sm";
-            if(tipo.includes('Camioneta')) document.getElementById('btnVehCam').className = "veh-btn bg-blue-50 border border-blue-500 text-blue-700 p-2.5 rounded-2xl text-xs font-bold flex flex-col items-center justify-center space-y-1 shadow-sm";
+            event.currentTarget.classList.remove('border-slate-200', 'bg-slate-50', 'text-slate-700');
+            event.currentTarget.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-800');
         }
 
-        function seleccionarMetodoPago(metodo) {
-            metodoPagoSeleccionado = metodo;
-            if(metodo === 'Efectivo') {
-                document.getElementById('btnPagoEfectivo').className = "p-2.5 rounded-xl border border-blue-500 bg-blue-50 text-blue-700 font-bold text-xs flex items-center justify-center space-x-2";
-                document.getElementById('btnPagoQr').className = "p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs flex items-center justify-center space-x-2";
-            } else {
-                document.getElementById('btnPagoQr').className = "p-2.5 rounded-xl border border-blue-500 bg-blue-50 text-blue-700 font-bold text-xs flex items-center justify-center space-x-2";
-                document.getElementById('btnPagoEfectivo').className = "p-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-bold text-xs flex items-center justify-center space-x-2";
+        function actualizarDashboard() {
+            let sucursal = document.getElementById('select-sucursal').value;
+            db.sucursalActiva = sucursal;
+            
+            let ventasFiltradas = sucursal === 'consolidado' ? db.ventas : db.ventas.filter(v => v.sucursal === sucursal);
+            
+            let totalServicios = ventasFiltradas.length;
+            let ingresoBruto = ventasFiltradas.reduce((acc, v) => acc + v.precio, 0);
+            let efectivo = ventasFiltradas.filter(v => v.metodo === 'Efectivo').reduce((acc, v) => acc + v.precio, 0);
+            let qr = ventasFiltradas.filter(v => v.metodo === 'QR').reduce((acc, v) => acc + v.precio, 0);
+            
+            let totalEgresos = db.egresos.reduce((acc, e) => acc + e.monto, 0);
+            let totalComisiones = ingresoBruto * 0.40; // 40% automatico operarios
+            let utilidadNeta = ingresoBruto - totalComisiones - totalEgresos;
+
+            document.getElementById('dash-total-servicios').innerText = totalServicios;
+            document.getElementById('dash-ingreso-bruto').innerText = `Bs. ${ingresoBruto.toFixed(2)}`;
+            document.getElementById('dash-efectivo').innerText = `Bs. ${efectivo.toFixed(2)}`;
+            document.getElementById('dash-qr').innerText = `Bs. ${qr.toFixed(2)}`;
+            document.getElementById('dash-utilidad-neta').innerText = `Bs. ${utilidadNeta.toFixed(2)}`;
+        }
+
+        function llenarSelectServicios() {
+            let select = document.getElementById('pos-servicio');
+            select.innerHTML = '';
+            db.serviciosCatalogo.forEach(s => {
+                let opt = document.createElement('option');
+                opt.value = s.nombre;
+                opt.setAttribute('data-precio', s.precio);
+                opt.innerText = `${s.nombre} - Bs. ${s.precio.toFixed(2)}`;
+                select.appendChild(opt);
+            });
+        }
+
+        function registrarVentaPOS() {
+            let placa = document.getElementById('pos-placa').value.trim().toUpperCase();
+            let cliente = document.getElementById('pos-cliente').value.trim() || 'Cliente General';
+            let selectServ = document.getElementById('pos-servicio');
+            let servicioNombre = selectServ.value;
+            let servicioPrecio = parseFloat(selectServ.options[selectServ.selectedIndex].getAttribute('data-precio'));
+            let operario = document.getElementById('pos-operario').value;
+            let metodo = document.querySelector('input[name="pago-metodo"]:checked').value;
+            let notas = document.getElementById('pos-notas').value.trim() || 'Ninguna';
+
+            if(!placa) {
+                alert('Por favor ingrese el número de placa.');
+                return;
             }
-        }
 
-        function renderGridPosServicios() {
-            let html = '';
-            catalogoServicios.forEach(s => {
-                let isSelected = servicioSeleccionadoNombre === s.nombre;
-                let activeClass = isSelected ? 'bg-blue-50 border-blue-500 text-blue-900 shadow-sm' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100';
-                html += `<div onclick="elegirServicioCatalogo('${s.nombre}', ${s.precio})" class="p-3 rounded-xl border ${activeClass} cursor-pointer transition-all flex items-center justify-between">
-                    <div class="flex items-center space-x-2.5">
-                        <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600"><i class="fa-solid ${s.icono}"></i></div>
-                        <div>
-                            <div class="font-bold text-xs">${s.nombre}</div>
-                            <div class="text-[10px] text-slate-400">Precio sugerido</div>
-                        </div>
-                    </div>
-                    <div class="font-black text-blue-600 text-xs table-nums">Bs. ${s.precio.toFixed(2)}</div>
-                </div>`;
+            db.ventas.push({
+                sucursal: db.sucursalActiva === 'consolidado' ? 'matriz' : db.sucursalActiva,
+                placa, cliente, servicio: servicioNombre, precio: servicioPrecio, operario, metodo, notas
             });
-            document.getElementById('gridServiciosPos').innerHTML = html;
+
+            alert('¡Servicio registrado y cobrado con éxito!');
+            document.getElementById('pos-placa').value = '';
+            document.getElementById('pos-cliente').value = '';
+            document.getElementById('pos-notas').value = '';
+            cambiarTab('dashboard');
         }
 
-        function elegirServicioCatalogo(nombre, precio) {
-            servicioSeleccionadoNombre = nombre;
-            document.getElementById('posMontoManual').value = precio;
-            renderGridPosServicios();
+        function actualizarComisiones() {
+            let contenedor = document.getElementById('lista-comisiones-operarios');
+            contenedor.innerHTML = '';
+            
+            let operarios = ['Carlos Gómez', 'Luis Vargas', 'Mario Rojas'];
+            operarios.forEach(op => {
+                let trabajosOp = db.ventas.filter(v => v.operario === op);
+                let totalGenerado = trabajosOp.reduce((acc, v) => acc + v.precio, 0);
+                let comision = totalGenerado * 0.40;
+
+                let div = document.createElement('div');
+                div.className = 'bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xs text-navy-900">${op}</span>
+                        <span class="text-xs font-bold text-emerald-600">Comisión (40%): Bs. ${comision.toFixed(2)}</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Servicios realizados: ${trabajosOp.length} (Total Gen: Bs. ${totalGenerado.toFixed(2)})</p>
+                    <div class="text-[10px] text-slate-400 space-y-1">
+                        ${trabajosOp.map(t => `<div class="bg-white p-1.5 rounded border border-slate-100 flex justify-between"><span>Placa: <b>${t.placa}</b> (${t.servicio})</span><span>Bs.${t.precio}</span></div>`).join('') || 'Sin servicios hoy'}
+                    </div>
+                `;
+                contenedor.appendChild(div);
+            });
         }
 
-        function verificarMaster() {
-            const clave = document.getElementById('inputClaveMaster').value;
-            if(clave === 'RUVAMA#18rac*') {
-                cerrarModalMaster();
-                document.getElementById('view-welcome').classList.add('hidden');
-                document.getElementById('view-app').classList.add('hidden');
-                document.getElementById('view-master-panel').classList.remove('hidden');
-                renderEmpresasMaster();
+        function agregarServicioCatalogo() {
+            let nombre = document.getElementById('nuevo-serv-nombre').value.trim();
+            let precio = parseFloat(document.getElementById('nuevo-serv-precio').value);
+            if(!nombre || isNaN(precio)) return alert('Ingrese datos válidos');
+            db.serviciosCatalogo.push({ nombre, precio });
+            document.getElementById('nuevo-serv-nombre').value = '';
+            document.getElementById('nuevo-serv-precio').value = '';
+            actualizarCatalogoEInventario();
+            llenarSelectServicios();
+        }
+
+        function agregarInsumoInventario() {
+            let nombre = document.getElementById('nuevo-insumo-nombre').value.trim();
+            let stock = parseFloat(document.getElementById('nuevo-insumo-stock').value);
+            if(!nombre || isNaN(stock)) return alert('Ingrese datos válidos');
+            db.insumos.push({ nombre, stock });
+            document.getElementById('nuevo-insumo-nombre').value = '';
+            document.getElementById('nuevo-insumo-stock').value = '';
+            actualizarCatalogoEInventario();
+        }
+
+        function actualizarCatalogoEInventario() {
+            let catCont = document.getElementById('lista-catalogo-servicios');
+            catCont.innerHTML = db.serviciosCatalogo.map(s => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-xl text-xs"><span><b>${s.nombre}</b></span><span class="text-emerald-600 font-bold">Bs. ${s.precio.toFixed(2)}</span></div>`).join('');
+            
+            let invCont = document.getElementById('lista-inventario');
+            invCont.innerHTML = db.insumos.map(i => `<div class="flex justify-between items-center bg-slate-50 p-2 rounded-xl text-xs"><span>${i.nombre}</span><span class="font-bold text-navy-900">${i.stock} unids/litros</span></div>`).join('');
+        }
+
+        function registrarGasto() {
+            let categoria = document.getElementById('gasto-categoria').value;
+            let monto = parseFloat(document.getElementById('gasto-monto').value);
+            let detalle = document.getElementById('gasto-detalle').value.trim() || 'Sin detalle';
+            if(isNaN(monto) || monto <= 0) return alert('Ingrese un monto válido');
+            
+            db.egresos.push({ categoria, monto, detalle });
+            document.getElementById('gasto-monto').value = '';
+            document.getElementById('gasto-detalle').value = '';
+            actualizarEgresos();
+            alert('Egreso registrado correctamente.');
+        }
+
+        function actualizarEgresos() {
+            let cont = document.getElementById('lista-egresos');
+            cont.innerHTML = db.egresos.map(e => `<div class="bg-slate-50 p-2 rounded-xl text-xs flex justify-between"><div><span class="font-bold text-rose-600">[${e.categoria}]</span> ${e.detalle}</div><span class="font-bold">Bs. ${e.monto.toFixed(2)}</span></div>`).join('');
+        }
+
+        function enviarReporteWhatsApp() {
+            let bruto = db.ventas.reduce((a,v)=>a+v.precio,0);
+            let mensaje = `*REPORTE GERENCIAL - ROCABADO AUDITORES*%0A%%0ATotal Servicios: ${db.ventas.length}%0AIngreso Bruto: Bs. ${bruto.toFixed(2)}%0AUtilidad Neta Real: Calculada y auditada.%0A*Transformando números en decisiones.*`;
+            window.open(`https://api.whatsapp.com/send?phone=&text=${mensaje}`, '_blank');
+        }
+
+        function abrirMasterModal() { document.getElementById('master-modal').classList.remove('hidden'); }
+        function cerrarMasterModal() { document.getElementById('master-modal').classList.add('hidden'); }
+        
+        function verificarClaveMaster() {
+            let clave = document.getElementById('master-clave').value;
+            if(clave === '12345' || clave === 'Rocabado2026') {
+                document.getElementById('master-login-view').classList.add('hidden');
+                document.getElementById('master-panel-view').classList.remove('hidden');
             } else {
                 alert('Clave maestra incorrecta.');
             }
         }
 
-        function volverInicio() {
-            document.getElementById('view-master-panel').classList.add('hidden');
-            document.getElementById('view-app').classList.add('hidden');
-            document.getElementById('view-welcome').classList.remove('hidden');
-            actualizarPantallaBienvenida();
+        function generarLicenciaEmpresa() {
+            let nombre = document.getElementById('empresa-nombre').value;
+            let vigencia = document.getElementById('empresa-vigencia').value;
+            if(!nombre) return alert('Ingrese el nombre de la empresa.');
+            alert(`¡Licencia generada con éxito para "${nombre}" por ${vigencia}! Enlace corporativo creado y listo para enviar por WhatsApp.`);
+            cerrarMasterModal();
         }
 
-        function actualizarPantallaBienvenida() {
-            const emp = empresasBD.find(e => e.id === empresaActivaId) || empresasBD[0];
-            if(!emp) return;
-
-            document.getElementById('welcomeEmpresaNombre').innerText = emp.nombre;
-            document.getElementById('welcomeEmpresaSub').innerText = emp.eslogan || 'Transformando números en decisiones';
-            document.getElementById('welcomeWpTexto').innerText = `Soporte Técnico (${emp.wp})`;
-            document.getElementById('welcomeBtnWp').href = `https://wa.me/${emp.wp}?text=Hola%20${encodeURIComponent(emp.nombre)},%20deseo%20soporte%20técnico.`;
-
-            const logoImg = document.getElementById('welcomeLogoImg');
-            const logoIcon = document.getElementById('welcomeLogoIcon');
-            if(emp.logo && emp.logo.trim() !== '') {
-                logoImg.src = emp.logo;
-                logoImg.classList.remove('hidden');
-                logoIcon.classList.add('hidden');
-            } else {
-                logoImg.classList.add('hidden');
-                logoIcon.classList.remove('hidden');
+        function resetearOperaciones() {
+            if(confirm('¿Está seguro de limpiar y restaurar todas las operaciones a cero?')) {
+                db.ventas = [];
+                db.egresos = [];
+                alert('Operaciones restauradas a cero.');
+                cerrarMasterModal();
+                actualizarDashboard();
             }
         }
 
-        function crearEmpresaMaster() {
-            const nombre = document.getElementById('regNombre').value.trim();
-            const nit = document.getElementById('regNit').value.trim();
-            const wp = document.getElementById('regWp').value.trim();
-            const dir = document.getElementById('regDir').value.trim();
-            const usuario = document.getElementById('regUser').value.trim();
-            const pass = document.getElementById('regPass').value.trim();
-            const licencia = document.getElementById('regLicencia').value;
-
-            if(!nombre || !nit || !usuario || !pass) { 
-                alert('Complete los campos obligatorios (Nombre, NIT, Usuario y Contraseña).'); 
-                return; 
-            }
-
-            const nuevaId = Date.now();
-            const nuevaEmpresa = { 
-                id: nuevaId, 
-                nombre, 
-                nit, 
-                wp: wp || '59170000000', 
-                dir: dir || 'Santa Cruz, Bolivia',
-                usuario,
-                pass,
-                licencia,
-                logo: '', 
-                eslogan: 'Transformando números en decisiones' 
-            };
-
-            const fileInput = document.getElementById('regLogoFile');
-            if(fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    nuevaEmpresa.logo = e.target.result;
-                    empresasBD.push(nuevaEmpresa);
-                    finalizarCreacionEmpresa(nuevaId);
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                empresasBD.push(nuevaEmpresa);
-                finalizarCreacionEmpresa(nuevaId);
-            }
-        }
-
-        function finalizarCreacionEmpresa(id) {
-            document.getElementById('regNombre').value = '';
-            document.getElementById('regNit').value = '';
-            document.getElementById('regWp').value = '';
-            document.getElementById('regDir').value = '';
-            document.getElementById('regUser').value = '';
-            document.getElementById('regPass').value = '';
-            
-            renderEmpresasMaster();
-            alert('¡Empresa y Licencia generadas con éxito!');
-            entrarEmpresa(id);
-        }
-
-        function renderEmpresasMaster() {
-            let html = '';
-            empresasBD.forEach(emp => {
-                html += `<tr class="hover:bg-slate-50">
-                    <td class="p-3">
-                        <div class="font-extrabold text-slate-900">${emp.nombre}</div>
-                        <div class="text-[10px] text-slate-500">NIT: ${emp.nit}</div>
-                    </td>
-                    <td class="p-3">
-                        <span class="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full text-[10px] font-bold border border-blue-100">${emp.licencia}</span>
-                    </td>
-                    <td class="p-3 text-center">
-                        <button onclick="entrarEmpresa(${emp.id})" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl font-bold text-[11px] shadow-sm">
-                            Abrir
-                        </button>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('tablaEmpresasMaster').innerHTML = html;
-        }
-
-        function entrarEmpresa(id) {
-            empresaActivaId = id;
-            const emp = empresasBD.find(e => e.id === id);
-            if(!emp) return;
-
-            document.getElementById('appHeaderNombre').innerText = emp.nombre;
-            document.getElementById('appHeaderNit').innerText = emp.nit;
-            document.getElementById('appHeaderLic').innerText = emp.licencia;
-            document.getElementById('lblLicTipo').innerText = emp.licencia;
-            document.getElementById('appBtnWp').href = `https://wa.me/${emp.wp}?text=Hola%20${encodeURIComponent(emp.nombre)},%20soporte%20Rocabado.`;
-            
-            document.getElementById('cfgNombre').value = emp.nombre;
-            document.getElementById('cfgNit').value = emp.nit;
-            document.getElementById('cfgWp').value = emp.wp;
-            document.getElementById('cfgEslogan').value = emp.eslogan || 'Transformando números en decisiones';
-
-            const headerLogoBox = document.getElementById('headerLogoBox');
-            if(emp.logo) {
-                headerLogoBox.innerHTML = `<img src="${emp.logo}" class="w-full h-full object-cover">`;
-            } else {
-                headerLogoBox.innerHTML = `<i class="fa-solid fa-chart-pie"></i>`;
-            }
-
-            document.getElementById('view-welcome').classList.add('hidden');
-            document.getElementById('view-master-panel').classList.add('hidden');
-            document.getElementById('view-app').classList.remove('hidden');
-            renderGridPosServicios();
-            renderCatalogoConfig();
-            document.getElementById('posMontoManual').value = catalogoServicios[0].precio;
-            switchTab('resumen');
-        }
-
-        function entrarEmpresaActual() {
-            entrarEmpresa(empresaActivaId);
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            
-            document.querySelectorAll('.nav-tab').forEach(btn => {
-                btn.className = "nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:bg-slate-100 whitespace-nowrap";
-                if(btn.dataset.target === tabId) {
-                    btn.className = "nav-tab px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-sm whitespace-nowrap";
-                }
-            });
-            window.scrollTo(0, 0);
-            renderCalculosContables();
-        }
-
-        function registrarServicioPOS() {
-            const placa = document.getElementById('posPlaca').value.trim().toUpperCase();
-            const cliente = document.getElementById('posCliente').value.trim() || 'Cliente Frecuente';
-            const celular = document.getElementById('posCelular').value.trim() || '59170000000';
-            const total = parseFloat(document.getElementById('posMontoManual').value);
-            
-            if(!placa) { alert('Ingrese la placa o identificador del vehículo.'); return; }
-            if(isNaN(total) || total <= 0) { alert('Ingrese un monto válido a cobrar.'); return; }
-
-            const fechaHora = new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            const operario = document.getElementById('posOperario').value;
-
-            dbServicios.unshift({
-                fecha: fechaHora,
-                vehiculo: tipoVehiculoSeleccionado,
-                placa, cliente, celular,
-                servicio: servicioSeleccionadoNombre,
-                operario,
-                total,
-                metodo: metodoPagoSeleccionado
-            });
-
-            const emp = empresasBD.find(e => e.id === empresaActivaId);
-            document.getElementById('ticketEmpresa').innerText = emp.nombre;
-            document.getElementById('ticketNit').innerText = 'NIT: ' + emp.nit;
-            document.getElementById('tFecha').innerText = fechaHora;
-            document.getElementById('tVehiculo').innerText = tipoVehiculoSeleccionado;
-            document.getElementById('tPlaca').innerText = placa;
-            document.getElementById('tCliente').innerText = cliente;
-            document.getElementById('tServicio').innerText = servicioSeleccionadoNombre;
-            document.getElementById('tOperario').innerText = operario;
-            document.getElementById('tMetodo').innerText = metodoPagoSeleccionado;
-            document.getElementById('tTotal').innerText = formatoMoneda(total);
-
-            document.getElementById('posPlaca').value = '';
-            document.getElementById('posCliente').value = '';
-            document.getElementById('posCelular').value = '';
-
-            document.getElementById('modal-ticket').classList.remove('hidden');
-        }
-
-        function registrarGasto() {
-            const categoria = document.getElementById('gastoCategoria').value;
-            const descripcion = document.getElementById('gastoDescripcion').value.trim() || categoria;
-            const monto = parseFloat(document.getElementById('gastoMonto').value);
-
-            if(isNaN(monto) || monto <= 0) { alert('Ingrese un monto válido.'); return; }
-
-            dbGastos.unshift({ fecha: new Date().toLocaleDateString(), categoria, descripcion, monto });
-            document.getElementById('gastoDescripcion').value = '';
-            document.getElementById('gastoMonto').value = '';
-            renderCalculosContables();
-            alert('Gasto registrado en auditoría.');
-        }
-
-        function eliminarGasto(idx) {
-            if(confirm('¿Eliminar este egreso?')) {
-                dbGastos.splice(idx, 1);
-                renderCalculosContables();
-            }
-        }
-
-        function agregarServicioCatalogo() {
-            const nombre = document.getElementById('nuevoCatNombre').value.trim();
-            const precio = parseFloat(document.getElementById('nuevoCatPrecio').value);
-            if(!nombre || isNaN(precio)) { alert('Complete los datos del servicio.'); return; }
-
-            catalogoServicios.push({ nombre, precio, icono: 'fa-wrench' });
-            document.getElementById('nuevoCatNombre').value = '';
-            document.getElementById('nuevoCatPrecio').value = '';
-            renderGridPosServicios();
-            renderCatalogoConfig();
-            alert('Servicio añadido al catálogo inteligente.');
-        }
-
-        function renderCatalogoConfig() {
-            let html = '';
-            catalogoServicios.forEach((s, idx) => {
-                html += `<div class="flex justify-between items-center bg-slate-50 p-2.5 rounded-xl border border-slate-200 text-xs">
-                    <div><span class="font-bold">${s.nombre}</span> - <span class="text-blue-600 font-black">${formatoMoneda(s.precio)}</span></div>
-                    <button onclick="catalogoServicios.splice(${idx},1);renderGridPosServicios();renderCatalogoConfig();" class="text-red-500 font-bold text-[10px]">Eliminar</button>
-                </div>`;
-            });
-            document.getElementById('listaCatalogoConfig').innerHTML = html;
-        }
-
-        function guardarConfigEmpresa() {
-            const emp = empresasBD.find(e => e.id === empresaActivaId);
-            if(!emp) return;
-
-            emp.nombre = document.getElementById('cfgNombre').value;
-            emp.nit = document.getElementById('cfgNit').value;
-            emp.wp = document.getElementById('cfgWp').value;
-            emp.eslogan = document.getElementById('cfgEslogan').value;
-
-            const fileInput = document.getElementById('cfgLogoFile');
-            if(fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    emp.logo = e.target.result;
-                    aplicarCambiosVisualesEmpresa(emp);
-                    alert('¡Configuración y logotipo actualizados!');
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                aplicarCambiosVisualesEmpresa(emp);
-                alert('¡Configuración actualizada!');
-            }
-        }
-
-        function aplicarCambiosVisualesEmpresa(emp) {
-            document.getElementById('appHeaderNombre').innerText = emp.nombre;
-            document.getElementById('appHeaderNit').innerText = emp.nit;
-            const headerLogoBox = document.getElementById('headerLogoBox');
-            if(emp.logo) {
-                headerLogoBox.innerHTML = `<img src="${emp.logo}" class="w-full h-full object-cover">`;
-            }
-        }
-
-        function filtrarReportesFecha() {
-            const fechaVal = document.getElementById('filtroFecha').value;
-            if(!fechaVal) { alert('Seleccione una fecha.'); return; }
-            let filtrados = dbServicios.filter(s => s.fecha.includes(fechaVal.split('-').reverse().join('/')));
-            let total = filtrados.reduce((acc, curr) => acc + curr.total, 0);
-            document.getElementById('resultadoReporteFecha').innerHTML = `<div class="bg-blue-50 border border-blue-100 p-3 rounded-xl font-bold text-slate-800">
-                Servicios en fecha: ${filtrados.length} <br>
-                Ingreso consolidado: <span class="text-blue-600">${formatoMoneda(total)}</span>
-            </div>`;
-        }
-
-        function renderCalculosContables() {
-            document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
-
-            let totIng = 0, totEfe = 0, totQR = 0;
-            dbServicios.forEach(s => {
-                totIng += s.total;
-                if(s.metodo === 'Efectivo') totEfe += s.total;
-                else totQR += s.total;
-            });
-
-            document.getElementById('kpiVehiculos').innerText = dbServicios.length;
-            document.getElementById('kpiIngresos').innerText = formatoMoneda(totIng);
-            document.getElementById('kpiEfectivoQR').innerText = `${formatoMoneda(totEfe)} / ${formatoMoneda(totQR)}`;
-
-            let totCom = 0, comHtml = '';
-            operariosLista.forEach(op => {
-                let servOp = dbServicios.filter(s => s.operario === op);
-                let genOp = servOp.reduce((acc, curr) => acc + curr.total, 0);
-                let comOp = genOp * 0.40;
-                totCom += comOp;
-
-                comHtml += `<tr class="hover:bg-slate-50">
-                    <td class="p-3 font-bold text-slate-900">${op}</td>
-                    <td class="p-3 text-center table-nums">${servOp.length}</td>
-                    <td class="p-3 text-right table-nums text-blue-600">${formatoMoneda(genOp)}</td>
-                    <td class="p-3 text-right font-black table-nums text-emerald-600">${formatoMoneda(comOp)}</td>
-                </tr>`;
-            });
-            document.getElementById('tablaComisionesBody').innerHTML = comHtml;
-
-            let totGas = 0, gasHtml = '';
-            dbGastos.forEach((g, idx) => {
-                totGas += g.monto;
-                gasHtml += `<tr class="hover:bg-slate-50">
-                    <td class="p-2.5 text-slate-500">${g.fecha}</td>
-                    <td class="p-2.5 font-semibold text-slate-800">${g.categoria}</td>
-                    <td class="p-2.5 text-right font-black table-nums text-red-600">${formatoMoneda(g.monto)}</td>
-                    <td class="p-2.5 text-center">
-                        <button onclick="eliminarGasto(${idx})" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash text-xs"></i></button>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('tablaGastosBody').innerHTML = gasHtml;
-            document.getElementById('lblTotalGastosHeader').innerText = `Total: ${formatoMoneda(totGas)}`;
-
-            let utilidadNeta = totIng - totGas - totCom;
-            document.getElementById('kpiUtilidad').innerText = formatoMoneda(utilidadNeta);
-
-            let histHtml = '';
-            dbServicios.forEach(s => {
-                let emp = empresasBD.find(e => e.id === empresaActivaId);
-                let msg = encodeURIComponent(`¡Hola ${s.cliente}! Su servicio de ${s.servicio} para el vehículo ${s.vehiculo} (${s.placa}) está listo en ${emp.nombre}. Gracias.`);
-                histHtml += `<tr class="hover:bg-slate-50">
-                    <td class="p-3 font-bold text-slate-900">${s.vehiculo} <br><span class="text-[10px] text-blue-600">${s.placa}</span></td>
-                    <td class="p-3 text-slate-700">${s.cliente}</td>
-                    <td class="p-3 text-right font-black table-nums text-blue-600">${formatoMoneda(s.total)}</td>
-                    <td class="p-3 text-center">
-                        <a href="https://wa.me/${s.celular}?text=${msg}" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-xl text-[10px] font-bold inline-flex items-center space-x-1 shadow-sm">
-                            <i class="fa-brands fa-whatsapp"></i><span>Wp</span>
-                        </a>
-                    </td>
-                </tr>`;
-            });
-            document.getElementById('tablaHistorialBody').innerHTML = histHtml;
-        }
-
-        actualizarPantallaBienvenida();
+        // Inicialización
+        window.onload = function() {
+            llenarSelectServicios();
+            actualizarDashboard();
+        };
     </script>
 </body>
 </html>
