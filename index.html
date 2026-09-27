@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rocabado Auditores Consultores - Plataforma Gerencial Multisede</title>
+    <title>Rocabado Auditores Consultores - Plataforma Gerencial Autolavados</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -42,13 +42,14 @@
             </div>
         </div>
         
-        <!-- NAVEGACIÓN TÁCTIL DE 5 PESTAÑAS MAESTRAS -->
+        <!-- NAVEGACIÓN TÁCTIL DE 6 PESTAÑAS MAESTRAS -->
         <nav class="bg-navy-800 px-2 py-2 flex space-x-2 overflow-x-auto scrollbar-none border-t border-slate-700/50">
             <button onclick="cambiarTab('dashboard')" id="btn-dashboard" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-emerald-600 text-white shadow flex items-center space-x-1"><i class="fa-solid fa-gauge-high"></i><span>1. Dashboard</span></button>
             <button onclick="cambiarTab('pos')" id="btn-pos" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-cash-register"></i><span>2. POS & Caja</span></button>
-            <button onclick="cambiarTab('comisiones')" id="btn-comisiones" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-users-gear"></i><span>3. Comisiones</span></button>
-            <button onclick="cambiarTab('catalogo')" id="btn-catalogo" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-boxes-stacked"></i><span>4. Catálogo</span></button>
-            <button onclick="cambiarTab('egresos')" id="btn-egresos" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-file-invoice-dollar"></i><span>5. Egresos</span></button>
+            <button onclick="cambiarTab('historial')" id="btn-historial" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-car-burst"></i><span>3. Placas & CRM</span></button>
+            <button onclick="cambiarTab('comisiones')" id="btn-comisiones" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-users-gear"></i><span>4. Comisiones</span></button>
+            <button onclick="cambiarTab('catalogo')" id="btn-catalogo" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-boxes-stacked"></i><span>5. Catálogo</span></button>
+            <button onclick="cambiarTab('egresos')" id="btn-egresos" class="tab-btn px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap text-slate-300 hover:bg-slate-700 flex items-center space-x-1"><i class="fa-solid fa-file-invoice-dollar"></i><span>6. Egresos</span></button>
         </nav>
     </header>
 
@@ -89,7 +90,7 @@
             </div>
 
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-2">
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Métodos de Cobro (Arqueo)</span>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Arqueo de Caja (Medios de Pago)</span>
                 <div class="flex justify-between items-center py-2 border-b border-slate-100 text-sm">
                     <span class="text-slate-600"><i class="fa-solid fa-money-bill-wave text-emerald-600 mr-2"></i> Efectivo en Caja</span>
                     <span class="font-bold text-navy-900" id="dash-efectivo">Bs. 0,00</span>
@@ -106,8 +107,8 @@
                     <i class="fa-solid fa-shield-halved text-emerald-400 text-lg"></i>
                 </div>
                 <h3 class="text-2xl font-black text-emerald-400" id="dash-utilidad-neta">Bs. 0,00</h3>
-                <p class="text-[11px] text-slate-400">Post deducción automática de sueldos, comisiones y gastos operativos.</p>
-                <button onclick="enviarReporteWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold text-xs shadow-md transition flex items-center justify-center space-x-2">
+                <p class="text-[11px] text-slate-400">Post deducción automática de comisiones (40%) y egresos operativos.</p>
+                <button onclick="enviarReporteWhatsAppGerencial()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold text-xs shadow-md transition flex items-center justify-center space-x-2">
                     <i class="fa-brands fa-whatsapp text-base"></i>
                     <span>Enviar Arqueo Gerencial por WhatsApp</span>
                 </button>
@@ -117,7 +118,7 @@
         <!-- 2. TAB POS INTELIGENTE & CAJA RÁPIDA -->
         <section id="tab-pos" class="space-y-4 hidden">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
-                <h3 class="font-bold text-sm text-navy-900 flex items-center"><i class="fa-solid fa-cash-register text-emerald-600 mr-2"></i> POS Inteligente & Caja Rápida</h3>
+                <h3 class="font-bold text-sm text-navy-900 flex items-center"><i class="fa-solid fa-cash-register text-emerald-600 mr-2"></i> POS Inteligente & Registro de Placa</h3>
                 
                 <div>
                     <label class="block text-xs font-semibold text-slate-500 mb-1">Tipo de Vehículo</label>
@@ -131,13 +132,18 @@
 
                 <div class="grid grid-cols-2 gap-2">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 mb-1">Nro. Placa</label>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Nro. Placa (Obligatorio)</label>
                         <input type="text" id="pos-placa" placeholder="EJ: 2849XYZ" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs uppercase font-bold text-navy-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-500 mb-1">Cliente / Celular</label>
-                        <input type="text" id="pos-cliente" placeholder="Nombre / WhatsApp" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-navy-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <label class="block text-xs font-semibold text-slate-500 mb-1">Celular WhatsApp</label>
+                        <input type="text" id="pos-celular" placeholder="Ej: 70012345" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-navy-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                     </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Nombre del Cliente</label>
+                    <input type="text" id="pos-cliente" placeholder="Nombre completo" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-navy-900 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                 </div>
 
                 <div>
@@ -148,7 +154,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-500 mb-1">Operario Asignado</label>
+                    <label class="block text-xs font-semibold text-slate-500 mb-1">Operario Asignado (Comisión 40%)</label>
                     <select id="pos-operario" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-navy-900 font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none">
                         <option value="Carlos Gómez">Carlos Gómez</option>
                         <option value="Luis Vargas">Luis Vargas</option>
@@ -177,12 +183,26 @@
             </div>
         </section>
 
-        <!-- 3. TAB COMISIONES -->
+        <!-- 3. TAB HISTORIAL DE PLACAS & CRM WHATSAPP -->
+        <section id="tab-historial" class="space-y-4 hidden">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-car-burst text-emerald-600 mr-2"></i> Historial de Placas & CRM</h3>
+                    <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full">Fidelización</span>
+                </div>
+                <p class="text-xs text-slate-500">Monitoree la frecuencia de visitas por vehículo y envíe recordatorios o agradecimientos automáticos por WhatsApp.</p>
+                <div id="lista-historial-vehiculos" class="space-y-3 pt-2">
+                    <!-- Dinámico -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TAB COMISIONES -->
         <section id="tab-comisiones" class="space-y-4 hidden">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
                 <div class="flex justify-between items-center">
                     <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-users-gear text-emerald-600 mr-2"></i> Planilla de Comisiones (40%)</h3>
-                    <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full">Automático</span>
+                    <span class="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-1 rounded-full">Auditoría</span>
                 </div>
                 <div id="lista-comisiones-operarios" class="space-y-3">
                     <!-- Dinámico -->
@@ -190,7 +210,7 @@
             </div>
         </section>
 
-        <!-- 4. TAB CATÁLOGO -->
+        <!-- 5. TAB CATÁLOGO -->
         <section id="tab-catalogo" class="space-y-4 hidden">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
                 <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-boxes-stacked text-emerald-600 mr-2"></i> Catálogo Real de Lavadero</h3>
@@ -203,7 +223,7 @@
             </div>
         </section>
 
-        <!-- 5. TAB EGRESOS -->
+        <!-- 6. TAB EGRESOS -->
         <section id="tab-egresos" class="space-y-4 hidden">
             <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
                 <h3 class="font-bold text-sm text-navy-900"><i class="fa-solid fa-file-invoice-dollar text-emerald-600 mr-2"></i> Egresos y Gastos Operativos</h3>
@@ -213,6 +233,8 @@
                         <option value="Servicios básicos">Servicios básicos (Agua, Luz)</option>
                         <option value="Alquiler">Alquiler</option>
                         <option value="Sueldos">Sueldos</option>
+                        <option value="Material de limpieza">Material de limpieza</option>
+                        <option value="Mantenimientos">Mantenimientos</option>
                         <option value="Otros">Otros</option>
                     </select>
                 </div>
@@ -249,23 +271,20 @@
         </div>
     </div>
 
-    <!-- SCRIPT DE LÓGICA CON CONTROL DE 4 DÍAS -->
+    <!-- SCRIPT DE LÓGICA COMPLETA -->
     <script>
         let tipoVehiculoSeleccionado = 'Auto / Sedán';
         
         let db = {
             sucursalActiva: 'consolidado',
-            diasRestantesPrueba: 4, // Control exacto de 4 días
+            diasRestantesPrueba: 4, 
             serviciosCatalogo: [
                 { nombre: 'Lavado Básico', precio: 35 },
                 { nombre: 'Lavado General', precio: 50 },
                 { nombre: 'Lavado Completo Ejecutivo', precio: 80 }
             ],
-            insumos: [
-                { nombre: 'Shampoo Profesional (Litros)', stock: 45 }
-            ],
             ventas: [
-                { sucursal: 'matriz', placa: '2849XYZ', cliente: 'Joseth Rocabado', servicio: 'Lavado Completo Ejecutivo', precio: 80, operario: 'Carlos Gómez', metodo: 'Efectivo' }
+                { sucursal: 'matriz', placa: '2849XYZ', cliente: 'Joseth Rocabado', celular: '70012345', servicio: 'Lavado Completo Ejecutivo', precio: 80, operario: 'Carlos Gómez', metodo: 'Efectivo', vehiculo: 'Auto / Sedán', fecha: '2026-09-26' }
             ],
             egresos: [
                 { categoria: 'Servicios básicos', monto: 350, detalle: 'CRE' }
@@ -284,6 +303,7 @@
             document.getElementById('btn-' + tabId).classList.remove('text-slate-300', 'hover:bg-slate-700');
             
             if(tabId === 'dashboard') actualizarDashboard();
+            if(tabId === 'historial') actualizarHistorialPlacas();
             if(tabId === 'comisiones') actualizarComisiones();
             if(tabId === 'catalogo') actualizarCatalogoEInventario();
             if(tabId === 'egresos') actualizarEgresos();
@@ -336,6 +356,7 @@
         function registrarVentaPOS() {
             let placa = document.getElementById('pos-placa').value.trim().toUpperCase();
             let cliente = document.getElementById('pos-cliente').value.trim() || 'Cliente General';
+            let celular = document.getElementById('pos-celular').value.trim() || 'Sin celular';
             let selectServ = document.getElementById('pos-servicio');
             let servicioNombre = selectServ.value;
             let servicioPrecio = parseFloat(selectServ.options[selectServ.selectedIndex].getAttribute('data-precio'));
@@ -343,19 +364,56 @@
             let metodo = document.querySelector('input[name="pago-metodo"]:checked').value;
 
             if(!placa) {
-                alert('Por favor ingrese el número de placa.');
+                alert('Por favor ingrese el número de placa obligatorio.');
                 return;
             }
 
             db.ventas.push({
                 sucursal: db.sucursalActiva === 'consolidado' ? 'matriz' : db.sucursalActiva,
-                placa, cliente, servicio: servicioNombre, precio: servicioPrecio, operario, metodo, vehiculo: tipoVehiculoSeleccionado
+                placa, cliente, celular, servicio: servicioNombre, precio: servicioPrecio, operario, metodo, vehiculo: tipoVehiculoSeleccionado, fecha: new Date().toISOString().split('T')[0]
             });
 
-            alert('¡Servicio registrado y cobrado con éxito!');
+            alert('¡Servicio registrado con éxito!');
             document.getElementById('pos-placa').value = '';
             document.getElementById('pos-cliente').value = '';
+            document.getElementById('pos-celular').value = '';
             cambiarTab('dashboard');
+        }
+
+        function actualizarHistorialPlacas() {
+            let cont = document.getElementById('lista-historial-vehiculos');
+            cont.innerHTML = '';
+            
+            // Agrupar ventas por placa
+            let placasMap = {};
+            db.ventas.forEach(v => {
+                if(!placasMap[v.placa]) {
+                    placasMap[v.placa] = { cliente: v.cliente, celular: v.celular, vehiculo: v.vehiculo, visitas: 0, ultimoServicio: v.servicio };
+                }
+                placasMap[v.placa].visitas++;
+            });
+
+            for(let placa in placasMap) {
+                let info = placasMap[placa];
+                let div = document.createElement('div');
+                div.className = 'bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-2';
+                
+                let msgAgradecimiento = encodeURIComponent(`¡Hola ${info.cliente}! Gracias por confiar en nuestro autolavado. Su vehículo con placa ${placa} ha quedado impecable. ¡Lo esperamos pronto! - Rocabado Auditores Consultores`);
+                let msgRecuerdo = encodeURIComponent(`¡Hola ${info.cliente}! Notamos que su vehículo (${placa}) ya lleva unos días sin su mantenimiento. Venga esta semana y disfrute de un descuento especial.`);
+
+                div.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-xs text-navy-900 bg-white px-2 py-1 rounded border border-slate-200">Placa: ${placa}</span>
+                        <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">${info.visitas} Visita(s)</span>
+                    </div>
+                    <p class="text-xs text-slate-600"><b>Cliente:</b> ${info.cliente} | <b>Celular:</b> ${info.celular}</p>
+                    <div class="grid grid-cols-2 gap-2 pt-1">
+                        <a href="https://api.whatsapp.com/send?phone=${info.celular}&text=${msgAgradecimiento}" target="_blank" class="bg-emerald-600 text-white text-center py-2 rounded-xl text-[11px] font-bold shadow hover:bg-emerald-700 transition"><i class="fa-brands fa-whatsapp mr-1"></i> Agradecer</a>
+                        <a href="https://api.whatsapp.com/send?phone=${info.celular}&text=${msgRecuerdo}" target="_blank" class="bg-navy-900 text-white text-center py-2 rounded-xl text-[11px] font-bold shadow hover:bg-navy-800 transition"><i class="fa-brands fa-whatsapp mr-1"></i> Recordatorio</a>
+                    </div>
+                `;
+                cont.appendChild(div);
+            }
         }
 
         function actualizarComisiones() {
@@ -414,9 +472,9 @@
             cont.innerHTML = db.egresos.map(e => `<div class="bg-slate-50 p-2.5 rounded-xl text-xs flex justify-between items-center border border-slate-100"><div><span class="font-bold text-rose-600 block">[${e.categoria}]</span> <span class="text-slate-700">${e.detalle}</span></div><span class="font-black text-navy-900">Bs. ${e.monto.toFixed(2)}</span></div>`).join('');
         }
 
-        function enviarReporteWhatsApp() {
+        function enviarReporteWhatsAppGerencial() {
             let bruto = db.ventas.reduce((a,v)=>a+v.precio,0);
-            let mensaje = `*REPORTE GERENCIAL - ROCABADO AUDITORES*%0A%0ATotal Servicios: ${db.ventas.length}%0AIngreso Bruto: Bs. ${bruto.toFixed(2)}%0AUtilidad Neta Real: Verificada.`;
+            let mensaje = encodeURIComponent(`*REPORTE GERENCIAL - ROCABADO AUDITORES*\n\nTotal Servicios: ${db.ventas.length}\nIngreso Bruto: Bs. ${bruto.toFixed(2)}\nControl Interno: Verificado.`);
             window.open(`https://api.whatsapp.com/send?phone=&text=${mensaje}`, '_blank');
         }
 
